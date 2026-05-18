@@ -7,12 +7,17 @@
    VARIABLES & RESET
    ══════════════════════════════ */
 :root {
-    --black: #332E2B;
-    --burgundy: #72393F;
-    --taupe: #AD9D8D;
-    --sand: #D0C8BD;
-    --mist: #D9D9D9;
-    --cream: #F0E9E3;
+    --black: #1C1C1E;
+    --burgundy: #373E50;
+    /* granito — tu color acento principal */
+    --taupe: #8EA39E;
+    /* sage verde — reemplaza el marrón */
+    --sand: #B0C0CD;
+    /* nimbo azul claro */
+    --mist: #DADFE3;
+    /* vapor gris */
+    --cream: #F6F2EF;
+    /* pérola — fondo base */
 
     --font-display: 'TT Berlinerins', Impact, sans-serif;
     --font-body: 'TT Interphases Pro', 'Inter', sans-serif;
@@ -589,35 +594,16 @@ body:has(button:hover) .cursor {
 
 .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 7vw, 7.5rem);
-    line-height: 1.05;
+    font-size: clamp(2.4rem, 5vw, 5rem);
+    font-weight: 400;
+    line-height: 1.1;
     color: var(--cream);
     margin-bottom: 1.5rem;
-    text-align: left;
+    max-width: 600px;
 }
 
 .hero-word {
-    display: block;
-    overflow: hidden;
-}
-
-.hero-word span,
-.hero-word {
-    opacity: 0;
-    transform: translateY(60px);
-    animation: slideUp 0.8s var(--ease-out) forwards;
-}
-
-.hero-word:nth-child(1) {
-    animation-delay: 0.4s;
-}
-
-.hero-word:nth-child(2) {
-    animation-delay: 0.55s;
-}
-
-.hero-word:nth-child(3) {
-    animation-delay: 0.7s;
+    display: none;
 }
 
 .hero-subtitle {
