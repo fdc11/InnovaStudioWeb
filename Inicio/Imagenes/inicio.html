@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Innovo Studio — Creamos. Capturamos. Conectamos.</title>
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
+    <link href="https://fonts.cdnfonts.com/css/tt-berlinerins" rel="stylesheet" />
+    <link href="https://fonts.cdnfonts.com/css/tt-interphases-pro" rel="stylesheet" />
+    <link rel="stylesheet" href="inicio.css" />
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- CURSOR PERSONALIZADO                    -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- NAVBAR                                  -->
+    <!-- ═══════════════════════════════════════ -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Navegación principal">
+        <a href="#" class="nav-logo" aria-label="Innovo Studio - Inicio">
+            <span class="logo-innovo">INNOVO</span>
+            <span class="logo-studio">STUDIO</span>
+        </a>
+
+        <ul class="nav-links" id="navLinks" role="list">
+            <li><a href="#inicio" class="nav-link">Inicio</a></li>
+            <li><a href="#servicios" class="nav-link">Servicios</a></li>
+            <li><a href="#historias" class="nav-link">Historias</a></li>
+            <li><a href="#contacto" class="nav-link">Contacto</a></li>
+        </ul>
+
+        <a href="#contacto" class="btn-nav-cta">Contactar</a>
+
+        <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+        </button>
+    </nav>
+
+    <!-- Menú móvil fullscreen -->
+    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+        <ul class="mobile-links" role="list">
+            <li><a href="#inicio" class="mobile-link">Inicio</a></li>
+            <li><a href="#servicios" class="mobile-link">Servicios</a></li>
+            <li><a href="#historias" class="mobile-link">Historias</a></li>
+            <li><a href="#contacto" class="mobile-link">Contacto</a></li>
+        </ul>
+        <a href="#contacto" class="mobile-cta">Contactar →</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECCIÓN 1: HERO                         -->
+    <!-- ═══════════════════════════════════════ -->
+    <section class="hero" id="inicio" aria-label="Hero principal">
+        <div class="hero-bg placeholder-img"></div>
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+
+            <h1 class="hero-title" aria-label="Creamos. Capturamos. Conectamos.">
+                <span class="hero-word">CREAMOS.</span>
+                <span class="hero-word">CAPTURAMOS.</span>
+                <span class="hero-word">CONECTAMOS.</span>
+            </h1>
+
+            <p class="hero-subtitle">
+                Producción visual y desarrollo web para eventos y negocios en Ica.
+            </p>
+
+            <div class="hero-cta-group">
+                <a href="#historias" class="btn btn-primary">Ver nuestro trabajo</a>
+                <a href="#servicios" class="btn btn-outline">Conocer servicios</a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator" aria-hidden="true">
+            <span class="scroll-label">Scroll</span>
+            <div class="scroll-arrow">
+                <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
+                    <path d="M8 0v20M1 13l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECCIÓN 2: STATS                        -->
+    <!-- ═══════════════════════════════════════ -->
+    <section class="stats" id="stats" aria-label="Estadísticas">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item reveal">
+                    <span class="stat-number" data-target="50" data-prefix="+" data-suffix="">+50</span>
+                    <span class="stat-label">Proyectos</span>
+                </div>
+                <div class="stat-divider" aria-hidden="true"></div>
+                <div class="stat-item reveal">
+                    <span class="stat-number" data-target="30" data-prefix="+" data-suffix="">+30</span>
+                    <span class="stat-label">Clientes</span>
+                </div>
+                <div class="stat-divider" aria-hidden="true"></div>
+                <div class="stat-item reveal">
+                    <span class="stat-number" data-target="3" data-prefix="+" data-suffix=" Años">+3</span>
+                    <span class="stat-label">Años</span>
+                </div>
+                <div class="stat-divider" aria-hidden="true"></div>
+                <div class="stat-item reveal">
+                    <span class="stat-number" data-target="100" data-prefix="" data-suffix="%">100%</span>
+                    <span class="stat-label">Satisfacción</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECCIÓN 3: SOBRE INNOVO                 -->
+    <!-- ═══════════════════════════════════════ -->
+    <section class="sobre" id="sobre" aria-label="Quiénes somos">
+        <div class="container sobre-container">
+            <div class="sobre-image-wrap reveal-left">
+                <div class="sobre-img placeholder-img" role="img" aria-label="Equipo de Innovo Studio"></div>
+                <div class="sobre-image-accent" aria-hidden="true"></div>
+            </div>
+
+            <div class="sobre-content reveal-right">
+                <span class="section-tag">Quiénes Somos</span>
+                <h2 class="sobre-title">Fusionamos el arte visual con la tecnología.</h2>
+                <p class="sobre-text">
+                    Somos un equipo apasionado de creativos, estrategas y desarrolladores con sede en Lima. Cada
+                    proyecto es una oportunidad para contar una historia que resuene, impacte y perdure.
+                </p>
+
+                <ul class="sobre-list" role="list">
+                    <li class="sobre-list-item">
+                        <span class="list-accent" aria-hidden="true">—</span>
+                        Producción audiovisual de alto nivel
+                    </li>
+                    <li class="sobre-list-item">
+                        <span class="list-accent" aria-hidden="true">—</span>
+                        Desarrollo web a medida
+                    </li>
+                    <li class="sobre-list-item">
+                        <span class="list-accent" aria-hidden="true">—</span>
+                        Estrategia digital integrada
+                    </li>
+                </ul>
+
+                <a href="#" class="link-cta">Nuestra historia <span class="link-arrow">→</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECCIÓN 4: SERVICIOS                    -->
+    <!-- ═══════════════════════════════════════ -->
+    <section class="servicios" id="servicios" aria-label="Servicios destacados">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Lo que hacemos</span>
+                <h2 class="section-title">Servicios que transforman ideas en resultados.</h2>
+            </div>
+
+            <div class="cards-grid">
+                <article class="service-card reveal" tabindex="0" aria-label="Servicio: Producción Visual">
+                    <div class="card-img card-img-1 placeholder-img" role="img" aria-label="Producción Visual"></div>
+                    <div class="card-overlay" aria-hidden="true"></div>
+                    <span class="card-number" aria-hidden="true">01</span>
+                    <div class="card-body">
+                        <h3 class="card-title">Producción Visual</h3>
+                        <p class="card-desc">Fotografía, video y contenido editorial que comunica tu esencia con
+                            impacto.</p>
+                        <span class="card-arrow" aria-hidden="true">→</span>
+                    </div>
+                </article>
+
+                <article class="service-card reveal" tabindex="0" aria-label="Servicio: Desarrollo Web">
+                    <div class="card-img card-img-2 placeholder-img" role="img" aria-label="Desarrollo Web"></div>
+                    <div class="card-overlay" aria-hidden="true"></div>
+                    <span class="card-number" aria-hidden="true">02</span>
+                    <div class="card-body">
+                        <h3 class="card-title">Desarrollo Web</h3>
+                        <p class="card-desc">Sitios y plataformas digitales que combinan experiencia de usuario con
+                            rendimiento.</p>
+                        <span class="card-arrow" aria-hidden="true">→</span>
+                    </div>
+                </article>
+
+                <article class="service-card reveal" tabindex="0" aria-label="Servicio: Marketing Digital">
+                    <div class="card-img card-img-3 placeholder-img" role="img" aria-label="Marketing Digital"></div>
+                    <div class="card-overlay" aria-hidden="true"></div>
+                    <span class="card-number" aria-hidden="true">03</span>
+                    <div class="card-body">
+                        <h3 class="card-title">Marketing Digital</h3>
+                        <p class="card-desc">Estrategias que generan conexión real entre tu marca y las personas que
+                            importan.</p>
+                        <span class="card-arrow" aria-hidden="true">→</span>
+                    </div>
+                </article>
+            </div>
+
+            <div class="section-cta reveal">
+                <a href="#" class="btn btn-outline-dark">Ver todos los servicios →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECCIÓN 5: WORK / HISTORIAS             -->
+    <!-- ═══════════════════════════════════════ -->
+    <section class="work" id="historias" aria-label="Nuestro trabajo">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Nuestro Trabajo</span>
+                <h2 class="section-title">Proyectos que hablan por sí solos.</h2>
+            </div>
+
+            <div class="work-grid">
+                <div class="work-item work-item-1 reveal-left" tabindex="0" role="img"
+                    aria-label="Proyecto: Identidad Visual">
+                    <div class="work-img work-img-1 placeholder-img"></div>
+                    <div class="work-overlay">
+                        <span class="work-category">Branding</span>
+                        <h3 class="work-name">Identidad Visual Completa</h3>
+                    </div>
+                </div>
+
+                <div class="work-item work-item-2 reveal-right" tabindex="0" role="img"
+                    aria-label="Proyecto: Campaña Digital">
+                    <div class="work-img work-img-2 placeholder-img"></div>
+                    <div class="work-overlay">
+                        <span class="work-category">Campaña</span>
+                        <h3 class="work-name">Campaña Digital 360°</h3>
+                    </div>
+                </div>
+
+                <div class="work-item work-item-3 reveal" tabindex="0" role="img"
+                    aria-label="Proyecto: Cobertura de Evento">
+                    <div class="work-img work-img-3 placeholder-img"></div>
+                    <div class="work-overlay">
+                        <span class="work-category">Producción</span>
+                        <h3 class="work-name">Cobertura de Evento</h3>
+                    </div>
+                </div>
+
+                <div class="work-item work-item-4 reveal" tabindex="0" role="img"
+                    aria-label="Proyecto: Sitio Web Corporativo">
+                    <div class="work-img work-img-4 placeholder-img"></div>
+                    <div class="work-overlay">
+                        <span class="work-category">Web</span>
+                        <h3 class="work-name">Sitio Web Corporativo</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-cta reveal">
+                <a href="#" class="btn btn-outline-dark">Ver todas las historias →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECCIÓN 6: POR QUÉ INNOVO               -->
+    <!-- ═══════════════════════════════════════ -->
+    <section class="porque" id="porque" aria-label="Por qué elegirnos">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title-light">¿Por qué elegirnos?</h2>
+                <p class="section-sub-light">No somos una agencia más. Somos tu equipo creativo de confianza.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature reveal" style="--delay: 0ms">
+                    <div class="feature-icon" aria-hidden="true">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="1.5" />
+                            <path d="M10 16l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="feature-line" aria-hidden="true"></div>
+                    <h3 class="feature-title">Visión Completa</h3>
+                    <p class="feature-desc">Abordamos cada proyecto desde la estrategia hasta la ejecución final, sin
+                        dejar nada al azar.</p>
+                </div>
+
+                <div class="feature reveal" style="--delay: 100ms">
+                    <div class="feature-icon" aria-hidden="true">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <path d="M16 4l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z" stroke="currentColor" stroke-width="1.5"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="feature-line" aria-hidden="true"></div>
+                    <h3 class="feature-title">Calidad Premium</h3>
+                    <p class="feature-desc">Estándares internacionales aplicados al contexto local. Cada detalle
+                        importa.</p>
+                </div>
+
+                <div class="feature reveal" style="--delay: 200ms">
+                    <div class="feature-icon" aria-hidden="true">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="1.5" />
+                            <path d="M16 10v6l4 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="feature-line" aria-hidden="true"></div>
+                    <h3 class="feature-title">Entrega Puntual</h3>
+                    <p class="feature-desc">Respetamos tus plazos porque sabemos que el tiempo es el recurso más
+                        valioso.</p>
+                </div>
+
+                <div class="feature reveal" style="--delay: 300ms">
+                    <div class="feature-icon" aria-hidden="true">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <path d="M8 12h16M8 16h10M6 8h20v14a2 2 0 01-2 2H8a2 2 0 01-2-2V8z" stroke="currentColor"
+                                stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="feature-line" aria-hidden="true"></div>
+                    <h3 class="feature-title">Soporte Continuo</h3>
+                    <p class="feature-desc">La relación no termina con la entrega. Estamos aquí para crecer contigo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECCIÓN 7: TESTIMONIOS                  -->
+    <!-- ═══════════════════════════════════════ -->
+    <section class="testimonios" id="testimonios" aria-label="Testimonios de clientes">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Lo que dicen</span>
+                <h2 class="section-title">La voz de quienes confían en nosotros.</h2>
+            </div>
+
+            <div class="slider-wrap reveal">
+                <div class="slider-track" id="sliderTrack" role="list">
+                    <div class="testimonial-card" role="listitem">
+                        <div class="t-border" aria-hidden="true"></div>
+                        <p class="t-quote">"Innovo transformó por completo la presencia digital de nuestra empresa. El
+                            resultado superó todas nuestras expectativas. Profesionalismo y creatividad en cada etapa."
+                        </p>
+                        <div class="t-author">
+                            <span class="t-name">Carlos Mendoza</span>
+                            <span class="t-type">Dirección Ejecutiva — Evento Corporativo</span>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card" role="listitem">
+                        <div class="t-border" aria-hidden="true"></div>
+                        <p class="t-quote">"El equipo entendió nuestra visión desde el primer día. La producción
+                            audiovisual fue de un nivel que no habíamos visto antes en Lima. Absolutamente
+                            recomendados."</p>
+                        <div class="t-author">
+                            <span class="t-name">Valeria Torres</span>
+                            <span class="t-type">Brand Manager — Campaña Digital</span>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card" role="listitem">
+                        <div class="t-border" aria-hidden="true"></div>
+                        <p class="t-quote">"Nuestro sitio web nuevo generó un 300% más de consultas en el primer mes.
+                            Innovo no solo crea páginas web, crea herramientas de negocio que realmente funcionan."</p>
+                        <div class="t-author">
+                            <span class="t-name">Miguel Ángel Ríos</span>
+                            <span class="t-type">CEO — Desarrollo Web Corporativo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slider-controls" aria-label="Controles del slider">
+                    <button class="slider-btn" id="sliderPrev" aria-label="Testimonio anterior">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M12 4l-6 6 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <div class="slider-dots" id="sliderDots" role="tablist" aria-label="Ir a testimonio">
+                        <button class="dot active" data-index="0" role="tab" aria-selected="true"
+                            aria-label="Testimonio 1"></button>
+                        <button class="dot" data-index="1" role="tab" aria-selected="false"
+                            aria-label="Testimonio 2"></button>
+                        <button class="dot" data-index="2" role="tab" aria-selected="false"
+                            aria-label="Testimonio 3"></button>
+                    </div>
+                    <button class="slider-btn" id="sliderNext" aria-label="Siguiente testimonio">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M8 4l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECCIÓN 8: CTA FINAL                    -->
+    <!-- ═══════════════════════════════════════ -->
+    <section class="cta-final" id="contacto" aria-label="Contacto y llamada a la acción">
+        <div class="cta-noise" aria-hidden="true"></div>
+        <div class="container cta-content reveal">
+            <span class="section-tag-light">Hablemos</span>
+            <h2 class="cta-title">¿Listo para tu próximo proyecto?</h2>
+            <p class="cta-subtitle">Cuéntanos tu visión. Nosotros la hacemos realidad.</p>
+            <div class="cta-btns">
+                <a href="mailto:hola@innovostudio.pe" class="btn btn-cream-outline">Contáctanos</a>
+                <a href="#servicios" class="btn btn-cream-outline">Ver servicios</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- FOOTER                                  -->
+    <!-- ═══════════════════════════════════════ -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-divider" aria-hidden="true"></div>
+        <div class="container footer-inner">
+            <div class="footer-logo">
+                <span class="logo-innovo">INNOVO</span>
+                <span class="logo-studio">STUDIO</span>
+                <p class="footer-tagline">Creamos. Capturamos. Conectamos.</p>
+            </div>
+
+            <nav class="footer-col" aria-label="Navegación del footer">
+                <h4 class="footer-heading">Navegación</h4>
+                <ul role="list">
+                    <li><a href="#inicio" class="footer-link">Inicio</a></li>
+                    <li><a href="#servicios" class="footer-link">Servicios</a></li>
+                    <li><a href="#historias" class="footer-link">Historias</a></li>
+                    <li><a href="#contacto" class="footer-link">Contacto</a></li>
+                </ul>
+            </nav>
+
+            <div class="footer-col">
+                <h4 class="footer-heading">Servicios</h4>
+                <ul role="list">
+                    <li><a href="#" class="footer-link">Producción Visual</a></li>
+                    <li><a href="#" class="footer-link">Desarrollo Web</a></li>
+                    <li><a href="#" class="footer-link">Marketing Digital</a></li>
+                    <li><a href="#" class="footer-link">Branding</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-heading">Contacto</h4>
+                <ul role="list">
+                    <li><a href="mailto:hola@innovostudio.pe" class="footer-link">hola@innovostudio.pe</a></li>
+                    <li><a href="tel:+51999999999" class="footer-link">+51 999 999 999</a></li>
+                    <li class="footer-social" aria-label="Redes sociales">
+                        <a href="#" class="social-link" aria-label="Instagram">IG</a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">LI</a>
+                        <a href="#" class="social-link" aria-label="Behance">BE</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="footer-copy">© 2025 Innovo Studio. Todos los derechos reservados. Lima, Perú.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="inicio.js"></script>
+</body>
+
+</html>
