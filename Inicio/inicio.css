@@ -321,15 +321,17 @@ body:has(button:hover) .cursor {
 
 .nav-left {
     display: flex;
-    justify-content: flex-start;
+    justify-self: end;
     gap: 2.5rem;
+    padding-right: 2.5rem;
 }
 
 .nav-right {
     display: flex;
-    justify-content: flex-end;
+    justify-self: start;
     align-items: center;
     gap: 2rem;
+    padding-left: 2.5rem;
 }
 
 .nav-logo {
@@ -386,29 +388,6 @@ body:has(button:hover) .cursor {
     display: flex;
     gap: 2.5rem;
     list-style: none;
-}
-
-.nav-left {
-    justify-self: start;
-    display: flex;
-    gap: 2.5rem;
-}
-
-.nav-right {
-    justify-self: end;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-}
-
-.nav-logo {
-    justify-self: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    line-height: 1;
-    color: var(--cream);
-    gap: 2px;
 }
 
 .nav-link {
