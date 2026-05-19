@@ -7,26 +7,32 @@
    VARIABLES & RESET
    ══════════════════════════════ */
 :root {
-    --black: #1C1C1E;
-    --burgundy: #373E50;
-    /* granito — tu color acento principal */
-    --taupe: #8EA39E;
-    /* sage verde — reemplaza el marrón */
-    --sand: #B0C0CD;
-    /* nimbo azul claro */
-    --mist: #DADFE3;
-    /* vapor gris */
-    --cream: #F6F2EF;
-    /* pérola — fondo base */
+    --black: #031716;
+    /* Rich Black — fondos dark */
+    --burgundy: #0B4442;
+    /* Warm Black teal — tu "acento" principal */
+    --taupe: #418383;
+    /* Jelly Bean — texto secundario, iconos */
+    --sand: #C0D7D5;
+    /* Columbia Blue — fondos sección servicios */
+    --mist: #E8F0EF;
+    /* Casi blanco con tinte teal — separadores */
+    --cream: #F2F8F7;
+    /* Fondo base con tinte fresco */
+}
 
-    --font-display: 'TT Berlinerins', Impact, sans-serif;
-    --font-body: 'TT Interphases Pro', 'Inter', sans-serif;
+--font-display: 'TT Berlinerins',
+Impact,
+sans-serif;
+--font-body: 'TT Interphases Pro',
+'Inter',
+sans-serif;
 
-    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-    --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+--ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
 
-    --nav-h: 72px;
-    --container: clamp(1.5rem, 5vw, 8rem);
+--nav-h: 72px;
+--container: clamp(1.5rem, 5vw, 8rem);
 }
 
 *,
