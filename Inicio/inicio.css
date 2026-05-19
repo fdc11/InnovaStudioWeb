@@ -1000,6 +1000,9 @@ body:has(button:hover) .cursor {
     position: absolute;
     inset: 0;
     background-color: var(--taupe);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     transition: transform 0.55s var(--ease-out);
 }
 
