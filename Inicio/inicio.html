@@ -35,7 +35,12 @@
 
         <ul class="nav-links nav-right" role="list">
             <li><a href="#historias" class="nav-link">Historias</a></li>
-            <li><a href="#contacto" class="nav-link btn-nav-cta">Contactar</a></li>
+            <li>
+                <a href="https://wa.me/51999999999?text=Hola%2C%20me%20interesa%20un%20proyecto" target="_blank"
+                    rel="noopener" class="nav-link btn-nav-cta">
+                    Contactar
+                </a>
+            </li>
         </ul>
 
         <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
@@ -65,7 +70,7 @@
 
         <div class="hero-content">
 
-            <h1 class="hero-title">
+            <h1 class="hero-title" data-split>
                 Tu historia merece<br>ser contada con arte.
             </h1>
 
@@ -99,25 +104,78 @@
                 <div class="stat-item reveal">
                     <span class="stat-number" data-target="50" data-prefix="+" data-suffix="">+50</span>
                     <span class="stat-label">Proyectos</span>
+                    <div class="stat-bar-wrap" aria-hidden="true">
+                        <div class="stat-bar" style="--bar-w:50%"></div>
+                    </div>
                 </div>
                 <div class="stat-divider" aria-hidden="true"></div>
                 <div class="stat-item reveal">
                     <span class="stat-number" data-target="30" data-prefix="+" data-suffix="">+30</span>
                     <span class="stat-label">Clientes</span>
+                    <div class="stat-bar-wrap" aria-hidden="true">
+                        <div class="stat-bar" style="--bar-w:30%"></div>
+                    </div>
                 </div>
                 <div class="stat-divider" aria-hidden="true"></div>
                 <div class="stat-item reveal">
                     <span class="stat-number" data-target="3" data-prefix="+" data-suffix=" Años">+3</span>
                     <span class="stat-label">Años</span>
+                    <div class="stat-bar-wrap" aria-hidden="true">
+                        <div class="stat-bar" style="--bar-w:15%"></div>
+                    </div>
                 </div>
                 <div class="stat-divider" aria-hidden="true"></div>
                 <div class="stat-item reveal">
                     <span class="stat-number" data-target="100" data-prefix="" data-suffix="%">100%</span>
                     <span class="stat-label">Satisfacción</span>
+                    <div class="stat-bar-wrap" aria-hidden="true">
+                        <div class="stat-bar" style="--bar-w:100%"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- MARQUEE — TICKER DE VALORES             -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="marquee-wrap" aria-hidden="true">
+        <div class="marquee-track">
+            <span class="marquee-item">Producción Visual</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Desarrollo Web</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Marketing Digital</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Branding</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Fotografía</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Video</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Identidad Visual</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Estrategia Digital</span>
+            <span class="marquee-sep">✦</span>
+            <!-- Duplicado para loop continuo -->
+            <span class="marquee-item">Producción Visual</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Desarrollo Web</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Marketing Digital</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Branding</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Fotografía</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Video</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Identidad Visual</span>
+            <span class="marquee-sep">✦</span>
+            <span class="marquee-item">Estrategia Digital</span>
+            <span class="marquee-sep">✦</span>
+        </div>
+    </div>
 
     <!-- ═══════════════════════════════════════ -->
     <!-- SECCIÓN 3: SOBRE INNOVO                 -->
@@ -222,39 +280,43 @@
             </div>
 
             <div class="work-grid">
-                <div class="work-item work-item-1 reveal-left" tabindex="0" role="img"
-                    aria-label="Proyecto: Identidad Visual">
+                <div class="work-item work-item-1 reveal-left" tabindex="0" aria-label="Proyecto: Identidad Visual">
                     <div class="work-img work-img-1 placeholder-img"></div>
                     <div class="work-overlay">
                         <span class="work-category">Branding</span>
                         <h3 class="work-name">Identidad Visual Completa</h3>
+                        <p class="work-case">Desarrollo de marca desde cero para empresa de servicios en Lima. Logo,
+                            paleta, guía de estilo.</p>
                     </div>
                 </div>
 
-                <div class="work-item work-item-2 reveal-right" tabindex="0" role="img"
-                    aria-label="Proyecto: Campaña Digital">
+                <div class="work-item work-item-2 reveal-right" tabindex="0" aria-label="Proyecto: Campaña Digital">
                     <div class="work-img work-img-2 placeholder-img"></div>
                     <div class="work-overlay">
                         <span class="work-category">Campaña</span>
                         <h3 class="work-name">Campaña Digital 360°</h3>
+                        <p class="work-case">Estrategia multiplataforma para lanzamiento de producto. +200% alcance
+                            orgánico.</p>
                     </div>
                 </div>
 
-                <div class="work-item work-item-3 reveal" tabindex="0" role="img"
-                    aria-label="Proyecto: Cobertura de Evento">
+                <div class="work-item work-item-3 reveal" tabindex="0" aria-label="Proyecto: AutoGas Web">
                     <div class="work-img work-img-3 placeholder-img"></div>
+                    <div class="work-overlay">
+                        <span class="work-category">Web</span>
+                        <h3 class="work-name">AutoGas — Plataforma Web</h3>
+                        <p class="work-case">Ecosistema digital completo: tienda, sistema B2B en tiempo real y ERP
+                            visual.</p>
+                    </div>
+                </div>
+
+                <div class="work-item work-item-4 reveal" tabindex="0" aria-label="Proyecto: Producción Audiovisual">
+                    <div class="work-img work-img-4 placeholder-img"></div>
                     <div class="work-overlay">
                         <span class="work-category">Producción</span>
                         <h3 class="work-name">Cobertura de Evento</h3>
-                    </div>
-                </div>
-
-                <div class="work-item work-item-4 reveal" tabindex="0" role="img"
-                    aria-label="Proyecto: Sitio Web Corporativo">
-                    <div class="work-img work-img-4 placeholder-img"></div>
-                    <div class="work-overlay">
-                        <span class="work-category">Web</span>
-                        <h3 class="work-name">Sitio Web Corporativo</h3>
+                        <p class="work-case">Producción audiovisual completa para evento corporativo en Ica. Foto +
+                            video editorial.</p>
                     </div>
                 </div>
             </div>
@@ -403,25 +465,41 @@
     </section>
 
     <!-- ═══════════════════════════════════════ -->
-    <!-- SECCIÓN 8: CTA FINAL                    -->
+    <!-- SECCIÓN 8: CTA FINAL — EDITORIAL        -->
     <!-- ═══════════════════════════════════════ -->
     <section class="cta-final" id="contacto" aria-label="Contacto y llamada a la acción">
         <div class="cta-noise" aria-hidden="true"></div>
+        <div class="cta-marquee-bg" aria-hidden="true">
+            <span>¿Tienes un proyecto?</span>
+        </div>
         <div class="container cta-content reveal">
             <span class="section-tag-light">Hablemos</span>
-            <h2 class="cta-title">¿Listo para tu próximo proyecto?</h2>
+            <h2 class="cta-title">¿Listo para tu<br>próximo proyecto?</h2>
             <p class="cta-subtitle">Cuéntanos tu visión. Nosotros la hacemos realidad.</p>
             <div class="cta-btns">
-                <a href="mailto:hola@innovostudio.pe" class="btn btn-cream-outline">Contáctanos</a>
-                <a href="#servicios" class="btn btn-cream-outline">Ver servicios</a>
+                <a href="mailto:hola@innovostudio.pe" class="btn btn-cream-outline">Escribirnos →</a>
+                <a href="https://wa.me/51999999999?text=Hola%2C%20me%20interesa%20un%20proyecto%20con%20Innovo%20Studio"
+                    target="_blank" rel="noopener" class="btn btn-whatsapp">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                        <path
+                            d="M12 0C5.373 0 0 5.373 0 12c0 2.115.549 4.099 1.51 5.823L.057 23.786a.5.5 0 00.61.637l6.085-1.595A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.727 9.727 0 01-4.96-1.36l-.355-.212-3.683.965.981-3.588-.232-.37A9.718 9.718 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z" />
+                    </svg>
+                    WhatsApp
+                </a>
             </div>
         </div>
     </section>
 
     <!-- ═══════════════════════════════════════ -->
-    <!-- FOOTER                                  -->
+    <!-- FOOTER — EDITORIAL                      -->
     <!-- ═══════════════════════════════════════ -->
     <footer class="footer" role="contentinfo">
+        <div class="footer-headline-wrap">
+            <p class="footer-headline">Innovo Studio.</p>
+        </div>
+
         <div class="footer-divider" aria-hidden="true"></div>
         <div class="container footer-inner">
             <div class="footer-logo">

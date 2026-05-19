@@ -6,6 +6,25 @@
 'use strict';
 
 /* ══════════════════════════════
+   0. TEXT SPLIT — HERO TITLE
+      Divide cada <br> en líneas
+      y las anima desde abajo
+   ══════════════════════════════ */
+(function initHeroTextSplit() {
+    const title = document.querySelector('.hero-title[data-split]');
+    if (!title) return;
+
+    // Obtiene el HTML original con <br>
+    const raw = title.innerHTML;
+    // Divide por <br> (con o sin espacio/atributos)
+    const lines = raw.split(/<br\s*\/?>/i);
+
+    title.innerHTML = lines.map(line =>
+        `<span class="split-line"><span class="split-line-inner">${line.trim()}</span></span>`
+    ).join('');
+})();
+
+/* ══════════════════════════════
    1. NAVBAR SCROLL
    ══════════════════════════════ */
 (function initNavbar() {
@@ -278,8 +297,8 @@
     }
     animateFollower();
 
-    // Escalar en elementos interactivos
-    const hoverTargets = document.querySelectorAll('a, button, .service-card, .work-item');
+    // Escalar en elementos interactivos básicos
+    const hoverTargets = document.querySelectorAll('a, button');
     hoverTargets.forEach(el => {
         el.addEventListener('mouseenter', () => {
             cursor.style.transform = 'translate(-50%, -50%) scale(2)';
@@ -290,6 +309,23 @@
             cursor.style.transform = 'translate(-50%, -50%) scale(1)';
             follower.style.transform = 'translate(-50%, -50%) scale(1)';
             follower.style.opacity = '1';
+        });
+    });
+
+    // Cursor con texto "VER →" en work items y service cards
+    const viewTargets = document.querySelectorAll('.work-item, .service-card');
+    viewTargets.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            follower.setAttribute('data-label', 'VER →');
+            follower.classList.add('cursor-label');
+            follower.style.width = '72px';
+            follower.style.height = '72px';
+        });
+        el.addEventListener('mouseleave', () => {
+            follower.removeAttribute('data-label');
+            follower.classList.remove('cursor-label');
+            follower.style.width = '36px';
+            follower.style.height = '36px';
         });
     });
 
