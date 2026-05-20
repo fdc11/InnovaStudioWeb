@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Servicios — Innovo Studio</title>
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
+    <link href="https://fonts.cdnfonts.com/css/tt-berlinerins" rel="stylesheet" />
+    <link href="https://fonts.cdnfonts.com/css/tt-interphases-pro" rel="stylesheet" />
+    <link rel="stylesheet" href="servicios.css" />
+    <meta name="theme-color" content="#332E2B">
+</head>
+
+<body>
+
+    <!-- Cursor Personalizado de Alta Gama -->
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <a href="../Inicio/inicio.html" class="nav-logo" aria-label="Innovo Studio Home">
+            <span class="logo-innovo">INNOVO<span class="logo-dot">.</span></span>
+            <span class="logo-studio">STUDIO</span>
+        </a>
+
+        <ul class="nav-links" role="list">
+            <li><a href="../Inicio/inicio.html" class="nav-link">Inicio</a></li>
+            <li><a href="#" class="nav-link active-page">Servicios</a></li>
+            <li><a href="../Inicio/inicio.html#proceso" class="nav-link">Proceso</a></li>
+            <li><a href="../Historias/historias.html" class="nav-link">Historias</a></li>
+            <li><a href="../Contacto/contacto.html" class="nav-link">Contacto</a></li>
+        </ul>
+
+        <div class="nav-cta-container">
+            <a href="https://wa.me/51999999999?text=Hola%2C%20me%20interesa%20un%20proyecto" target="_blank"
+                rel="noopener" class="btn-nav-cta" aria-label="Contactar por WhatsApp">
+                Contactar
+            </a>
+        </div>
+
+        <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+        </button>
+    </nav>
+
+    <!-- Menú móvil fullscreen -->
+    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+        <div class="mobile-menu-inner">
+            <div class="mobile-menu-nav">
+                <span class="mobile-menu-tag">Menú</span>
+                <ul class="mobile-links" role="list">
+                    <li>
+                        <a href="../Inicio/inicio.html" class="mobile-link" style="--i: 1">
+                            <span class="mobile-link-num">01</span>
+                            <span class="mobile-link-text">Inicio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="mobile-link" style="--i: 2">
+                            <span class="mobile-link-num">02</span>
+                            <span class="mobile-link-text">Servicios</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../Inicio/inicio.html#proceso" class="mobile-link" style="--i: 3">
+                            <span class="mobile-link-num">03</span>
+                            <span class="mobile-link-text">Proceso</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../Historias/historias.html" class="mobile-link" style="--i: 4">
+                            <span class="mobile-link-num">04</span>
+                            <span class="mobile-link-text">Historias</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../Contacto/contacto.html" class="mobile-link" style="--i: 5">
+                            <span class="mobile-link-num">05</span>
+                            <span class="mobile-link-text">Contacto</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="mobile-menu-info" style="--i: 6">
+                <div class="mobile-info-group">
+                    <span class="mobile-info-label">Hablemos</span>
+                    <a href="mailto:hola@innovostudio.pe" class="mobile-info-value">hola@innovostudio.pe</a>
+                    <a href="tel:+51999999999" class="mobile-info-value">+51 999 999 999</a>
+                </div>
+                <div class="mobile-info-group">
+                    <span class="mobile-info-label">Ubicación</span>
+                    <span class="mobile-info-value">Lima, Perú</span>
+                </div>
+                <div class="mobile-info-group">
+                    <span class="mobile-info-label">Redes</span>
+                    <div class="mobile-socials">
+                        <a href="#" class="mobile-social-link" aria-label="Instagram">IG</a>
+                        <a href="#" class="mobile-social-link" aria-label="LinkedIn">LI</a>
+                        <a href="#" class="mobile-social-link" aria-label="Behance">BE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO SERVICIOS -->
+    <header class="services-hero section--dark" id="servicios-hero">
+        <div class="container services-hero-content">
+            <span class="section-tag reveal">Nuestros Servicios</span>
+            <h1 class="services-title" data-split>SOLUCIONES DIGITALES Y VISUALES<br>CON ESTILO PREMIUM.</h1>
+            <p class="services-subtitle reveal">
+                Diseñamos estrategias estéticas de alta costura para marcas que buscan destacar mediante producciones audiovisuales deslumbrantes y desarrollo web de vanguardia.
+            </p>
+        </div>
+    </header>
+
+    <!-- GRID DE SERVICIOS DETALLADOS -->
+    <section class="services-detail section--light">
+        <div class="container">
+            <div class="services-list">
+                
+                <!-- Servicio 1 -->
+                <article class="service-item reveal">
+                    <div class="service-meta">
+                        <span class="service-index">01</span>
+                        <h2 class="service-name">Producción Visual</h2>
+                    </div>
+                    <div class="service-info">
+                        <p class="service-description">
+                            Capturamos la esencia y el carácter de tu marca mediante fotografía editorial, producciones audiovisuales cinematográficas y dirección de arte con los más altos estándares visuales.
+                        </p>
+                        <ul class="service-features" role="list">
+                            <li>Fotografía Publicitaria y de Producto</li>
+                            <li>Campañas y Video de Moda / Corporativo</li>
+                            <li>Dirección Creativa y Styling</li>
+                            <li>Post-producción avanzada & Colorización</li>
+                        </ul>
+                        <div class="service-action">
+                            <a href="../Contacto/contacto.html?service=produccion" class="btn btn-outline-dark">Cotizar Servicio →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Servicio 2 -->
+                <article class="service-item reveal">
+                    <div class="service-meta">
+                        <span class="service-index">02</span>
+                        <h2 class="service-name">Desarrollo Web</h2>
+                    </div>
+                    <div class="service-info">
+                        <p class="service-description">
+                            Construimos experiencias digitales únicas e interactivas. Fusionamos diseño UX/UI de vanguardia con código limpio, rápido y de alto rendimiento adaptado a cualquier dispositivo.
+                        </p>
+                        <ul class="service-features" role="list">
+                            <li>Páginas Web Corporativas de Alta Gama</li>
+                            <li>Diseño de Interfaces (Figma UX/UI)</li>
+                            <li>Plataformas E-commerce & Tiendas Online</li>
+                            <li>Optimización SEO y Performance Web</li>
+                        </ul>
+                        <div class="service-action">
+                            <a href="../Contacto/contacto.html?service=web" class="btn btn-outline-dark">Cotizar Servicio →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Servicio 3 -->
+                <article class="service-item reveal">
+                    <div class="service-meta">
+                        <span class="service-index">03</span>
+                        <h2 class="service-name">Marketing Digital</h2>
+                    </div>
+                    <div class="service-info">
+                        <p class="service-description">
+                            Conectamos tu negocio con clientes potenciales a través de campañas de publicidad precisas y estrategias analíticas centradas en el retorno de inversión y el crecimiento de la marca.
+                        </p>
+                        <ul class="service-features" role="list">
+                            <li>Publicidad de Pago (Google Ads, Meta Ads)</li>
+                            <li>Estrategia de Embudo de Conversión (Funnels)</li>
+                            <li>Analítica Web & Reportes de Rendimiento</li>
+                            <li>Campañas de Email Marketing Automatizado</li>
+                        </ul>
+                        <div class="service-action">
+                            <a href="../Contacto/contacto.html?service=marketing" class="btn btn-outline-dark">Cotizar Servicio →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Servicio 4 -->
+                <article class="service-item reveal">
+                    <div class="service-meta">
+                        <span class="service-index">04</span>
+                        <h2 class="service-name">Social Media</h2>
+                    </div>
+                    <div class="service-info">
+                        <p class="service-description">
+                            Gestionamos y posicionamos tu presencia en redes sociales de manera estratégica. Diseñamos contenido dinámico, atractivo y relevante que conecta directamente con tu audiencia.
+                        </p>
+                        <ul class="service-features" role="list">
+                            <li>Gestión y Planificación de Redes</li>
+                            <li>Creación de Reels y TikToks de Alto Alcance</li>
+                            <li>Branding y Estilo Visual de Feed</li>
+                            <li>Campañas con Creadores de Contenido</li>
+                        </ul>
+                        <div class="service-action">
+                            <a href="../Contacto/contacto.html?service=social" class="btn btn-outline-dark">Cotizar Servicio →</a>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESO RESUMIDO -->
+    <section class="cta-banner section--sand">
+        <div class="container text-center reveal">
+            <h2 class="cta-banner-title">¿Listo para impulsar tu proyecto?</h2>
+            <p class="cta-banner-desc">Trabajamos mano a mano para crear una identidad y ecosistema digital único.</p>
+            <a href="../Contacto/contacto.html" class="btn btn-primary">Empieza Hoy</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer section--dark" role="contentinfo">
+        <div class="container footer-top">
+            <a href="../Inicio/inicio.html" class="nav-logo footer-logo-large" aria-label="Innovo Studio Home">
+                <span class="logo-innovo">INNOVO<span class="logo-dot">.</span></span>
+                <span class="logo-studio">STUDIO</span>
+            </a>
+            <div class="footer-contact-info">
+                <a href="mailto:hola@innovostudio.pe" class="footer-contact-link">hola@innovostudio.pe</a>
+                <span class="footer-contact-sep">·</span>
+                <a href="tel:+51999999999" class="footer-contact-link">+51 999 999 999</a>
+            </div>
+            <p class="footer-tagline">"Creamos. Capturamos. Conectamos."</p>
+        </div>
+
+        <div class="footer-pattern-divider" aria-hidden="true"></div>
+
+        <div class="container footer-inner">
+            <nav class="footer-col" aria-label="Navegación del footer">
+                <h4 class="footer-heading">Navegación</h4>
+                <ul role="list">
+                    <li><a href="../Inicio/inicio.html" class="footer-link">Inicio</a></li>
+                    <li><a href="#" class="footer-link">Servicios</a></li>
+                    <li><a href="../Inicio/inicio.html#proceso" class="footer-link">Proceso</a></li>
+                    <li><a href="../Historias/historias.html" class="footer-link">Historias</a></li>
+                    <li><a href="../Contacto/contacto.html" class="footer-link">Contacto</a></li>
+                </ul>
+            </nav>
+
+            <div class="footer-col">
+                <h4 class="footer-heading">Servicios</h4>
+                <ul role="list">
+                    <li><a href="#" class="footer-link">Producción Visual</a></li>
+                    <li><a href="#" class="footer-link">Desarrollo Web</a></li>
+                    <li><a href="#" class="footer-link">Marketing Digital</a></li>
+                    <li><a href="#" class="footer-link">Social Media</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4 class="footer-heading">Redes Sociales</h4>
+                <ul role="list">
+                    <li class="footer-social" aria-label="Redes sociales">
+                        <a href="#" class="social-link" aria-label="Instagram">IG</a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">LI</a>
+                        <a href="#" class="social-link" aria-label="Behance">BE</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-divider-burgundy" aria-hidden="true"></div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="footer-copy">© 2026 Innovo Studio. Todos los derechos reservados. Lima, Perú.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="servicios.js"></script>
+</body>
+
+</html>
