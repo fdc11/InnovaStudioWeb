@@ -7,12 +7,13 @@
    VARIABLES & RESET
    ══════════════════════════════ */
 :root {
-    --black: #031716;
-    --burgundy: #0B4442;
-    --taupe: #418383;
-    --sand: #C0D7D5;
-    --mist: #E8F0EF;
-    --cream: #F2F8F7;
+    --black: #1A1613;
+    --burgundy: #C8A95E;
+    /* antes era tu verde — ahora es el dorado acento */
+    --taupe: #AF8C5C;
+    --sand: #E7E2DD;
+    --mist: #F0EDE8;
+    --cream: #F8F5F1;
 
     --font-display: 'TT Berlinerins', Impact, sans-serif;
     --font-body: 'TT Interphases Pro', 'Inter', sans-serif;
