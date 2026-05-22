@@ -277,17 +277,22 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     });
 })();
 
+
 // ================================================================
-//  8. SCRAMBLE LOGO AL HOVER
+//  8. SCRAMBLE TEXT — Logo en la navbar (solo afecta "INNOVO")
 // ================================================================
 (function initScrambleNavLogo() {
     const logo = document.querySelector('.nav-logo');
     if (!logo) return;
-    const original = logo.textContent.replace('.', '');
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let interval, isAnimating = false;
+
+    // El primer nodo de texto es "INNOVO"
     const textNode = logo.childNodes[0];
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
+
+    const originalText = 'INNOVO';  // Solo la parte que animaremos
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let interval = null;
+    let isAnimating = false;
 
     logo.addEventListener('mouseenter', () => {
         if (isAnimating) return;
@@ -295,12 +300,15 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
         let iteration = 0;
         clearInterval(interval);
         interval = setInterval(() => {
-            textNode.textContent = original.split('').map((letter, i) => {
+            // Generar texto aleatorio de la misma longitud que "INNOVO"
+            const newText = originalText.split('').map((letter, i) => {
                 if (i < iteration) return letter;
                 return chars[Math.floor(Math.random() * chars.length)];
             }).join('');
-            if (iteration >= original.length) {
-                textNode.textContent = original;
+            textNode.textContent = newText;
+
+            if (iteration >= originalText.length) {
+                textNode.textContent = originalText;
                 clearInterval(interval);
                 isAnimating = false;
             }
