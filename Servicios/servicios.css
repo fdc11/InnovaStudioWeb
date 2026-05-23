@@ -204,6 +204,16 @@ body.cursor-hovering .cursor-ring {
 
     .hamburger {
         display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navbar {
+        padding: 1.4rem 1.5rem;
+    }
+
+    .navbar.scrolled {
+        padding: 0.9rem 1.5rem;
     }
 }
 
@@ -236,11 +246,130 @@ body.cursor-hovering .cursor-ring {
 @media (max-width: 768px) {
     .mobile-menu-inner {
         grid-template-columns: 1fr;
-        padding: 5rem 2rem;
+        padding: 5rem 1.5rem 2rem;
     }
 }
 
-/* ... resto del menú móvil (similar al original) ... */
+/* ========== ESTILOS PARA LINKS DEL MENÚ MÓVIL ========== */
+.mobile-menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.mobile-menu-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--color-taupe);
+}
+
+.mobile-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-links li {
+    border-bottom: 1px solid rgba(240, 233, 227, 0.08);
+}
+
+.mobile-links li:first-child {
+    border-top: 1px solid rgba(240, 233, 227, 0.08);
+}
+
+.mobile-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    text-decoration: none;
+    color: var(--color-cream);
+    transition: color 0.3s;
+}
+
+.mobile-link:hover {
+    color: var(--color-burgundy);
+}
+
+.mobile-link-num {
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--color-burgundy);
+    min-width: 1.8rem;
+    font-family: var(--font-body);
+}
+
+.mobile-link-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.mobile-menu-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 1rem;
+}
+
+.mobile-info-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.mobile-info-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-taupe);
+}
+
+.mobile-info-value {
+    font-size: 0.85rem;
+    color: var(--color-cream);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.mobile-info-value:hover {
+    color: var(--color-burgundy);
+}
+
+.mobile-socials {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.mobile-social-link {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-taupe);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.mobile-social-link:hover {
+    color: var(--color-cream);
+}
+
+/* Animación de hamburger activo */
+.hamburger.active .ham-line:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+}
+
+.hamburger.active .ham-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hamburger.active .ham-line:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+}
 
 /* ========== HERO ========== */
 .hero {
@@ -255,7 +384,8 @@ body.cursor-hovering .cursor-ring {
 .hero-bg {
     position: absolute;
     inset: 0;
-    background-image: url('/Imagenes/hero-bg.jpg');
+    background-image: url('Imagenes/hero-bg.jpg');
+    background-color: #332E2B; /* fallback si la imagen no carga */
     background-size: cover;
     background-position: center;
     opacity: 0.4;

@@ -518,6 +518,12 @@ body.cursor-on-work .cursor-ring::after {
     .hamburger {
         display: flex;
     }
+    .navbar {
+        padding: 1.4rem 1.5rem;
+    }
+    .navbar.scrolled {
+        padding: 0.9rem 1.5rem;
+    }
 }
 
 .hamburger.active .ham-line:nth-child(1) {

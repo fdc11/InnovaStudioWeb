@@ -808,7 +808,7 @@ h3 {
     align-items: center;
     gap: 0.75rem;
     opacity: 0;
-    animation: fadeUp 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    /* Animación gestionada exclusivamente por GSAP en inicio.js */
 }
 
 .hero-label::before {
@@ -844,6 +844,11 @@ h3 {
 
 /* Móvil: tamaño fijo que cabe en pantalla sin cortarse */
 @media (max-width: 768px) {
+    .hero-label {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
     .hero-title {
         font-size: 2.6rem;
         letter-spacing: -0.02em;
@@ -1492,13 +1497,19 @@ h3 {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .porque-card:nth-child(2) {
+    .porque-card {
+        border-right: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .porque-card:nth-child(2),
+    .porque-card:nth-child(4) {
         border-right: none;
     }
 
     .porque-card:nth-child(3),
     .porque-card:nth-child(4) {
-        border-top: 1px solid var(--border);
+        border-bottom: none;
     }
 }
 
@@ -1507,9 +1518,16 @@ h3 {
         grid-template-columns: 1fr;
     }
 
-    .porque-card {
+    .porque-card,
+    .porque-card:nth-child(2),
+    .porque-card:nth-child(3),
+    .porque-card:nth-child(4) {
         border-right: none;
         border-bottom: 1px solid var(--border);
+    }
+
+    .porque-card:last-child {
+        border-bottom: none;
     }
 }
 
@@ -1671,7 +1689,7 @@ h3 {
 .cta-bg-overlay {
     position: absolute;
     inset: 0;
-    background-image: url('/Imagenes/cta-bg.jpg');
+    background-image: url('Imagenes/cta-bg.jpg');
     background-size: cover;
     background-position: center;
     opacity: 0.06;
@@ -1963,6 +1981,20 @@ h3 {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* ========== PREVENCIÓN DE FOUC PARA ELEMENTOS ANIMADOS CON GSAP ========== */
+/* Todos los elementos que gsap.from() anima desde opacity:0 deben tener
+   opacity:0 inicial en CSS para evitar parpadeo antes de que GSAP arrange */
+.service-card,
+.porque-card,
+.timeline-step,
+.proyecto-item,
+.section-tag,
+.cta-buttons .btn {
+    opacity: 0;
+}
+
+/* El fallback de 4s en JS restaurará opacity:1 si GSAP no llega a tiempo */
 
 /* Stagger para grids */
 .services-grid .service-card:nth-child(1) {

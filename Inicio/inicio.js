@@ -81,6 +81,16 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const target = href;
+
+            // Cerrar menú móvil si está abierto antes de la transición
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.getElementById('hamburger');
+            if (mobileMenu && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                hamburger && hamburger.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
             gsap.to(curtain, {
                 yPercent: 0,
                 duration: 0.7,
@@ -550,8 +560,9 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
         }
     });
 
-    // Entrada al scroll
-    gsap.from('.testimonial-card', {
+    // Entrada al scroll — animamos el CONTENEDOR, no los slides individuales
+    // para no interferir con la lógica de opacidad del slider
+    gsap.from('.testimonios-slider', {
         opacity: 0,
         y: 30,
         duration: 0.8,
@@ -719,7 +730,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 //  23. FALLBACK DE SEGURIDAD (nada invisible)
 // ================================================================
 setTimeout(() => {
-    document.querySelectorAll('.service-card, .porque-card, .timeline-step, .proyecto-item, .stat-item, .footer-grid > *, .testimonial-card, .section-tag, .section-subtitle, .adn-text, .adn-image').forEach(el => {
+    document.querySelectorAll('.service-card, .porque-card, .timeline-step, .proyecto-item, .stat-item, .footer-grid > *, .testimonial-card, .section-tag, .section-subtitle, .adn-text, .adn-image, .hero-label, .hero-scroll-indicator, .cta-buttons .btn').forEach(el => {
         if (parseFloat(window.getComputedStyle(el).opacity) < 0.1) {
             el.style.opacity = '1';
             el.style.transform = 'none';

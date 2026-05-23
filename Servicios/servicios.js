@@ -122,10 +122,14 @@ document.querySelectorAll('.modal-close, .modal').forEach(el => {
 });
 
 // Smooth scroll a servicios
-document.querySelector('.hero-cta .btn').addEventListener('click', (e) => {
-    e.preventDefault();
-    document.querySelector('#servicios').scrollIntoView({ behavior: 'smooth' });
-});
+const heroCta = document.querySelector('.hero-cta .btn');
+if (heroCta) {
+    heroCta.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector('#servicios');
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+}
 
 // Pequeño efecto parallax en hero-bg
 window.addEventListener('scroll', () => {
