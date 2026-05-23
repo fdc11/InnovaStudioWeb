@@ -829,7 +829,7 @@ h1, h2, h3 {
 .cta-bg-overlay {
     position: absolute;
     inset: 0;
-    background-image: url('Imagenes/cta-bg.jpg');
+    background-image: url('../Inicio/Imagenes/ProduccionVisual.jpg');
     background-size: cover;
     background-position: center;
     opacity: 0.06;
@@ -1041,22 +1041,46 @@ h1, h2, h3 {
     .svc-cards { grid-template-columns: 1fr; }
     .svc-card--wide { grid-column: auto; }
     .svc-card { min-height: 480px; }
-    .svc-stats-grid { grid-template-columns: repeat(2,1fr); }
-    .svc-stat-item:nth-child(2) { border-right: none; }
+    
+    .svc-stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .svc-stat-item {
+        border-right: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+    }
+    .svc-stat-item:nth-child(2),
+    .svc-stat-item:nth-child(4) {
+        border-right: none;
+    }
     .svc-stat-item:nth-child(3),
-    .svc-stat-item:nth-child(4) { border-top: 1px solid var(--border); }
-    .porque-grid { grid-template-columns: repeat(2,1fr); }
-    .porque-card:nth-child(2) { border-right: none; }
+    .svc-stat-item:nth-child(4) {
+        border-bottom: none;
+    }
+
+    .porque-grid { grid-template-columns: repeat(2, 1fr); }
+    .porque-card {
+        border-right: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+    }
+    .porque-card:nth-child(2),
+    .porque-card:nth-child(4) {
+        border-right: none;
+    }
     .porque-card:nth-child(3),
-    .porque-card:nth-child(4) { border-top: 1px solid var(--border); }
+    .porque-card:nth-child(4) {
+        border-bottom: none;
+    }
+
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .footer-brand { grid-column: span 2; }
 }
+
 @media (max-width: 768px) {
-    .container { padding: 0 1.5rem; }
-    .nav-container { padding: 0 1.5rem; }
-    .svc-hero { padding-bottom: 5rem; }
-    .svc-hero-title { font-size: clamp(2.5rem, 9vw, 4rem); }
+    .navbar { padding: 1.4rem 1.5rem; }
+    .navbar.scrolled { padding: 0.9rem 1.5rem; }
+    .hamburger { display: flex; align-items: center; justify-content: center; }
+    .svc-hero { padding: 8rem 0 5rem; }
+    .svc-hero-title { font-size: 2.5rem; }
+    .svc-hero-title em { font-size: 2.35rem; }
     .svc-hero-cta { flex-direction: column; }
     .svc-hero-cta .btn { width: 100%; justify-content: center; }
     .svc-scroll-ind { display: none; }
@@ -1071,11 +1095,40 @@ h1, h2, h3 {
     .svc-modal-content { padding: 2.5rem 1.75rem; }
     .whatsapp-float { bottom: 1.25rem; right: 1.25rem; width: 48px; height: 48px; }
 }
+
 @media (max-width: 500px) {
     .svc-stats-grid { grid-template-columns: 1fr; }
-    .svc-stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .svc-stat-item,
+    .svc-stat-item:nth-child(2),
+    .svc-stat-item:nth-child(3),
+    .svc-stat-item:nth-child(4) {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+    .svc-stat-item:last-child {
+        border-bottom: none;
+    }
+
     .porque-grid { grid-template-columns: 1fr; }
-    .porque-card { border-right: none; border-bottom: 1px solid var(--border); }
+    .porque-card,
+    .porque-card:nth-child(2),
+    .porque-card:nth-child(3),
+    .porque-card:nth-child(4) {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+    .porque-card:last-child {
+        border-bottom: none;
+    }
+
     .footer-grid { grid-template-columns: 1fr; }
     .footer-brand { grid-column: span 1; }
+}
+
+/* ========== PREVENCIÓN DE FOUC PARA GSAP ========== */
+.svc-card,
+.timeline-step,
+.porque-card,
+.section-tag {
+    opacity: 0;
 }

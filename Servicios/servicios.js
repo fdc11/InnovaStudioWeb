@@ -71,6 +71,16 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const target = this.getAttribute('href');
+
+            // Cerrar menú móvil si está abierto antes de la transición
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.getElementById('hamburger');
+            if (mobileMenu && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                hamburger && hamburger.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
             gsap.to(curtain, {
                 yPercent: 0,
                 duration: 0.7,
