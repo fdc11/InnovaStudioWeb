@@ -1,310 +1,387 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Servicios — Innovo Studio | Producción visual + Tecnología</title>
-    <meta name="description" content="Innovo Studio ofrece producción visual (fotografía, video, dron), desarrollo web y paquetes combinados para eventos, bodas y negocios en Lima, Perú.">
-    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
-    <link href="https://fonts.cdnfonts.com/css/tt-berlinerins" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/tt-interphases-pro" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="servicios.css">
-    <meta name="theme-color" content="#332E2B">
+    <meta name="theme-color" content="#0A0A0A">
+    <meta name="description" content="Servicios de Innovo Studio: producción visual, fotografía, video, dron, desarrollo web, invitaciones RSVP y paquetes combinados para Lima, Perú.">
+    <!-- GSAP + Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 </head>
-
 <body>
 
-    <!-- Cursor personalizado (solo escritorio) -->
-    <div class="cursor-dot" id="cursorDot"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
+    <!-- Barra de progreso de scroll -->
+    <div id="scrollProgress"></div>
 
-    <!-- Navbar -->
+    <!-- Cortina de transición entre páginas -->
+    <div id="pageCurtain"></div>
+
+    <!-- Preloader (idéntico al de inicio) -->
+    <div id="preloader">
+        <div class="preloader-logo">INNOVO<span>.</span>STUDIO</div>
+        <div class="preloader-counter">0%</div>
+        <div class="preloader-bar"><div class="preloader-bar-fill" id="preloaderBarFill"></div></div>
+        <div class="preloader-veil"></div>
+    </div>
+
+    <!-- ==================== NAVBAR ==================== -->
     <nav class="navbar" id="navbar">
-        <a href="../Inicio/inicio.html" class="nav-logo">
-            <span class="logo-innovo">INNOVO<span class="logo-dot">.</span></span>
-            <span class="logo-studio">STUDIO</span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="../Inicio/inicio.html" class="nav-link">Inicio</a></li>
-            <li><a href="#" class="nav-link active-page">Servicios</a></li>
-            <li><a href="../Inicio/inicio.html#proceso" class="nav-link">Proceso</a></li>
-            <li><a href="../Historias/historias.html" class="nav-link">Historias</a></li>
-            <li><a href="../Contacto/contacto.html" class="nav-link">Contacto</a></li>
-        </ul>
-        <div class="nav-cta-container">
-            <a href="https://wa.me/51999999999?text=Hola%2C%20me%20interesa%20un%20proyecto" target="_blank" class="btn-nav-cta">Contactar</a>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">INNOVO<span style="color:var(--copper)">.</span>STUDIO</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="servicios.html" class="nav-link active">Servicios</a></li>
+                <li><a href="proceso.html" class="nav-link">Proceso</a></li>
+                <li><a href="proyectos.html" class="nav-link">Proyectos</a></li>
+                <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+            </ul>
+            <div class="nav-cta">
+                <a href="https://wa.me/51999999999?text=Hola%20Innovo%20Studio%2C%20me%20interesa%20un%20proyecto" class="btn btn-small" target="_blank">Cotizar ahora</a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Menú">
+                <span class="ham-line"></span>
+                <span class="ham-line"></span>
+                <span class="ham-line"></span>
+            </button>
         </div>
-        <button class="hamburger" id="hamburger" aria-label="Menú">
-            <span class="ham-line"></span>
-            <span class="ham-line"></span>
-            <span class="ham-line"></span>
-        </button>
     </nav>
 
-    <!-- Menú mobile fullscreen -->
+    <!-- Menú móvil -->
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-inner">
-            <div class="mobile-menu-nav">
-                <span class="mobile-menu-tag">Menú</span>
-                <ul class="mobile-links">
-                    <li><a href="../Inicio/inicio.html" class="mobile-link" style="--i:1"><span class="mobile-link-num">01</span><span class="mobile-link-text">Inicio</span></a></li>
-                    <li><a href="#" class="mobile-link" style="--i:2"><span class="mobile-link-num">02</span><span class="mobile-link-text">Servicios</span></a></li>
-                    <li><a href="../Inicio/inicio.html#proceso" class="mobile-link" style="--i:3"><span class="mobile-link-num">03</span><span class="mobile-link-text">Proceso</span></a></li>
-                    <li><a href="../Historias/historias.html" class="mobile-link" style="--i:4"><span class="mobile-link-num">04</span><span class="mobile-link-text">Historias</span></a></li>
-                    <li><a href="../Contacto/contacto.html" class="mobile-link" style="--i:5"><span class="mobile-link-num">05</span><span class="mobile-link-text">Contacto</span></a></li>
-                </ul>
-            </div>
-            <div class="mobile-menu-info" style="--i:6">
-                <div class="mobile-info-group">
-                    <span class="mobile-info-label">Hablemos</span>
-                    <a href="mailto:hola@innovostudio.pe" class="mobile-info-value">hola@innovostudio.pe</a>
-                    <a href="tel:+51999999999" class="mobile-info-value">+51 999 999 999</a>
-                </div>
-                <div class="mobile-info-group">
-                    <span class="mobile-info-label">Ubicación</span>
-                    <span class="mobile-info-value">Lima, Perú</span>
-                </div>
-                <div class="mobile-info-group">
-                    <span class="mobile-info-label">Redes</span>
-                    <div class="mobile-socials">
-                        <a href="#" class="mobile-social-link">IG</a>
-                        <a href="#" class="mobile-social-link">LI</a>
-                        <a href="#" class="mobile-social-link">BE</a>
-                    </div>
+            <ul class="mobile-links">
+                <li><a href="index.html" class="mobile-link">Inicio</a></li>
+                <li><a href="servicios.html" class="mobile-link">Servicios</a></li>
+                <li><a href="proceso.html" class="mobile-link">Proceso</a></li>
+                <li><a href="proyectos.html" class="mobile-link">Proyectos</a></li>
+                <li><a href="contacto.html" class="mobile-link">Contacto</a></li>
+            </ul>
+            <div class="mobile-info">
+                <a href="mailto:hola@innovostudio.pe" class="mobile-email">hola@innovostudio.pe</a>
+                <a href="tel:+51999999999" class="mobile-phone">+51 999 999 999</a>
+                <div class="mobile-socials">
+                    <a href="#" target="_blank">Instagram</a>
+                    <a href="#" target="_blank">Facebook</a>
+                    <a href="#" target="_blank">TikTok</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- HERO -->
-    <header class="hero servicios-hero">
-        <div class="hero-bg"></div>
-        <div class="container hero-content">
-            <span class="section-tag reveal">Nuestros servicios</span>
-            <h1 class="hero-title" data-split>PRODUCCIÓN VISUAL<br>Y TECNOLOGÍA<br>PARA MARCAS QUE EXIGEN MÁS.</h1>
-            <p class="hero-subtitle reveal">Fusionamos el arte de la imagen con el poder del código. Creamos experiencias que conectan emociones y resultados.</p>
-            <div class="hero-cta reveal">
+    <!-- ==================== HERO CON VIDEO ==================== -->
+    <header class="svc-hero section-dark" id="inicio-servicios">
+        <div class="svc-hero-bg">
+            <video autoplay muted loop playsinline poster="/Imagenes/hero-servicios-poster.jpg">
+                <source src="/Inicio/Imagenes/VideoBanner.mp4" type="video/mp4">
+                <!-- fallback image si el video no existe -->
+            </video>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="svc-grain"></div>
+        <div class="container svc-hero-content">
+            <p class="svc-hero-label">Lima, Perú — Lo que hacemos</p>
+            <h1 class="svc-hero-title" id="svcHeroTitle">
+                Producción visual<br>
+                <em>+ tecnología</em><br>
+                para marcas que exigen más.
+            </h1>
+            <p class="svc-hero-subtitle">
+                Fusionamos el arte de la imagen con el poder del código.<br>
+                Creamos experiencias que conectan emociones y resultados.
+            </p>
+            <div class="svc-hero-cta">
                 <a href="#servicios" class="btn btn-primary">Explorar servicios →</a>
+                <a href="contacto.html" class="btn btn-outline">Hablemos</a>
             </div>
         </div>
-        <div class="hero-scroll-indicator">
-            <span></span><span></span>
+        <div class="svc-scroll-ind">
+            <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+            <span>Scroll</span>
         </div>
     </header>
 
-    <!-- SERVICIOS PREMIUM (Grid asimétrico) -->
-    <section id="servicios" class="services-grid-section section--light">
+    <!-- ==================== SERVICIOS CARDS ==================== -->
+    <section id="servicios" class="svc-cards-section section-light">
         <div class="container">
-            <div class="section-header text-center reveal">
+            <div class="svc-section-header">
                 <span class="section-tag">Especialidades</span>
-                <h2 class="section-title">Lo que hacemos, <br>lo hacemos extraordinario.</h2>
+                <h2 class="section-title">Lo que hacemos,<br>lo hacemos extraordinario.</h2>
+                <p class="section-subtitle">5 socios, dos disciplinas, un solo estándar de calidad. Ningún subcontrato.</p>
             </div>
-            <div class="services-cards">
-                <!-- Card 1 - Producción Visual -->
-                <div class="service-card" data-service="visual">
-                    <div class="card-bg" style="background-image: url('Imagenes/produccion-visual.jpg');background-color:#332E2B;"></div>
-                    <div class="card-overlay"></div>
-                    <div class="card-content">
-                        <span class="card-index">01</span>
-                        <h3 class="card-title">Producción Visual</h3>
-                        <p class="card-short">Fotografía, video, dron, edición, redes y ads. La potencia visual de tu marca.</p>
-                        <ul class="card-features">
-                            <li>Fotografía de eventos</li>
-                            <li>Videografía cinematográfica</li>
-                            <li>Dron / tomas aéreas</li>
-                            <li>Edición profesional</li>
-                            <li>Gestión de redes + Meta Ads</li>
-                        </ul>
-                        <button class="card-btn" data-modal="modal-visual">Conocer más →</button>
-                    </div>
-                </div>
+            <div class="svc-cards">
 
-                <!-- Card 2 - Tecnología &amp; Desarrollo -->
-                <div class="service-card" data-service="tech">
-                    <div class="card-bg" style="background-image: url('Imagenes/desarrollo-web.jpg');background-color:#332E2B;"></div>
-                    <div class="card-overlay"></div>
-                    <div class="card-content">
-                        <span class="card-index">02</span>
-                        <h3 class="card-title">Tecnología &amp; Desarrollo</h3>
-                        <p class="card-short">Invitaciones web interactivas, galerías privadas, webs de negocio y mantenimiento.</p>
-                        <ul class="card-features">
-                            <li>Invitaciones web RSVP</li>
-                            <li>Galerías privadas post-evento</li>
-                            <li>Páginas web corporativas</li>
-                            <li>Mantenimiento mensual (ingreso recurrente)</li>
-                            <li>SEO + rendimiento</li>
-                        </ul>
-                        <button class="card-btn" data-modal="modal-tech">Conocer más →</button>
-                    </div>
-                </div>
-
-                <!-- Card 3 - Paquetes Combinados -->
-                <div class="service-card wide" data-service="pack">
-                    <div class="card-bg" style="background-image: url('Imagenes/paquetes.jpg');background-color:#332E2B;"></div>
-                    <div class="card-overlay"></div>
-                    <div class="card-content">
-                        <span class="card-index">03</span>
-                        <h3 class="card-title">Paquetes Combinados</h3>
-                        <p class="card-short">Soluciones todo-en-uno que integran producción visual + desarrollo. Máximo valor por tu inversión.</p>
-                        <div class="pack-grid">
-                            <div class="pack-item">Boda Completa <span>Foto+Video+Web+Gal.</span></div>
-                            <div class="pack-item">Evento Social <span>Foto+Video+Gal privada</span></div>
-                            <div class="pack-item">Negocio Starter <span>Web+Foto+Redes</span></div>
-                            <div class="pack-item">Negocio Activo <span>Todo lo anterior + Ads</span></div>
+                <!-- Card 1 — Producción Visual -->
+                <div class="svc-card" data-service="visual">
+                    <div class="svc-card-bg" style="background-image: url('Imagenes/produccion-visual.jpg');"></div>
+                    <div class="svc-card-overlay"></div>
+                    <div class="svc-card-content">
+                        <span class="svc-card-index">01</span>
+                        <div class="svc-card-body">
+                            <h3 class="svc-card-title">Producción Visual</h3>
+                            <p class="svc-card-short">Fotografía, video, dron, edición y ads. La potencia visual de tu marca.</p>
+                            <ul class="svc-card-features">
+                                <li>Fotografía de eventos y marcas</li>
+                                <li>Videografía cinematográfica</li>
+                                <li>Dron / tomas aéreas</li>
+                                <li>Edición profesional</li>
+                                <li>Gestión de redes + Meta Ads</li>
+                            </ul>
+                            <button class="btn btn-primary svc-card-btn" data-modal="modal-visual">Conocer más →</button>
                         </div>
-                        <button class="card-btn" data-modal="modal-packs">Ver todos →</button>
                     </div>
                 </div>
+
+                <!-- Card 2 — Tecnología & Desarrollo -->
+                <div class="svc-card" data-service="tech">
+                    <div class="svc-card-bg" style="background-image: url('Imagenes/desarrollo-web.jpg');"></div>
+                    <div class="svc-card-overlay"></div>
+                    <div class="svc-card-content">
+                        <span class="svc-card-index">02</span>
+                        <div class="svc-card-body">
+                            <h3 class="svc-card-title">Tecnología & Desarrollo</h3>
+                            <p class="svc-card-short">Invitaciones web interactivas, galerías privadas, webs de negocio.</p>
+                            <ul class="svc-card-features">
+                                <li>Invitaciones web RSVP</li>
+                                <li>Galerías privadas post-evento</li>
+                                <li>Páginas web corporativas</li>
+                                <li>Mantenimiento mensual recurrente</li>
+                                <li>SEO + rendimiento técnico</li>
+                            </ul>
+                            <button class="btn btn-primary svc-card-btn" data-modal="modal-tech">Conocer más →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 — Paquetes Combinados (wide) -->
+                <div class="svc-card svc-card--wide" data-service="pack">
+                    <div class="svc-card-bg" style="background-image: url('Imagenes/paquetes.jpg');"></div>
+                    <div class="svc-card-overlay"></div>
+                    <div class="svc-card-content">
+                        <span class="svc-card-index">03</span>
+                        <div class="svc-card-body">
+                            <h3 class="svc-card-title">Paquetes Combinados</h3>
+                            <p class="svc-card-short">Máxima potencia: producción visual + desarrollo integrado. La experiencia completa.</p>
+                            <ul class="svc-card-features svc-card-features--row">
+                                <li>Boda 360° — foto + video + dron + invitación web RSVP</li>
+                                <li>Marca Premium — web corporativa + sesión de fotos + gestión de redes</li>
+                                <li>Evento Corporativo — cobertura completa + galería privada + highlight</li>
+                            </ul>
+                            <button class="btn btn-primary svc-card-btn" data-modal="modal-packs">Ver paquetes →</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN DIFERENCIAL (Contadores animados) -->
-    <section class="diferencial section--dark">
+    <!-- ==================== STATS ==================== -->
+    <section class="svc-stats section-dark">
         <div class="container">
-            <div class="diferencial-grid">
-                <div class="diferencial-item reveal">
-                    <span class="diferencial-number" data-count="120">0</span>
-                    <span class="diferencial-label">Eventos capturados</span>
+            <div class="svc-stats-grid">
+                <div class="svc-stat-item">
+                    <span class="svc-stat-number" data-count="120">0</span>
+                    <span class="svc-stat-sep">+</span>
+                    <span class="svc-stat-label">Eventos capturados</span>
                 </div>
-                <div class="diferencial-item reveal">
-                    <span class="diferencial-number" data-count="45">0</span>
-                    <span class="diferencial-label">Plataformas web entregadas</span>
+                <div class="svc-stat-item">
+                    <span class="svc-stat-number" data-count="45">0</span>
+                    <span class="svc-stat-sep">+</span>
+                    <span class="svc-stat-label">Plataformas web entregadas</span>
                 </div>
-                <div class="diferencial-item reveal">
-                    <span class="diferencial-number" data-count="28">0</span>
-                    <span class="diferencial-label">Clientes recurrentes</span>
+                <div class="svc-stat-item">
+                    <span class="svc-stat-number" data-count="28">0</span>
+                    <span class="svc-stat-sep">+</span>
+                    <span class="svc-stat-label">Clientes recurrentes</span>
                 </div>
-                <div class="diferencial-item reveal">
-                    <span class="diferencial-number" data-count="100">0</span>
-                    <span class="diferencial-label">% enfoque en experiencia</span>
+                <div class="svc-stat-item">
+                    <span class="svc-stat-number" data-count="100">0</span>
+                    <span class="svc-stat-sep">%</span>
+                    <span class="svc-stat-label">Enfoque en experiencia</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PROCESO CREATIVO (Línea de tiempo horizontal animada) -->
-    <section class="proceso section--sand">
+    <!-- ==================== PROCESO CREATIVO ==================== -->
+    <section class="svc-proceso section-light">
         <div class="container">
-            <div class="section-header text-center reveal">
+            <div class="svc-section-header">
                 <span class="section-tag">Metodología</span>
-                <h2 class="section-title">Cómo hacemos magia <br>juntos</h2>
+                <h2 class="section-title">Cómo hacemos<br><em class="title-italic">magia juntos</em></h2>
             </div>
             <div class="proceso-timeline">
-                <div class="proceso-step reveal">
+                <div class="timeline-step">
                     <div class="step-number">01</div>
-                    <h4>Captación & Brief</h4>
-                    <p>Entendemos tu visión, objetivos y necesidades. Definimos alcance y equipo necesario.</p>
+                    <div class="step-content">
+                        <h3>Captación & Brief</h3>
+                        <p>Entendemos tu visión, objetivos y necesidades. Definimos alcance, equipo y cronograma.</p>
+                    </div>
                 </div>
-                <div class="proceso-step reveal">
+                <div class="timeline-step">
                     <div class="step-number">02</div>
-                    <h4>Cotización & Cierre</h4>
-                    <p>Presupuesto claro, anticipo del 50% y plan de trabajo. Todos los socios involucrados saben su rol.</p>
+                    <div class="step-content">
+                        <h3>Cotización & Cierre</h3>
+                        <p>Presupuesto claro, anticipo del 50% y plan de trabajo. Todos los socios saben su rol.</p>
+                    </div>
                 </div>
-                <div class="proceso-step reveal">
+                <div class="timeline-step">
                     <div class="step-number">03</div>
-                    <h4>Ejecución & Producción</h4>
-                    <p>Captura visual, desarrollo web o ambos. Avances periódicos y hasta 2 rondas de revisión.</p>
+                    <div class="step-content">
+                        <h3>Ejecución & Producción</h3>
+                        <p>Captura visual, desarrollo web o ambos. Avances periódicos y hasta 2 rondas de revisión.</p>
+                    </div>
                 </div>
-                <div class="proceso-step reveal">
+                <div class="timeline-step">
                     <div class="step-number">04</div>
-                    <h4>Entrega & Post-Venta</h4>
-                    <p>Producto final, saldo restante, seguimiento y servicios recurrentes (mantenimiento, redes).</p>
+                    <div class="step-content">
+                        <h3>Entrega & Post-Venta</h3>
+                        <p>Producto final, saldo restante, seguimiento y servicios recurrentes (mantenimiento, redes).</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA FINAL con parallax -->
-    <section class="cta-final section--dark">
-        <div class="cta-bg-parallax" style="background-color:#332E2B;"></div>
-        <div class="container text-center">
-            <h2 class="cta-title reveal">¿Listo para trabajar con el equipo que sí cumple?</h2>
-            <p class="cta-desc reveal">No subcontratamos. Somos los mismos 5 socios que hacemos que tu proyecto sea único.</p>
-            <a href="https://wa.me/51999999999?text=Quiero%20un%20proyecto%20WOW%20con%20Innovo%20Studio" class="btn btn-primary cta-btn reveal">Empieza hoy →</a>
+    <!-- ==================== POR QUÉ ELEGIRNOS ==================== -->
+    <section class="svc-porque section-dark">
+        <div class="container">
+            <div class="svc-section-header">
+                <span class="section-tag">Por qué Innovo</span>
+                <h2 class="section-title">Sin intermediarios.<br>Sin excusas.</h2>
+            </div>
+            <div class="porque-grid">
+                <div class="porque-card">
+                    <div class="porque-bg-num">01</div>
+                    <h3>5 socios directos</h3>
+                    <p>No subcontratamos. Los mismos 5 profesionales que firman el contrato ejecutan tu proyecto.</p>
+                </div>
+                <div class="porque-card">
+                    <div class="porque-bg-num">02</div>
+                    <h3>Visual + Tech integrado</h3>
+                    <p>Nadie más combina producción cinematográfica con desarrollo web en un solo equipo cohesionado.</p>
+                </div>
+                <div class="porque-card">
+                    <div class="porque-bg-num">03</div>
+                    <h3>Entrega garantizada</h3>
+                    <p>Cronograma claro desde el día 1. Eventos en 3 días, webs en 2 semanas. Lo prometido, entregado.</p>
+                </div>
+                <div class="porque-card">
+                    <div class="porque-bg-num">04</div>
+                    <h3>Relación a largo plazo</h3>
+                    <p>Mantenimiento mensual, gestión de redes y soporte continuo. No desaparecemos tras la entrega.</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- FOOTER (similar al original pero actualizado) -->
-    <footer class="footer section--dark">
-        <div class="container footer-top">
-            <a href="../Inicio/inicio.html" class="nav-logo footer-logo-large">
-                <span class="logo-innovo">INNOVO<span class="logo-dot">.</span></span>
-                <span class="logo-studio">STUDIO</span>
-            </a>
-            <div class="footer-contact-info">
-                <a href="mailto:hola@innovostudio.pe" class="footer-contact-link">hola@innovostudio.pe</a>
-                <span class="footer-contact-sep">·</span>
-                <a href="tel:+51999999999" class="footer-contact-link">+51 999 999 999</a>
-            </div>
-            <p class="footer-tagline">"Creamos. Capturamos. Conectamos."</p>
-        </div>
-        <div class="footer-pattern-divider"></div>
-        <div class="container footer-inner">
-            <div class="footer-col">
-                <h4 class="footer-heading">Navegación</h4>
-                <ul>
-                    <li><a href="../Inicio/inicio.html" class="footer-link">Inicio</a></li>
-                    <li><a href="#" class="footer-link">Servicios</a></li>
-                    <li><a href="../Inicio/inicio.html#proceso" class="footer-link">Proceso</a></li>
-                    <li><a href="../Historias/historias.html" class="footer-link">Historias</a></li>
-                    <li><a href="../Contacto/contacto.html" class="footer-link">Contacto</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4 class="footer-heading">Servicios</h4>
-                <ul>
-                    <li><a href="#" class="footer-link">Producción Visual</a></li>
-                    <li><a href="#" class="footer-link">Desarrollo Web</a></li>
-                    <li><a href="#" class="footer-link">Paquetes Combinados</a></li>
-                    <li><a href="#" class="footer-link">Mantenimiento Web</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4 class="footer-heading">Redes</h4>
-                <ul class="footer-social">
-                    <li><a href="#" class="social-link">IG</a></li>
-                    <li><a href="#" class="social-link">LI</a></li>
-                    <li><a href="#" class="social-link">BE</a></li>
-                </ul>
+    <!-- ==================== CTA FINAL ==================== -->
+    <section class="cta-final section-dark" id="contacto">
+        <div class="cta-bg-overlay"></div>
+        <div class="container">
+            <div class="cta-content">
+                <h2>Tu evento en 3 días.<br>Tu web en 2 semanas.</h2>
+                <p>Cuéntanos tu proyecto. En 24 horas tendrás una propuesta clara, con nombres, fechas y precio.</p>
+                <div class="cta-buttons">
+                    <a href="https://wa.me/51999999999?text=Hola%20Innovo%2C%20quiero%20cotizar%20mi%20proyecto" class="btn btn-primary">WhatsApp →</a>
+                    <a href="mailto:hola@innovostudio.pe" class="btn btn-outline">hola@innovostudio.pe</a>
+                </div>
             </div>
         </div>
-        <div class="footer-divider-burgundy"></div>
-        <div class="footer-bottom">
-            <div class="container">
-                <p>© 2026 Innovo Studio — 5 socios, una visión. Lima, Perú.</p>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer section-dark">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">INNOVO<span>.</span> STUDIO</a>
+                    <p>Producción visual + Ingeniería de software. Lima, Perú.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Instagram" target="_blank">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                            IG
+                        </a>
+                        <a href="#" aria-label="Facebook" target="_blank">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            FB
+                        </a>
+                        <a href="#" aria-label="TikTok" target="_blank">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                            TK
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Explorar</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="servicios.html">Servicios</a></li>
+                        <li><a href="proyectos.html">Proyectos</a></li>
+                        <li><a href="proceso.html">Proceso</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Servicios</h4>
+                    <ul>
+                        <li><a href="#">Producción Visual</a></li>
+                        <li><a href="#">Desarrollo Web</a></li>
+                        <li><a href="#">Paquetes Combinados</a></li>
+                        <li><a href="#">Mantenimiento Web</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contáctanos</h4>
+                    <a href="mailto:hola@innovostudio.pe">hola@innovostudio.pe</a>
+                    <a href="tel:+51999999999">+51 999 999 999</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Innovo Studio — 5 socios, una visión. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <!-- MODALES (ocultos inicialmente) -->
-    <div id="modal-visual" class="modal">
-        <div class="modal-content">
-            <span class="modal-close">&times;</span>
+    <!-- WhatsApp Flotante -->
+    <a href="https://wa.me/51999999999?text=Hola%20Innovo%20Studio%2C%20me%20interesa%20un%20proyecto" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <!-- ==================== MODALES ==================== -->
+    <div id="modal-visual" class="svc-modal">
+        <div class="svc-modal-content">
+            <button class="svc-modal-close" aria-label="Cerrar">&times;</button>
+            <span class="section-tag">01 — Producción Visual</span>
             <h3>Producción Visual Profesional</h3>
             <p>Fotografía de eventos, videografía con dron, edición cinematográfica, gestión de redes sociales y publicidad pagada (Meta/Google Ads). Todo con el estilo premium que caracteriza a Innovo Studio.</p>
-            <a href="https://wa.me/51999999999?text=Me%20interesa%20el%20servicio%20de%20Producción%20Visual" class="btn btn-primary">Cotizar ahora →</a>
+            <a href="https://wa.me/51999999999?text=Me%20interesa%20el%20servicio%20de%20Producción%20Visual" class="btn btn-primary" target="_blank">Cotizar ahora →</a>
         </div>
     </div>
-    <div id="modal-tech" class="modal">
-        <div class="modal-content">
-            <span class="modal-close">&times;</span>
+    <div id="modal-tech" class="svc-modal">
+        <div class="svc-modal-content">
+            <button class="svc-modal-close" aria-label="Cerrar">&times;</button>
+            <span class="section-tag">02 — Tecnología</span>
             <h3>Tecnología & Desarrollo</h3>
             <p>Invitaciones web interactivas con RSVP, galerías privadas para tus fotos de evento, páginas web corporativas rápidas y mantenimiento mensual que genera ingresos recurrentes para tu negocio.</p>
-            <a href="https://wa.me/51999999999?text=Necesito%20desarrollo%20web%20para%20mi%20negocio%20o%20evento" class="btn btn-primary">Solicitar información →</a>
+            <a href="https://wa.me/51999999999?text=Necesito%20desarrollo%20web%20para%20mi%20negocio%20o%20evento" class="btn btn-primary" target="_blank">Solicitar información →</a>
         </div>
     </div>
-    <div id="modal-packs" class="modal">
-        <div class="modal-content">
-            <span class="modal-close">&times;</span>
+    <div id="modal-packs" class="svc-modal">
+        <div class="svc-modal-content">
+            <button class="svc-modal-close" aria-label="Cerrar">&times;</button>
+            <span class="section-tag">03 — Paquetes</span>
             <h3>Paquetes Combinados</h3>
             <p>Máxima potencia: integra producción visual + desarrollo. Ideal para bodas, eventos sociales o negocios que quieren destacar. Consulta por nuestros planes personalizados.</p>
-            <a href="https://wa.me/51999999999?text=Quiero%20un%20paquete%20combinado%20de%20Innovo%20Studio" class="btn btn-primary">Conversemos →</a>
+            <a href="https://wa.me/51999999999?text=Quiero%20un%20paquete%20combinado%20de%20Innovo%20Studio" class="btn btn-primary" target="_blank">Conversemos →</a>
         </div>
     </div>
 
     <script src="servicios.js"></script>
 </body>
-
 </html>
