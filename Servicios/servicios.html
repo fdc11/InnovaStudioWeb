@@ -42,7 +42,8 @@
                 <li><a href="../Contacto/contacto.html" class="nav-link">Contacto</a></li>
             </ul>
             <div class="nav-cta">
-                <a href="https://wa.me/51999999999?text=Hola%20Innovo%20Studio%2C%20me%20interesa%20un%20proyecto" class="btn btn-small" target="_blank">Cotizar ahora</a>
+                <a href="https://wa.me/51999999999?text=Hola%20Innovo%20Studio%2C%20me%20interesa%20un%20proyecto"
+                    class="btn btn-small" target="_blank" rel="noopener">Cotizar ahora</a>
             </div>
             <button class="hamburger" id="hamburger" aria-label="Menú">
                 <span class="ham-line"></span>
@@ -55,22 +56,82 @@
     <!-- Menú móvil -->
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-inner">
-            <ul class="mobile-links">
-                <li><a href="../Inicio/inicio.html" class="mobile-link">Inicio</a></li>
-                <li><a href="#" class="mobile-link">Servicios</a></li>
-                <li><a href="../Inicio/inicio.html#proceso" class="mobile-link">Proceso</a></li>
-                <li><a href="../Historias/historias.html" class="mobile-link">Proyectos</a></li>
-                <li><a href="../Contacto/contacto.html" class="mobile-link">Contacto</a></li>
-            </ul>
-            <div class="mobile-info">
-                <a href="mailto:hola@innovostudio.pe" class="mobile-email">hola@innovostudio.pe</a>
-                <a href="tel:+51999999999" class="mobile-phone">+51 999 999 999</a>
+
+            <!-- Cabecera -->
+            <div class="mobile-menu-header">
+                <a href="../Inicio/inicio.html" class="mobile-menu-logo">INNOVO<span>.</span>STUDIO</a>
+                <span class="mobile-menu-tag">Menú</span>
+            </div>
+
+            <!-- Links de navegación -->
+            <div class="mobile-nav-area">
+                <ul class="mobile-links">
+                    <li>
+                        <a href="../Inicio/inicio.html" class="mobile-link">
+                            <span class="mobile-link-num">01</span>
+                            <span class="mobile-link-text">Inicio</span>
+                            <span class="mobile-link-arrow">→</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="mobile-link">
+                            <span class="mobile-link-num">02</span>
+                            <span class="mobile-link-text">Servicios</span>
+                            <span class="mobile-link-arrow">→</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../Inicio/inicio.html#proceso" class="mobile-link">
+                            <span class="mobile-link-num">03</span>
+                            <span class="mobile-link-text">Proceso</span>
+                            <span class="mobile-link-arrow">→</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../Historias/historias.html" class="mobile-link">
+                            <span class="mobile-link-num">04</span>
+                            <span class="mobile-link-text">Proyectos</span>
+                            <span class="mobile-link-arrow">→</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../Contacto/contacto.html" class="mobile-link">
+                            <span class="mobile-link-num">05</span>
+                            <span class="mobile-link-text">Contacto</span>
+                            <span class="mobile-link-arrow">→</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Botón CTA -->
+            <div class="mobile-cta-wrapper">
+                <a href="https://wa.me/51999999999?text=Hola%20Innovo%20Studio%2C%20me%20interesa%20un%20proyecto"
+                    class="mobile-cta" target="_blank">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z" />
+                    </svg>
+                    Cotizar por WhatsApp
+                </a>
+            </div>
+
+            <!-- Pie: contacto + redes -->
+            <div class="mobile-footer">
+                <div class="mobile-contact-block">
+                    <span class="mobile-contact-label">Contacto</span>
+                    <div class="mobile-info">
+                        <a href="mailto:hola@innovostudio.pe">hola@innovostudio.pe</a>
+                        <a href="tel:+51999999999">+51 999 999 999</a>
+                    </div>
+                </div>
                 <div class="mobile-socials">
                     <a href="#" target="_blank">Instagram</a>
                     <a href="#" target="_blank">Facebook</a>
                     <a href="#" target="_blank">TikTok</a>
                 </div>
             </div>
+
         </div>
     </div>
 

@@ -339,18 +339,19 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 // ================================================================
 (function initServiceCards() {
     const cards = document.querySelectorAll('.svc-card');
+    if (!cards.length) return;
 
-    cards.forEach((card, i) => {
-        // Reveal al hacer scroll
-        gsap.from(card, {
-            opacity: 0,
-            y: 50,
-            duration: 0.9,
-            ease: 'power3.out',
-            scrollTrigger: { trigger: card, start: 'top 88%' },
-            delay: i * 0.1
-        });
+    // Reveal al hacer scroll
+    gsap.from(cards, {
+        opacity: 0,
+        y: 50,
+        duration: 0.9,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: '.svc-cards', start: 'top 85%' }
+    });
 
+    cards.forEach((card) => {
         // Tilt 3D en hover (solo escritorio)
         if (window.innerWidth > 1024 && !prefersReducedMotion) {
             card.addEventListener('mousemove', e => {
