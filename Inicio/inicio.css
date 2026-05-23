@@ -672,6 +672,18 @@ h1, h2, h3 {
     color: var(--copper-light);
     font-size: clamp(3.2rem, 8vw, 7.5rem);
 }
+
+/* Móvil: el título necesita su propio tamaño — solo vw queda demasiado pequeño */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: clamp(3rem, 14vw, 4.2rem);
+        letter-spacing: -0.025em;
+        margin-bottom: 2rem;
+    }
+    .hero-line-accent {
+        font-size: clamp(2.8rem, 13vw, 4rem);
+    }
+}
 /* Cursor typewriter */
 .hero-tw-line.typing::after {
     content: '|';
@@ -719,13 +731,7 @@ h1, h2, h3 {
     to   { transform: translateX(-50%); }
 }
 
-.hero-buttons {
-    display: flex;
-    gap: 1.25rem;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.3s cubic-bezier(0.16,1,0.3,1) forwards;
-}
+/* hero-buttons eliminado */
 
 /* Indicador de scroll */
 .hero-scroll-indicator {
@@ -1511,7 +1517,6 @@ h1, h2, h3 {
     .section, .adn, .servicios, .proyectos,
     .proceso, .porque, .testimonios, .cta-final { padding-top: 5rem; padding-bottom: 5rem; }
     .hero-scroll-indicator { display: none; }
-    .hero-buttons .btn { width: 100%; text-align: center; justify-content: center; }
     .testimonial-content { padding: 2.5rem 1.75rem; }
     .testimonial-content p { font-size: 1.15rem; }
     .whatsapp-float { bottom: 1.25rem; right: 1.25rem; width: 48px; height: 48px; }
