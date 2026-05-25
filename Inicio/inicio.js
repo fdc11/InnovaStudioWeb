@@ -1,29 +1,24 @@
 'use strict';
 
 // ================================================================
-//  INNOVO STUDIO — Animaciones GSAP corregidas
-//  Requiere: gsap, ScrollTrigger
+//  INNOVO STUDIO — Animaciones específicas de INICIO
+//  (typewriter, parallax, split titles, servicios cards, etc.)
+//  No duplica funcionalidades de global.js (navbar, preloader, menú)
 // ================================================================
 
 gsap.registerPlugin(ScrollTrigger);
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Funcionalidades de Preloader, Navbar, Menu y Transitions han sido movidas a global.js
-
-// ================================================================
-//  5. HERO — Typewriter + entrada escalonada
-// ================================================================
+// ========== HERO TYPEWRITER (restaurado) ==========
 (function initHero() {
     if (prefersReducedMotion) {
-        // Mostrar todo directamente
         document.querySelector('.hero-label') && (document.querySelector('.hero-label').style.opacity = '1');
         const line1 = document.getElementById('heroTwLine1');
         const line2 = document.getElementById('heroTwLine2');
         if (line1) line1.textContent = 'Producción visual';
         if (line2) line2.textContent = '+ desarrollo digital';
         document.querySelector('.hero-marquee-wrapper') && (document.querySelector('.hero-marquee-wrapper').style.opacity = '1');
-        document.querySelector('.hero-buttons') && (document.querySelector('.hero-buttons').style.opacity = '1');
         document.querySelector('.hero-scroll-indicator') && (document.querySelector('.hero-scroll-indicator').style.opacity = '1');
         return;
     }
@@ -32,7 +27,6 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     const line2El = document.getElementById('heroTwLine2');
     const label = document.querySelector('.hero-label');
     const marquee = document.querySelector('.hero-marquee-wrapper');
-    const buttons = document.querySelector('.hero-buttons');
     const scrollInd = document.querySelector('.hero-scroll-indicator');
     const videoBg = document.querySelector('.hero-bg video, .hero-bg img');
 
@@ -66,7 +60,6 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
                         line2El.classList.add('done');
                         const tl2 = gsap.timeline();
                         if (marquee) tl2.to(marquee, { opacity: 1, duration: 0.6 });
-                        if (buttons) tl2.from(buttons.children, { opacity: 0, y: 16, duration: 0.6, stagger: 0.12 });
                         if (scrollInd) tl2.from(scrollInd, { opacity: 0, duration: 0.8 }, '+=0.3');
                     }, SPEED_PAUSE);
                 });
@@ -86,30 +79,16 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     }
 })();
 
-// ================================================================
-//  5.5. HERO VIDEO — Fade-in suave sin flash negro
-// ================================================================
+// ========== HERO VIDEO FADE ==========
 (function initHeroVideo() {
     const heroVideo = document.querySelector('.hero-video');
     if (!heroVideo) return;
-
     const showVideo = () => heroVideo.classList.add('loaded');
-
-    // Si ya tiene datos suficientes para reproducir, mostrarlo de inmediato
-    if (heroVideo.readyState >= 3) {
-        showVideo();
-    } else {
-        heroVideo.addEventListener('canplay', showVideo, { once: true });
-        // Fallback: si tarda más de 2s, mostrarlo de todas formas
-        setTimeout(() => {
-            if (!heroVideo.classList.contains('loaded')) showVideo();
-        }, 2000);
-    }
+    if (heroVideo.readyState >= 3) showVideo();
+    else heroVideo.addEventListener('canplay', showVideo, { once: true });
 })();
 
-// ================================================================
-//  6. PARALLAX HERO
-// ================================================================
+// ========== PARALLAX HERO ==========
 (function initHeroParallax() {
     const heroBg = document.querySelector('.hero-bg');
     if (!heroBg) return;
@@ -120,28 +99,19 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     });
 })();
 
-
-// ================================================================
-//  7. SPLIT TEXT EN TÍTULOS (palabras individuales)
-// ================================================================
+// ========== SPLIT TEXT EN TÍTULOS (excluyendo hero) ==========
 (function initSplitTitles() {
     if (prefersReducedMotion) return;
-
     document.querySelectorAll('.section-title').forEach(title => {
         if (title.closest('.hero')) return;
-
-        // Guardar el HTML original respetando <br>
         const originalHTML = title.innerHTML;
-        // Dividir en bloques que pueden ser texto plano o <br>
         const parts = originalHTML.split(/(<br\s*\/?>)/i);
         let newHTML = '';
         parts.forEach(part => {
             if (part.match(/<br\s*\/?>/i)) {
                 newHTML += part;
             } else {
-                // Dividir texto en palabras
-                const words = part.split(/(\s+)/);
-                words.forEach(word => {
+                part.split(/(\s+)/).forEach(word => {
                     if (!word.trim()) {
                         newHTML += word;
                     } else {
@@ -151,11 +121,11 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
             }
         });
         title.innerHTML = newHTML;
-
         const inners = title.querySelectorAll('.split-word-inner');
         ScrollTrigger.create({
             trigger: title,
             start: 'top 88%',
+            once: true,
             onEnter: () => {
                 inners.forEach((inner, i) => {
                     setTimeout(() => {
@@ -169,36 +139,27 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     });
 })();
 
-
-// ================================================================
-//  8. SCRAMBLE TEXT — Logo en la navbar (solo afecta "INNOVO")
-// ================================================================
+// ========== SCRAMBLE TEXT EN LOGO (NAVBAR) ==========
 (function initScrambleNavLogo() {
     const logo = document.querySelector('.nav-logo');
     if (!logo) return;
-
-    // El primer nodo de texto es "INNOVO"
     const textNode = logo.childNodes[0];
     if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
-
-    const originalText = 'INNOVO';  // Solo la parte que animaremos
+    const originalText = 'INNOVO';
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let interval = null;
     let isAnimating = false;
-
     logo.addEventListener('mouseenter', () => {
         if (isAnimating) return;
         isAnimating = true;
         let iteration = 0;
         clearInterval(interval);
         interval = setInterval(() => {
-            // Generar texto aleatorio de la misma longitud que "INNOVO"
             const newText = originalText.split('').map((letter, i) => {
                 if (i < iteration) return letter;
                 return chars[Math.floor(Math.random() * chars.length)];
             }).join('');
             textNode.textContent = newText;
-
             if (iteration >= originalText.length) {
                 textNode.textContent = originalText;
                 clearInterval(interval);
@@ -209,12 +170,8 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     });
 })();
 
-// ================================================================
-//  9. ADN: REVEAL IMAGEN (Contadores manejados globalmente)
-// ================================================================
+// ========== ADN: IMAGEN REVEAL Y STATS ==========
 (function initADN() {
-
-    // Reveal imagen
     const adnImage = document.querySelector('.adn-image');
     if (adnImage) {
         ScrollTrigger.create({
@@ -223,8 +180,6 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
             onEnter: () => adnImage.classList.add('revealed')
         });
     }
-
-    // Stats entran con stagger
     const stats = document.querySelectorAll('.stat-item');
     if (stats.length) {
         gsap.from(stats, {
@@ -237,14 +192,11 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     }
 })();
 
-// ================================================================
-//  10. SERVICIOS: STAGGER + TILT 3D
-// ================================================================
+// ========== SERVICIOS CARDS: REVEAL + TILT 3D ==========
 (function initServiciosCards() {
     const cards = document.querySelectorAll('.service-card');
     if (!cards.length) return;
 
-    // --- Estado inicial via inline style ---
     cards.forEach(card => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(40px)';
@@ -261,42 +213,32 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
         });
     }
 
-    // Intentar con ScrollTrigger primero
     let triggered = false;
     ScrollTrigger.create({
         trigger: '.services-grid',
         start: 'top 85%',
         once: true,
-        onEnter: () => {
-            if (triggered) return;
-            triggered = true;
-            revealCards();
-        }
+        onEnter: () => { if (!triggered) { triggered = true; revealCards(); } }
     });
 
-    // Fallback: 2.5s — si ya está en viewport pero ScrollTrigger no disparó
     setTimeout(() => {
         if (triggered) return;
         const grid = document.querySelector('.services-grid');
-        if (!grid) { revealCards(); return; }
-        const rect = grid.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 1.1) {
+        if (grid && grid.getBoundingClientRect().top < window.innerHeight * 1.1) {
             triggered = true;
             revealCards();
         } else {
-            function onScroll() {
-                const r = grid.getBoundingClientRect();
-                if (r.top < window.innerHeight * 0.9) {
+            const onScroll = () => {
+                if (grid && grid.getBoundingClientRect().top < window.innerHeight * 0.9) {
                     triggered = true;
                     revealCards();
                     window.removeEventListener('scroll', onScroll);
                 }
-            }
+            };
             window.addEventListener('scroll', onScroll, { passive: true });
         }
     }, 2500);
 
-    // Tilt 3D (sin cambios)
     if (!prefersReducedMotion && window.innerWidth > 1024) {
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -318,30 +260,22 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     }
 })();
 
-// ================================================================
-//  11. PROYECTOS: OVERLAY DESDE ABAJO + SCROLL REVEAL
-// ================================================================
+// ========== PROYECTOS: OVERLAY Y REVEAL ==========
 (function initProyectos() {
     const items = document.querySelectorAll('.proyecto-item');
     if (!items.length) return;
 
-    // Hover overlay stagger (sin cambios)
     items.forEach(item => {
         const overlayEls = item.querySelectorAll('.proyecto-cat, .proyecto-overlay h3, .proyecto-overlay p');
-        if (!overlayEls.length) return;
-        gsap.set(overlayEls, { y: 20, opacity: 0 });
-        item.addEventListener('mouseenter', () => {
-            gsap.to(overlayEls, { y: 0, opacity: 1, duration: 0.45, stagger: 0.07 });
-        });
-        item.addEventListener('mouseleave', () => {
-            gsap.to(overlayEls, { y: 12, opacity: 0, duration: 0.3, stagger: 0.04 });
-        });
-    });
-
-    // --- Scroll reveal robusto ---
-    // Preparar estado inicial via inline style (visible por defecto en CSS)
-    // para que si GSAP/ScrollTrigger falla, los items sean siempre visibles
-    items.forEach(item => {
+        if (overlayEls.length) {
+            gsap.set(overlayEls, { y: 20, opacity: 0 });
+            item.addEventListener('mouseenter', () => {
+                gsap.to(overlayEls, { y: 0, opacity: 1, duration: 0.45, stagger: 0.07 });
+            });
+            item.addEventListener('mouseleave', () => {
+                gsap.to(overlayEls, { y: 12, opacity: 0, duration: 0.3, stagger: 0.04 });
+            });
+        }
         item.style.opacity = '0';
         item.style.transform = 'scale(0.96)';
         item.style.transition = 'none';
@@ -357,48 +291,34 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
         });
     }
 
-    // Intentar con ScrollTrigger primero
     let triggered = false;
     ScrollTrigger.create({
         trigger: '.proyectos-grid',
         start: 'top 85%',
         once: true,
-        onEnter: () => {
-            if (triggered) return;
-            triggered = true;
-            revealItems();
-        }
+        onEnter: () => { if (!triggered) { triggered = true; revealItems(); } }
     });
 
-    // Fallback: si después de 2.5s aún no se disparó (ej. preloader bloqueó el scroll),
-    // revisar si la sección ya está en el viewport y revelar de todas formas
     setTimeout(() => {
         if (triggered) return;
         const grid = document.querySelector('.proyectos-grid');
-        if (!grid) { revealItems(); return; }
-        const rect = grid.getBoundingClientRect();
-        // Si la sección está en pantalla o ya pasó, revelar
-        if (rect.top < window.innerHeight * 1.1) {
+        if (grid && grid.getBoundingClientRect().top < window.innerHeight * 1.1) {
             triggered = true;
             revealItems();
         } else {
-            // Si aún no llega, agregar un listener de scroll de una sola vez
-            function onScroll() {
-                const r = grid.getBoundingClientRect();
-                if (r.top < window.innerHeight * 0.9) {
+            const onScroll = () => {
+                if (grid && grid.getBoundingClientRect().top < window.innerHeight * 0.9) {
                     triggered = true;
                     revealItems();
                     window.removeEventListener('scroll', onScroll);
                 }
-            }
+            };
             window.addEventListener('scroll', onScroll, { passive: true });
         }
     }, 2500);
 })();
 
-// ================================================================
-//  12. PROCESO: STAGGER EN PASOS
-// ================================================================
+// ========== PROCESO STEPS ==========
 (function initProceso() {
     const steps = document.querySelectorAll('.timeline-step');
     if (steps.length) {
@@ -412,13 +332,10 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     }
 })();
 
-// ================================================================
-//  13. POR QUÉ ELEGIRNOS: STAGGER + NÚMERO DE FONDO
-// ================================================================
+// ========== POR QUÉ ELEGIRNOS ==========
 (function initPorque() {
     const cards = document.querySelectorAll('.porque-card');
     if (!cards.length) return;
-
     gsap.from(cards, {
         opacity: 0,
         y: 36,
@@ -426,8 +343,6 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
         stagger: 0.1,
         scrollTrigger: { trigger: '.porque-grid', start: 'top 82%' }
     });
-
-    // Añadir número de fondo si no existe
     cards.forEach((card, idx) => {
         let bgNum = card.querySelector('.porque-bg-num');
         if (!bgNum) {
@@ -446,68 +361,48 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     });
 })();
 
-// ================================================================
-//  14. TESTIMONIOS: SLIDER CON FADE + SWIPE
-// ================================================================
+// ========== TESTIMONIOS SLIDER ==========
 (function initTestimonios() {
     const track = document.getElementById('testimonialTrack');
     const prevBtn = document.querySelector('.slider-prev');
     const nextBtn = document.querySelector('.slider-next');
     const dotsContainer = document.getElementById('testimonialDots');
     if (!track || !prevBtn || !nextBtn) return;
-
     const slides = Array.from(track.children);
     const total = slides.length;
     let current = 0;
     let autoInterval;
-
-    // Crear dots
-    slides.forEach((_, i) => {
-        const dot = document.createElement('button');
-        dot.classList.add('dot');
-        if (i === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => goTo(i));
-        dotsContainer.appendChild(dot);
-    });
-    const dots = dotsContainer.querySelectorAll('.dot');
-
+    if (dotsContainer) {
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goTo(i));
+            dotsContainer.appendChild(dot);
+        });
+    }
+    const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
     function goTo(index) {
         if (index === current) return;
         const prev = current;
         current = (index + total) % total;
-        // Ocultar slide anterior y mostrar nuevo con fade
         gsap.to(slides[prev], { opacity: 0, duration: 0.25 });
         gsap.to(slides[current], { opacity: 1, duration: 0.4, delay: 0.1 });
         track.style.transform = `translateX(-${current * 100}%)`;
         dots.forEach((d, i) => d.classList.toggle('active', i === current));
     }
-
-    // Inicializar opacidades
-    slides.forEach((s, i) => {
-        gsap.set(s, { opacity: i === 0 ? 1 : 0 });
-    });
-
+    slides.forEach((s, i) => { gsap.set(s, { opacity: i === 0 ? 1 : 0 }); });
     nextBtn.addEventListener('click', () => { goTo(current + 1); resetAuto(); });
     prevBtn.addEventListener('click', () => { goTo(current - 1); resetAuto(); });
-
     function startAuto() { autoInterval = setInterval(() => goTo(current + 1), 5000); }
     function resetAuto() { clearInterval(autoInterval); startAuto(); }
     startAuto();
-
     const slider = document.querySelector('.testimonios-slider');
     slider.addEventListener('mouseenter', () => clearInterval(autoInterval));
     slider.addEventListener('mouseleave', startAuto);
-
-    // Swipe táctil
     let touchStartX = 0, isDragging = false;
-    track.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-        isDragging = false;
-    }, { passive: true });
-    track.addEventListener('touchmove', (e) => {
-        const dx = Math.abs(e.touches[0].clientX - touchStartX);
-        if (dx > 10) isDragging = true;
-    }, { passive: true });
+    track.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchmove', (e) => { if (Math.abs(e.touches[0].clientX - touchStartX) > 10) isDragging = true; }, { passive: true });
     track.addEventListener('touchend', (e) => {
         if (!isDragging) return;
         const diff = touchStartX - e.changedTouches[0].clientX;
@@ -515,35 +410,25 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
             diff > 0 ? goTo(current + 1) : goTo(current - 1);
             resetAuto();
         }
+        isDragging = false;
     });
-
-    // Entrada al scroll — animamos el CONTENEDOR, no los slides individuales
-    // para no interferir con la lógica de opacidad del slider
-    gsap.from('.testimonios-slider', {
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        scrollTrigger: { trigger: '.testimonios-slider', start: 'top 82%' }
-    });
+    gsap.from('.testimonios-slider', { opacity: 0, y: 30, duration: 0.8, scrollTrigger: { trigger: '.testimonios-slider', start: 'top 82%' } });
 })();
 
-// ================================================================
-//  15. CTA FINAL: LÍNEAS DESDE LADOS OPUESTOS
-// ================================================================
+// ========== CTA FINAL (líneas desde lados) ==========
 (function initCTA() {
     const ctaH2 = document.querySelector('.cta-content h2');
     if (!ctaH2 || prefersReducedMotion) return;
-
     const lines = ctaH2.innerHTML.split(/<br\s*\/?>/i);
     ctaH2.innerHTML = lines.map((line, i) => {
         const dir = i % 2 === 0 ? '-60px' : '60px';
         return `<span class="cta-line" style="display:block;overflow:hidden"><span class="cta-line-inner" style="display:block;opacity:0;transform:translateX(${dir});will-change:transform,opacity">${line}</span></span>`;
     }).join('');
-
     const inners = ctaH2.querySelectorAll('.cta-line-inner');
     ScrollTrigger.create({
         trigger: ctaH2,
         start: 'top 85%',
+        once: true,
         onEnter: () => {
             inners.forEach((el, i) => {
                 setTimeout(() => {
@@ -554,58 +439,10 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
             });
         }
     });
-
-    gsap.from('.cta-buttons .btn', {
-        opacity: 0,
-        y: 20,
-        duration: 0.7,
-        stagger: 0.15,
-        scrollTrigger: { trigger: '.cta-buttons', start: 'top 88%' }
-    });
+    gsap.from('.cta-buttons .btn', { opacity: 0, y: 20, duration: 0.7, stagger: 0.15, scrollTrigger: { trigger: '.cta-buttons', start: 'top 88%' } });
 })();
 
-// ================================================================
-//  16. FOOTER: STAGGER EN COLUMNAS
-// ================================================================
-(function initFooter() {
-    gsap.from('.footer-grid > *', {
-        opacity: 0,
-        y: 24,
-        duration: 0.7,
-        stagger: 0.1,
-        scrollTrigger: { trigger: '.footer-grid', start: 'top 88%' }
-    });
-})();
-
-// ================================================================
-//  17. BARRA DE PROGRESO DE SCROLL
-// ================================================================
-(function initProgressBar() {
-    const bar = document.getElementById('scrollProgress');
-    if (!bar) return;
-    gsap.to(bar, {
-        scaleX: 1,
-        transformOrigin: 'left center',
-        ease: 'none',
-        scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 0.3 }
-    });
-})();
-
-// ================================================================
-//  18. PARALLAX SUTIL EN IMÁGENES
-// ================================================================
-(function initSectionParallax() {
-    document.querySelectorAll('.adn-image img, .proyecto-img img').forEach(img => {
-        gsap.fromTo(img,
-            { yPercent: -8 },
-            { yPercent: 8, ease: 'none', scrollTrigger: { trigger: img.closest('section, .proyecto-item'), start: 'top bottom', end: 'bottom top', scrub: true } }
-        );
-    });
-})();
-
-// ================================================================
-//  19. MAGNETIC BUTTONS (solo en escritorio)
-// ================================================================
+// ========== MAGNETIC BUTTONS ==========
 (function initMagneticButtons() {
     if (prefersReducedMotion || window.innerWidth <= 1024) return;
     document.querySelectorAll('.btn-primary, .btn-small').forEach(btn => {
@@ -621,9 +458,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     });
 })();
 
-// ================================================================
-//  20. MARQUEE: PAUSA AL HOVER
-// ================================================================
+// ========== MARQUEE PAUSE ON HOVER ==========
 (function initMarqueeSpeed() {
     const track = document.querySelector('.hero-marquee-track');
     if (!track) return;
@@ -632,23 +467,14 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     wrapper.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
 })();
 
-// ================================================================
-//  21. SECTION TAGS: ENTRADA DESDE LA IZQUIERDA
-// ================================================================
+// ========== SECTION TAGS (entrada izquierda) ==========
 (function initSectionTags() {
     document.querySelectorAll('.section-tag').forEach(tag => {
-        gsap.from(tag, {
-            opacity: 0,
-            x: -20,
-            duration: 0.6,
-            scrollTrigger: { trigger: tag, start: 'top 90%' }
-        });
+        gsap.from(tag, { opacity: 0, x: -20, duration: 0.6, scrollTrigger: { trigger: tag, start: 'top 90%' } });
     });
 })();
 
-// ================================================================
-//  22. SMOOTH SCROLL PARA ANCLAS (sin plugins externos)
-// ================================================================
+// ========== SMOOTH SCROLL ANCLAS (no interfiere con global) ==========
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
         const targetId = anchor.getAttribute('href');
@@ -671,8 +497,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             if (progress < 1) requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
-
-        // Cerrar menú móvil si está abierto
         const mobileMenu = document.getElementById('mobileMenu');
         const hamburger = document.getElementById('hamburger');
         if (mobileMenu && mobileMenu.classList.contains('active')) {
@@ -683,27 +507,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ================================================================
-//  23. FALLBACK DE SEGURIDAD (nada invisible)
-// ================================================================
+// ========== FALLBACK SEGURIDAD ==========
 setTimeout(() => {
-    document.querySelectorAll('.porque-card, .timeline-step, .stat-item, .footer-grid > *, .testimonial-card, .section-tag, .section-subtitle, .adn-text, .adn-image, .hero-label, .hero-scroll-indicator, .cta-buttons .btn').forEach(el => {
+    document.querySelectorAll('.porque-card, .timeline-step, .stat-item, .service-card, .proyecto-item, .section-tag, .cta-buttons .btn').forEach(el => {
         if (parseFloat(window.getComputedStyle(el).opacity) < 0.1) {
             el.style.opacity = '1';
             el.style.transform = 'none';
         }
-    });
-    // Forzar service-cards visibles (gestionadas por initServiciosCards, pero por si acaso)
-    document.querySelectorAll('.service-card').forEach(el => {
-        el.style.transition = 'none';
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-    });
-    // Forzar proyecto-items visibles (gestionados por initProyectos, pero por si acaso)
-    document.querySelectorAll('.proyecto-item').forEach(el => {
-        el.style.transition = 'none';
-        el.style.opacity = '1';
-        el.style.transform = 'scale(1)';
     });
     document.querySelectorAll('.split-word-inner, .cta-line-inner').forEach(el => {
         el.style.opacity = '1';
@@ -712,4 +522,4 @@ setTimeout(() => {
     ScrollTrigger.refresh();
 }, 4000);
 
-console.log('%c Innovo Studio — Inicio corregido', 'color: #C8845A; font-size: 14px; font-weight: bold;');
+console.log('%c Innovo Studio — Inicio (typewriter restaurado)', 'color: #C8845A; font-size: 14px; font-weight: bold;');
