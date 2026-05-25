@@ -771,6 +771,20 @@
     </a>
 
     <script src="servicios.js"></script>
+    <!-- Fallback: si GSAP falla o tarda, quita la cortina igual -->
+    <script>
+        (function () {
+            var curtain = document.getElementById('pageCurtain');
+            if (!curtain) return;
+            // Si después de 1.5s la cortina sigue tapando, la quitamos a mano
+            setTimeout(function () {
+                if (curtain.style.transform !== 'translateY(-100%)') {
+                    curtain.style.transition = 'transform 0.6s ease';
+                    curtain.style.transform = 'translateY(-100%)';
+                }
+            }, 1500);
+        })();
+    </script>
 </body>
 
 </html>
