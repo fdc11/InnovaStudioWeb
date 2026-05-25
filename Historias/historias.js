@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   INNOVO STUDIO — historias.js (sin cursor)
+   INNOVO STUDIO — historias.js (sin cursor, con video fade-in)
    ═══════════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -33,6 +33,32 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         const heroTitleInners = document.querySelectorAll('.stories-title .split-line-inner');
         heroTitleInners.forEach(inner => inner.classList.add('revealed'));
     }, 200);
+})();
+
+// ========== HERO VIDEO FADE-IN (NUEVO) ==========
+(function initStoriesHeroVideo() {
+    const heroVideo = document.querySelector('.stories-hero-video');
+    if (!heroVideo) return;
+    const showVideo = () => heroVideo.classList.add('loaded');
+    if (heroVideo.readyState >= 3) {
+        showVideo();
+    } else {
+        heroVideo.addEventListener('loadeddata', showVideo, { once: true });
+        setTimeout(() => {
+            if (!heroVideo.classList.contains('loaded')) showVideo();
+        }, 2000);
+    }
+})();
+
+// ========== PARALLAX SUTIL PARA EL VIDEO (OPCIONAL) ==========
+(function initStoriesHeroParallax() {
+    const heroBg = document.querySelector('.stories-hero-video');
+    if (!heroBg) return;
+    gsap.to(heroBg, {
+        yPercent: 20,
+        ease: 'none',
+        scrollTrigger: { trigger: '.stories-hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
 })();
 
 // ========== SCROLL REVEAL ==========

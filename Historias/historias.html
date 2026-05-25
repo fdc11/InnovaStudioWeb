@@ -96,19 +96,31 @@
         </div>
     </div>
 
-    <!-- ==================== HERO HISTORIAS (COHERENTE CON INICIO) ==================== -->
+    <!-- ==================== HERO HISTORIAS CON VIDEO DE FONDO ==================== -->
     <header class="stories-hero">
+        <!-- Video de fondo -->
+        <div class="stories-hero-bg">
+            <video class="stories-hero-video" id="storiesHeroVideo" autoplay muted loop playsinline
+                poster="../Inicio/Imagenes/HistoriasHero.jpg" preload="auto">
+                <source src="/Historias/Imagenes/Banner4.mp4" type="video/mp4">
+                <!-- Si no hay video, usar imagen de respaldo -->
+            </video>
+            <div class="stories-hero-overlay"></div>
+        </div>
+
         <div class="container stories-hero-content">
             <span class="section-tag reveal" data-split>Portafolio</span>
-            <h1 class="stories-title" data-split>HISTORIAS<br>QUE MARCAN LA DIFERENCIA.</h1>
+            <h1 class="stories-title" data-split>CASOS DE ESTUDIO E HISTORIAS<br>QUE MARCAN LA DIFERENCIA.</h1>
             <p class="stories-subtitle reveal">Explora nuestra selección de proyectos, donde fusionamos la elegancia
                 visual con desarrollos interactivos de alto impacto.</p>
         </div>
+
         <!-- Indicador de scroll (opcional, como en Inicio) -->
         <div class="stories-scroll-indicator" aria-hidden="true">
             <span>SCROLL</span>
             <div class="scroll-line"></div>
         </div>
+
         <!-- Marquee dentro del hero (similar al de Inicio) -->
         <div class="stories-marquee" aria-hidden="true">
             <div class="marquee-track">

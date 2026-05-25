@@ -3,43 +3,67 @@
    Hereda de global.css. No contiene reglas de navbar, footer ni preloader.
    ============================================================ */
 
-/* ---------- HERO HISTORIAS (coherente con Inicio) ---------- */
+/* ---------- HERO HISTORIAS CON VIDEO ---------- */
 .stories-hero {
     min-height: 70vh;
     position: relative;
     display: flex;
     align-items: center;
-    background: var(--ink);
     overflow: hidden;
     padding: 8rem 0 5rem;
 }
 
-/* Fondo con gradiente y textura sutil (similar a Inicio) */
-.stories-hero::before {
-    content: '';
+/* Contenedor del video de fondo */
+.stories-hero-bg {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 30% 50%, rgba(154, 78, 40, 0.08) 0%, transparent 70%);
     z-index: 0;
-    pointer-events: none;
 }
 
-/* Línea decorativa superior */
-.stories-hero::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+.stories-hero-video {
     width: 100%;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--copper-light), transparent);
-    opacity: 0.3;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.05);
+    animation: heroVideoZoom 20s ease-in-out infinite alternate;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    will-change: opacity;
+}
+
+.stories-hero-video.loaded {
+    opacity: 1;
+}
+
+@keyframes heroVideoZoom {
+    from {
+        transform: scale(1.05);
+    }
+
+    to {
+        transform: scale(1.12);
+    }
+}
+
+/* Overlay oscuro para legibilidad del texto */
+.stories-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+            rgba(10, 10, 10, 0.9) 0%,
+            rgba(10, 10, 10, 0.5) 50%,
+            rgba(10, 10, 10, 0.2) 100%);
     z-index: 1;
 }
 
-.stories-hero-content {
+/* Contenido del hero debe estar por encima del video */
+.stories-hero-content,
+.stories-scroll-indicator {
     position: relative;
     z-index: 2;
+}
+
+.stories-hero-content {
     max-width: 900px;
 }
 
@@ -62,7 +86,7 @@
     margin-bottom: 2rem;
 }
 
-/* Indicador de scroll (opcional, como en Inicio) */
+/* Indicador de scroll (como en Inicio) */
 .stories-scroll-indicator {
     position: absolute;
     bottom: 2rem;
@@ -101,18 +125,19 @@
     }
 }
 
-/* Marquee dentro del hero (opcional) */
+/* Marquee dentro del hero (pegado al fondo) */
 .stories-marquee {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(4px);
     padding: 0.8rem 0;
     border-top: 1px solid rgba(196, 122, 78, 0.2);
     overflow: hidden;
     white-space: nowrap;
+    z-index: 3;
 }
 
 .marquee-track {
@@ -140,6 +165,18 @@
 
     to {
         transform: translateX(-50%);
+    }
+}
+
+/* Reducir animación si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+    .stories-hero-video {
+        animation: none;
+        transform: scale(1);
+    }
+
+    .marquee-track {
+        animation-play-state: running;
     }
 }
 
