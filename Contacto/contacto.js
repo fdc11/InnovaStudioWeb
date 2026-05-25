@@ -1,6 +1,5 @@
 /* =========================================================
-   INNOVO STUDIO — contacto.js
-   Vanilla JS + GSAP de Alta Gama
+   INNOVO STUDIO — contacto.js (rediseñado)
    ========================================================= */
 
 'use strict';
@@ -9,7 +8,27 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 }
 
-// ========== TEXT SPLIT — GENERALIZED TITLES REVEALS ==========
+// ========== VIDEO HERO FADE-IN ==========
+(function initContactHeroVideo() {
+    const heroVideo = document.querySelector('.contact-hero-video');
+    if (!heroVideo) return;
+    const showVideo = () => heroVideo.classList.add('loaded');
+    if (heroVideo.readyState >= 3) showVideo();
+    else heroVideo.addEventListener('loadeddata', showVideo, { once: true });
+})();
+
+// ========== PARALLAX SUTIL PARA VIDEO ==========
+(function initContactHeroParallax() {
+    const heroBg = document.querySelector('.contact-hero-video');
+    if (!heroBg) return;
+    gsap.to(heroBg, {
+        yPercent: 20,
+        ease: 'none',
+        scrollTrigger: { trigger: '.contact-hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
+})();
+
+// ========== TEXT SPLIT ==========
 (function initTextSplitting() {
     const titles = document.querySelectorAll('[data-split]');
     titles.forEach(title => {
@@ -20,7 +39,7 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         ).join('');
     });
     setTimeout(() => {
-        const heroTitleInners = document.querySelectorAll('.contact-title .split-line-inner');
+        const heroTitleInners = document.querySelectorAll('.contact-hero-title .split-line-inner');
         heroTitleInners.forEach(inner => inner.classList.add('revealed'));
     }, 200);
 })();
@@ -124,4 +143,4 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     });
 })();
 
-console.log('%c INNOVO STUDIO — CONTACTO ', 'background:#9A4E28;color:#F5F1EB;font-size:14px;padding:6px 12px;font-weight:bold;letter-spacing:2px;');
+console.log('%c INNOVO STUDIO — CONTACTO (rediseñado)', 'background:#9A4E28;color:#F5F1EB;font-size:14px;padding:6px 12px;font-weight:bold;letter-spacing:2px;');

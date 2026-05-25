@@ -19,7 +19,6 @@
 
 <body>
 
-    <!-- Sin cursor personalizado -->
     <div id="scrollProgress"></div>
     <div id="pageCurtain"></div>
     <div id="preloader">
@@ -49,7 +48,7 @@
         </div>
     </nav>
 
-    <!-- Menú móvil (mismo que inicio/servicios) -->
+    <!-- Menú móvil (idéntico a inicio) -->
     <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menú de navegación">
         <div class="mobile-menu-inner">
             <div class="mobile-menu-header">
@@ -57,7 +56,7 @@
                 <span class="mobile-menu-tag">Menú</span>
             </div>
             <div class="mobile-nav-area">
-                <ul class="mobile-links" role="list">
+                <ul class="mobile-links">
                     <li><a href="../Inicio/inicio.html" class="mobile-link"><span class="mobile-link-num">01</span><span
                                 class="mobile-link-text">Inicio</span><span class="mobile-link-arrow">→</span></a></li>
                     <li><a href="../Servicios/servicios.html" class="mobile-link"><span
@@ -95,87 +94,145 @@
         </div>
     </div>
 
-    <!-- MAIN CONTACT CONTENT -->
-    <main class="contact-page">
-        <div class="container contact-grid">
-            <section class="contact-info-panel reveal">
-                <span class="section-tag">Hablemos</span>
-                <h1 class="contact-title" data-split>CREEMOS ALGO<br>EXTRAORDINARIO JUNTOS.</h1>
-                <p class="contact-desc">Cuéntanos tu visión o proyecto. Nos pondremos en contacto contigo en menos de 24
-                    horas para agendar una llamada y aterrizar tus ideas.</p>
-                <div class="contact-details">
-                    <div class="detail-group"><span class="detail-label">Correo Electrónico</span><a
-                            href="mailto:hola@innovostudio.pe" class="detail-value">hola@innovostudio.pe</a></div>
-                    <div class="detail-group"><span class="detail-label">WhatsApp Directo</span><a
-                            href="https://wa.me/51999999999" class="detail-value">+51 999 999 999</a></div>
-                    <div class="detail-group"><span class="detail-label">Ubicación Principal</span><span
-                            class="detail-value">Lima, Perú (Servicio Global)</span></div>
-                </div>
-                <div class="contact-social-group">
-                    <span class="detail-label">Síguenos</span>
-                    <div class="contact-social-links">
-                        <a href="#" class="contact-social-link">Instagram</a>
-                        <a href="#" class="contact-social-link">LinkedIn</a>
-                        <a href="#" class="contact-social-link">Behance</a>
-                    </div>
-                </div>
-            </section>
+    <!-- ==================== HERO DE CONTACTO (NUEVO, CON VIDEO) ==================== -->
+    <header class="contact-hero">
+        <div class="contact-hero-bg">
+            <video class="contact-hero-video" id="contactHeroVideo" autoplay muted loop playsinline
+                poster="../Inicio/Imagenes/ContactoHero.jpg" preload="auto">
+                <source src="../Inicio/Imagenes/ContactoHero.mp4" type="video/mp4">
+            </video>
+            <div class="contact-hero-overlay"></div>
+        </div>
+        <div class="container contact-hero-content">
+            <span class="section-tag reveal" data-split>Hablemos</span>
+            <h1 class="contact-hero-title" data-split>CREEMOS ALGO<br>EXTRAORDINARIO JUNTOS.</h1>
+            <p class="contact-hero-subtitle reveal">Cuéntanos tu visión o proyecto. Nos pondremos en contacto contigo en
+                menos de 24 horas para agendar una llamada y aterrizar tus ideas.</p>
+        </div>
+        <!-- Indicador de scroll -->
+        <div class="contact-scroll-indicator" aria-hidden="true">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+        <!-- Marquee -->
+        <div class="contact-marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <span>Branding</span><span class="marquee-sep">✦</span>
+                <span>Producción Visual</span><span class="marquee-sep">✦</span>
+                <span>Desarrollo Web</span><span class="marquee-sep">✦</span>
+                <span>Social Media</span><span class="marquee-sep">✦</span>
+                <span>Marketing Digital</span><span class="marquee-sep">✦</span>
+                <!-- loop -->
+                <span>Branding</span><span class="marquee-sep">✦</span>
+                <span>Producción Visual</span><span class="marquee-sep">✦</span>
+                <span>Desarrollo Web</span><span class="marquee-sep">✦</span>
+                <span>Social Media</span><span class="marquee-sep">✦</span>
+                <span>Marketing Digital</span><span class="marquee-sep">✦</span>
+            </div>
+        </div>
+    </header>
 
-            <section class="contact-form-panel reveal">
-                <form class="luxe-form" id="contactForm" novalidate>
-                    <div class="form-group">
-                        <input type="text" id="name" name="name" class="form-input" placeholder=" " required />
-                        <label for="name" class="form-label">Tu Nombre *</label>
-                        <span class="form-error-msg" id="nameError">Por favor ingresa tu nombre</span>
+    <!-- ==================== FORMULARIO + INFO (REDISEÑADO) ==================== -->
+    <main class="contact-main">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Panel izquierdo: Info editorial -->
+                <div class="contact-info-panel reveal">
+                    <div class="info-bg-number">01</div>
+                    <div class="contact-details">
+                        <div class="detail-group">
+                            <span class="detail-label">Correo Electrónico</span>
+                            <a href="mailto:hola@innovostudio.pe" class="detail-value">hola@innovostudio.pe</a>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">WhatsApp Directo</span>
+                            <a href="https://wa.me/51999999999" class="detail-value">+51 999 999 999</a>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Ubicación Principal</span>
+                            <span class="detail-value">Lima, Perú (Servicio Global)</span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" class="form-input" placeholder=" " required />
-                        <label for="email" class="form-label">Tu Correo Electrónico *</label>
-                        <span class="form-error-msg" id="emailError">Ingresa un correo electrónico válido</span>
+                    <div class="contact-social-group">
+                        <span class="detail-label">Síguenos</span>
+                        <div class="contact-social-links">
+                            <a href="#" class="contact-social-link">Instagram</a>
+                            <a href="#" class="contact-social-link">LinkedIn</a>
+                            <a href="#" class="contact-social-link">Behance</a>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="tel" id="phone" name="phone" class="form-input" placeholder=" " />
-                        <label for="phone" class="form-label">Tu Teléfono / WhatsApp (Opcional)</label>
-                    </div>
-                    <div class="form-group select-group">
-                        <select id="service" name="service" class="form-input form-select" required>
-                            <option value="" disabled selected hidden></option>
-                            <option value="produccion">Producción Visual</option>
-                            <option value="web">Desarrollo Web</option>
-                            <option value="marketing">Marketing Digital</option>
-                            <option value="social">Social Media</option>
-                            <option value="otro">Otro Proyecto</option>
-                        </select>
-                        <label for="service" class="form-label-select">¿En qué servicio estás interesado? *</label>
-                        <span class="form-error-msg" id="serviceError">Por favor selecciona un servicio</span>
-                    </div>
-                    <div class="form-group textarea-group">
-                        <textarea id="message" name="message" class="form-input form-textarea" placeholder=" "
-                            required></textarea>
-                        <label for="message" class="form-label">Cuéntanos sobre tu proyecto *</label>
-                        <span class="form-error-msg" id="messageError">Por favor escribe un mensaje descriptivo</span>
-                    </div>
-                    <div class="form-submit-container">
-                        <button type="submit" class="btn btn-primary btn-submit"><span>Enviar Solicitud</span><svg
-                                class="submit-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                            </svg></button>
-                    </div>
-                    <div class="form-status-box" id="formStatusBox">
-                        <div class="status-content status-success" id="statusSuccess"><span
-                                class="status-icon">✓</span><span class="status-msg">¡Mensaje enviado con éxito! Te
-                                contactaremos muy pronto.</span></div>
-                        <div class="status-content status-error" id="statusError"><span
-                                class="status-icon">✕</span><span class="status-msg">Hubo un error al enviar el
-                                formulario. Inténtalo de nuevo.</span></div>
-                    </div>
-                </form>
-            </section>
+                    <!-- Línea decorativa -->
+                    <div class="info-decor-line"></div>
+                </div>
+
+                <!-- Panel derecho: Formulario premium -->
+                <div class="contact-form-panel reveal">
+                    <form class="contact-form" id="contactForm" novalidate>
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" class="form-input" placeholder=" " required />
+                            <label for="name" class="form-label">Tu Nombre *</label>
+                            <span class="form-error-msg" id="nameError">Por favor ingresa tu nombre</span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" class="form-input" placeholder=" " required />
+                            <label for="email" class="form-label">Tu Correo Electrónico *</label>
+                            <span class="form-error-msg" id="emailError">Ingresa un correo válido</span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone" class="form-input" placeholder=" " />
+                            <label for="phone" class="form-label">Teléfono / WhatsApp (Opcional)</label>
+                        </div>
+
+                        <div class="form-group select-group">
+                            <select id="service" name="service" class="form-input form-select" required>
+                                <option value="" disabled selected hidden></option>
+                                <option value="produccion">Producción Visual</option>
+                                <option value="web">Desarrollo Web</option>
+                                <option value="marketing">Marketing Digital</option>
+                                <option value="social">Social Media</option>
+                                <option value="otro">Otro Proyecto</option>
+                            </select>
+                            <label for="service" class="form-label">¿En qué servicio estás interesado? *</label>
+                            <span class="form-error-msg" id="serviceError">Selecciona un servicio</span>
+                        </div>
+
+                        <div class="form-group textarea-group">
+                            <textarea id="message" name="message" class="form-input form-textarea" placeholder=" "
+                                required></textarea>
+                            <label for="message" class="form-label">Cuéntanos sobre tu proyecto *</label>
+                            <span class="form-error-msg" id="messageError">Escribe un mensaje descriptivo</span>
+                        </div>
+
+                        <div class="form-submit-container">
+                            <button type="submit" class="btn-submit">
+                                <span>Enviar Solicitud</span>
+                                <svg class="submit-arrow" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="form-status-box" id="formStatusBox">
+                            <div class="status-content status-success" id="statusSuccess">
+                                <span class="status-icon">✓</span>
+                                <span class="status-msg">¡Mensaje enviado con éxito! Te contactaremos muy pronto.</span>
+                            </div>
+                            <div class="status-content status-error" id="statusError">
+                                <span class="status-icon">✕</span>
+                                <span class="status-msg">Hubo un error. Inténtalo de nuevo.</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </main>
 
-    <!-- Footer unificado (global-footer) -->
+    <!-- ==================== FOOTER ==================== -->
     <footer class="global-footer section-dark">
         <div class="container">
             <div class="global-footer-grid">
@@ -189,7 +246,7 @@
                         <li><a href="../Inicio/inicio.html">Inicio</a></li>
                         <li><a href="../Servicios/servicios.html">Servicios</a></li>
                         <li><a href="../Historias/historias.html">Historias</a></li>
-                        <li><a href="#proceso">Proceso</a></li>
+                        <li><a href="../Inicio/inicio.html#proceso">Proceso</a></li>
                         <li><a href="../Contacto/contacto.html">Contacto</a></li>
                     </ul>
                 </div>
@@ -227,7 +284,6 @@
 
     <script src="../global.js"></script>
     <script src="contacto.js"></script>
-    <!-- No hay setTimeout de fallback -->
 </body>
 
 </html>
