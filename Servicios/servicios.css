@@ -1657,3 +1657,16 @@ h3 {
         height: 48px;
     }
 }
+
+/* ========== HERO: ESTADO INICIAL PARA ANIMACIÓN JS ==========
+   Los elementos del hero arrancan invisibles.
+   initHeroEntrance() los anima tras el preloader.
+   El fallback de 4s en servicios.js los fuerza visibles si algo falla.
+   ================================================================ */
+.services-hero .section-tag,
+.services-hero .hero-desc,
+.services-hero .hero-stat,
+.services-hero .hero-scroll-cta,
+.services-hero .hero-scroll-indicator {
+    opacity: 0;
+}

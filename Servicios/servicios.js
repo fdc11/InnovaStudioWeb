@@ -1,6 +1,9 @@
 'use strict';
 
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger);
+// ScrollToPlugin eliminado — no se usaba
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ========== PRELOADER ==========
 (function initPreloader() {
@@ -22,29 +25,18 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
         },
         onComplete: () => {
             gsap.delayedCall(0.2, () => {
-                if (veil) {
-                    gsap.to(veil, {
-                        yPercent: -100,
-                        duration: 0.9,
-                        ease: 'power3.inOut',
-                        onComplete: () => {
-                            preloader.style.display = 'none';
-                            document.body.style.overflow = '';
-                            ScrollTrigger.refresh();
-                        }
-                    });
-                } else {
-                    gsap.to(preloader, {
-                        yPercent: -100,
-                        duration: 0.9,
-                        ease: 'power3.inOut',
-                        onComplete: () => {
-                            preloader.style.display = 'none';
-                            document.body.style.overflow = '';
-                            ScrollTrigger.refresh();
-                        }
-                    });
-                }
+                const target = veil || preloader;
+                gsap.to(target, {
+                    yPercent: -100,
+                    duration: 0.9,
+                    ease: 'power3.inOut',
+                    onComplete: () => {
+                        preloader.style.display = 'none';
+                        document.body.style.overflow = '';
+                        ScrollTrigger.refresh();
+                        initHeroEntrance(); // Hero se anima DESPUÉS del preloader
+                    }
+                });
             });
         }
     });
@@ -88,6 +80,41 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
     });
 })();
 
+// ========== SCRAMBLE TEXT — Logo navbar (igual que inicio) ==========
+(function initScrambleNavLogo() {
+    const logo = document.querySelector('.nav-logo');
+    if (!logo) return;
+
+    // El primer nodo de texto del logo es "INNOVO"
+    const textNode = logo.childNodes[0];
+    if (!textNode || textNode.nodeType !== Node.TEXT_NODE) return;
+
+    const originalText = 'INNOVO';
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let interval = null;
+    let isAnimating = false;
+
+    logo.addEventListener('mouseenter', () => {
+        if (isAnimating) return;
+        isAnimating = true;
+        let iteration = 0;
+        clearInterval(interval);
+        interval = setInterval(() => {
+            const newText = originalText.split('').map((letter, i) => {
+                if (i < iteration) return letter;
+                return chars[Math.floor(Math.random() * chars.length)];
+            }).join('');
+            textNode.textContent = newText;
+            if (iteration >= originalText.length) {
+                textNode.textContent = originalText;
+                clearInterval(interval);
+                isAnimating = false;
+            }
+            iteration += 0.5;
+        }, 40);
+    });
+})();
+
 // ========== MENÚ MÓVIL ==========
 (function initMobileMenu() {
     const hamburger = document.getElementById('hamburger');
@@ -100,6 +127,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
     hamburger.addEventListener('click', () => {
         const isOpen = mobileMenu.classList.toggle('active');
         hamburger.classList.toggle('active');
+        hamburger.setAttribute('aria-expanded', isOpen);
         document.body.style.overflow = isOpen ? 'hidden' : '';
         if (isOpen) {
             gsap.to(links, { opacity: 1, y: 0, duration: 0.6, stagger: 0.07, ease: 'power3.out', delay: 0.3 });
@@ -112,6 +140,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
         link.addEventListener('click', () => {
             mobileMenu.classList.remove('active');
             hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
         });
     });
@@ -129,22 +158,122 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
     });
 })();
 
-// ========== SPLIT TEXT ANIMATION (HERO + TÍTULOS) ==========
-(function initSplitText() {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// ========== HERO ENTRANCE (se llama tras el preloader) ==========
+// Los elementos del hero empiezan invisibles vía CSS:
+// .services-hero .section-tag,
+// .services-hero .services-title,
+// .services-hero .hero-desc,
+// .services-hero .hero-stat,
+// .services-hero .hero-scroll-cta,
+// .services-hero .hero-scroll-indicator { opacity: 0; }
+function initHeroEntrance() {
+    if (prefersReducedMotion) {
+        document.querySelectorAll(
+            '.services-hero .section-tag, .services-title, .hero-desc, .hero-stat, .hero-scroll-cta, .hero-scroll-indicator'
+        ).forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+        initSplitTitle(); // igual arrancamos el split para el resto de la página
+        return;
+    }
+
+    const tag = document.querySelector('.services-hero .section-tag');
+    const heroDesc = document.querySelector('.hero-desc');
+    const heroStats = document.querySelectorAll('.hero-stat');
+    const heroCta = document.querySelector('.hero-scroll-cta');
+    const scrollInd = document.querySelector('.hero-scroll-indicator');
+
+    // Primero el tag (label pequeño)
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    if (tag) {
+        tl.fromTo(tag,
+            { opacity: 0, x: -20 },
+            { opacity: 1, x: 0, duration: 0.6 }
+        );
+    }
+
+    // Luego el título con split word por word
+    tl.add(() => initSplitTitle(), '-=0.2');
+
+    // Luego desc, stats y cta en cascada
+    if (heroDesc) {
+        tl.fromTo(heroDesc,
+            { opacity: 0, y: 22 },
+            { opacity: 1, y: 0, duration: 0.7 },
+            '+=0.5'   // espera a que terminen las palabras del título
+        );
+    }
+    if (heroStats.length) {
+        tl.fromTo(heroStats,
+            { opacity: 0, y: 18 },
+            { opacity: 1, y: 0, duration: 0.55, stagger: 0.12 },
+            '-=0.3'
+        );
+    }
+    if (heroCta) {
+        tl.fromTo(heroCta,
+            { opacity: 0, y: 12 },
+            { opacity: 1, y: 0, duration: 0.5 },
+            '-=0.2'
+        );
+    }
+    if (scrollInd) {
+        tl.fromTo(scrollInd,
+            { opacity: 0 },
+            { opacity: 1, duration: 0.6 },
+            '-=0.1'
+        );
+    }
+}
+
+// ========== SPLIT TEXT — Hero título ==========
+function initSplitTitle() {
+    const heroTitle = document.querySelector('.services-title');
+    if (!heroTitle || prefersReducedMotion) return;
+
+    const originalHTML = heroTitle.innerHTML;
+    const parts = originalHTML.split(/(<br\s*\/?>)/i);
+    let newHTML = '';
+    parts.forEach(part => {
+        if (part.match(/<br\s*\/?>/i)) {
+            newHTML += part;
+        } else {
+            part.split(/(\s+)/).forEach(word => {
+                if (!word.trim()) {
+                    newHTML += word;
+                } else {
+                    newHTML += `<span class="split-word-wrapper" style="display:inline-block;overflow:hidden;vertical-align:top"><span class="split-word-inner" style="display:inline-block;opacity:0;transform:translateY(32px) rotateX(-20deg);will-change:transform,opacity">${word}</span></span>`;
+                }
+            });
+        }
+    });
+    heroTitle.innerHTML = newHTML;
+
+    const words = heroTitle.querySelectorAll('.split-word-inner');
+    // Animamos con delay escalonado — sin ScrollTrigger porque el hero ya es visible
+    words.forEach((word, i) => {
+        setTimeout(() => {
+            word.style.transition = 'opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1)';
+            word.style.opacity = '1';
+            word.style.transform = 'translateY(0) rotateX(0)';
+        }, i * 45);
+    });
+
+    // Retornar duración estimada para que el timeline la espere
+    return words.length * 45;
+}
+
+// ========== SPLIT TEXT — Títulos de sección (con ScrollTrigger) ==========
+(function initSectionTitles() {
     if (prefersReducedMotion) return;
 
-    // Función para aplicar split a cualquier elemento con [data-split]
-    function applySplit(element) {
-        const originalHTML = element.innerHTML;
-        const parts = originalHTML.split(/(<br\s*\/?>)/i);
+    document.querySelectorAll('.section-title, .paquetes-title, .cta-content h2').forEach(title => {
+        const parts = title.innerHTML.split(/(<br\s*\/?>)/i);
         let newHTML = '';
         parts.forEach(part => {
             if (part.match(/<br\s*\/?>/i)) {
                 newHTML += part;
             } else {
-                const words = part.split(/(\s+)/);
-                words.forEach(word => {
+                part.split(/(\s+)/).forEach(word => {
                     if (!word.trim()) {
                         newHTML += word;
                     } else {
@@ -153,173 +282,104 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
                 });
             }
         });
-        element.innerHTML = newHTML;
-        return element.querySelectorAll('.split-word-inner');
-    }
+        title.innerHTML = newHTML;
 
-    // Hero title: se anima al entrar (inmediatamente porque el hero es visible)
-    const heroTitle = document.querySelector('.services-title');
-    if (heroTitle) {
-        const words = applySplit(heroTitle);
-        // Animación escalonada al cargar (sin ScrollTrigger)
-        setTimeout(() => {
-            words.forEach((word, i) => {
-                setTimeout(() => {
-                    word.style.transition = 'opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)';
-                    word.style.opacity = '1';
-                    word.style.transform = 'translateY(0) rotateX(0)';
-                }, i * 40);
-            });
-        }, 300);
-    }
-
-    // Otros títulos (section-title, paquetes-title, etc.) con ScrollTrigger
-    document.querySelectorAll('.section-title, .paquetes-title, .cta-content h2').forEach(title => {
-        const words = applySplit(title);
+        const inners = title.querySelectorAll('.split-word-inner');
         ScrollTrigger.create({
             trigger: title,
             start: 'top 85%',
+            once: true,
             onEnter: () => {
-                words.forEach((word, i) => {
+                inners.forEach((word, i) => {
                     setTimeout(() => {
                         word.style.transition = 'opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1)';
                         word.style.opacity = '1';
                         word.style.transform = 'translateY(0) rotateX(0)';
                     }, i * 35);
                 });
-            },
-            once: true
+            }
         });
     });
 })();
 
-// ========== ENTRADA DE ELEMENTOS CON GSAP (sin conflictos) ==========
-
-// 1. Hero: label, stats, scroll-cta
-const heroLabel = document.querySelector('.services-hero .section-tag');
-const heroStats = document.querySelectorAll('.hero-stat');
-const heroScrollCta = document.querySelector('.hero-scroll-cta');
-if (heroLabel) gsap.from(heroLabel, { opacity: 0, y: 20, duration: 0.7, delay: 0.2 });
-if (heroStats.length) gsap.from(heroStats, { opacity: 0, y: 20, duration: 0.6, stagger: 0.15, delay: 0.4 });
-if (heroScrollCta) gsap.from(heroScrollCta, { opacity: 0, y: 15, duration: 0.6, delay: 0.8 });
-
-// 2. Service Cards (stagger al hacer scroll)
-const serviceCards = document.querySelectorAll('.service-card');
-if (serviceCards.length) {
-    gsap.from(serviceCards, {
-        opacity: 0,
-        y: 50,
-        duration: 0.8,
-        stagger: 0.12,
-        scrollTrigger: {
-            trigger: '.services-grid',
-            start: 'top 85%',
-            toggleActions: 'play none none none'
-        }
-    });
-}
-
-// 3. Paquete Cards (stagger)
-const paqueteCards = document.querySelectorAll('.paquete-card');
-if (paqueteCards.length) {
-    gsap.from(paqueteCards, {
-        opacity: 0,
-        y: 40,
-        duration: 0.7,
-        stagger: 0.1,
-        scrollTrigger: {
-            trigger: '.paquetes-grid',
-            start: 'top 85%',
-            toggleActions: 'play none none none'
-        }
-    });
-}
-
-// 4. Timeline Steps (proceso)
-const timelineSteps = document.querySelectorAll('.timeline-step');
-if (timelineSteps.length) {
-    gsap.from(timelineSteps, {
-        opacity: 0,
-        y: 35,
-        duration: 0.7,
-        stagger: 0.15,
-        scrollTrigger: {
-            trigger: '.proceso-timeline',
-            start: 'top 85%',
-            toggleActions: 'play none none none'
-        }
-    });
-}
-
-// 5. CTA Buttons
-const ctaButtons = document.querySelectorAll('.cta-buttons .btn');
-if (ctaButtons.length) {
-    gsap.from(ctaButtons, {
-        opacity: 0,
-        y: 25,
-        duration: 0.6,
-        stagger: 0.12,
-        scrollTrigger: {
-            trigger: '.cta-buttons',
-            start: 'top 88%',
-            toggleActions: 'play none none none'
-        }
-    });
-}
-
-// 6. Section Tags (pequeña entrada desde izquierda)
-document.querySelectorAll('.section-tag').forEach(tag => {
-    if (tag.closest('.services-hero')) return; // ya animado
-    gsap.from(tag, {
-        opacity: 0,
-        x: -20,
-        duration: 0.6,
-        scrollTrigger: {
-            trigger: tag,
-            start: 'top 90%',
-            toggleActions: 'play none none none'
-        }
-    });
-});
-
-// 7. Footer columns (stagger)
-const footerCols = document.querySelectorAll('.footer-grid > *');
-if (footerCols.length) {
-    gsap.from(footerCols, {
-        opacity: 0,
-        y: 30,
-        duration: 0.7,
-        stagger: 0.1,
-        scrollTrigger: {
-            trigger: '.footer-grid',
-            start: 'top 88%',
-            toggleActions: 'play none none none'
-        }
-    });
-}
-
 // ========== PARALLAX HERO ==========
-const heroBg = document.querySelector('.services-hero .hero-bg-img');
-if (heroBg) {
+(function initHeroParallax() {
+    const heroBg = document.querySelector('.services-hero .hero-bg-img');
+    if (!heroBg) return;
     gsap.to(heroBg, {
         yPercent: 20,
         ease: 'none',
-        scrollTrigger: {
-            trigger: '.services-hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-        }
+        scrollTrigger: { trigger: '.services-hero', start: 'top top', end: 'bottom top', scrub: true }
     });
-}
+})();
+
+// ========== SECTION TAGS (fuera del hero) ==========
+(function initSectionTags() {
+    document.querySelectorAll('.section-tag').forEach(tag => {
+        if (tag.closest('.services-hero')) return; // ya animado en hero
+        gsap.from(tag, {
+            opacity: 0, x: -20, duration: 0.6,
+            scrollTrigger: { trigger: tag, start: 'top 90%', once: true }
+        });
+    });
+})();
+
+// ========== SERVICE CARDS ==========
+(function initServicesCards() {
+    const cards = document.querySelectorAll('.service-card');
+    if (!cards.length) return;
+    gsap.from(cards, {
+        opacity: 0, y: 50, duration: 0.8, stagger: 0.12,
+        scrollTrigger: { trigger: '.services-grid', start: 'top 85%', toggleActions: 'play none none none' }
+    });
+})();
+
+// ========== PAQUETES CARDS ==========
+(function initPaquetes() {
+    const cards = document.querySelectorAll('.paquete-card');
+    if (!cards.length) return;
+    gsap.from(cards, {
+        opacity: 0, y: 40, duration: 0.7, stagger: 0.1,
+        scrollTrigger: { trigger: '.paquetes-grid', start: 'top 85%', toggleActions: 'play none none none' }
+    });
+})();
+
+// ========== PROCESO STEPS ==========
+(function initProcesoSteps() {
+    const steps = document.querySelectorAll('.timeline-step');
+    if (!steps.length) return;
+    gsap.from(steps, {
+        opacity: 0, y: 35, duration: 0.7, stagger: 0.15,
+        scrollTrigger: { trigger: '.proceso-timeline', start: 'top 85%', toggleActions: 'play none none none' }
+    });
+})();
+
+// ========== CTA BUTTONS ==========
+(function initCTAButtons() {
+    const buttons = document.querySelectorAll('.cta-buttons .btn');
+    if (!buttons.length) return;
+    gsap.from(buttons, {
+        opacity: 0, y: 25, duration: 0.6, stagger: 0.12,
+        scrollTrigger: { trigger: '.cta-buttons', start: 'top 88%', toggleActions: 'play none none none' }
+    });
+})();
+
+// ========== FOOTER COLUMNS ==========
+(function initFooter() {
+    gsap.from('.footer-grid > *', {
+        opacity: 0, y: 30, duration: 0.7, stagger: 0.1,
+        scrollTrigger: { trigger: '.footer-grid', start: 'top 88%', toggleActions: 'play none none none' }
+    });
+})();
 
 // ========== MARQUEE PAUSE ON HOVER ==========
-const tickerTrack = document.querySelector('.ticker-track');
-if (tickerTrack) {
+(function initMarquee() {
+    const tickerTrack = document.querySelector('.ticker-track');
+    if (!tickerTrack) return;
     const wrapper = tickerTrack.parentElement;
     wrapper.addEventListener('mouseenter', () => tickerTrack.style.animationPlayState = 'paused');
     wrapper.addEventListener('mouseleave', () => tickerTrack.style.animationPlayState = 'running');
-}
+})();
 
 // ========== SMOOTH SCROLL PARA ANCLAS ==========
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -331,21 +391,34 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         e.preventDefault();
         const offset = 80;
         const targetY = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top: targetY, behavior: 'smooth' });
-        // Cerrar menú móvil si está abierto
+        const startY = window.scrollY;
+        const dist = targetY - startY;
+        const dur = 1000;
+        let startTime = null;
+        const ease = t => 1 - Math.pow(1 - t, 3); // easeOutCubic
+        function step(ts) {
+            if (!startTime) startTime = ts;
+            const progress = Math.min((ts - startTime) / dur, 1);
+            window.scrollTo(0, startY + dist * ease(progress));
+            if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
         const mobileMenu = document.getElementById('mobileMenu');
         const hamburger = document.getElementById('hamburger');
         if (mobileMenu && mobileMenu.classList.contains('active')) {
             mobileMenu.classList.remove('active');
             hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
         }
     });
 });
 
-// ========== FALLBACK DE SEGURIDAD (nada invisible) ==========
+// ========== FALLBACK DE SEGURIDAD (nada invisible tras 4s) ==========
 setTimeout(() => {
-    document.querySelectorAll('.service-card, .paquete-card, .timeline-step, .hero-stat, .cta-buttons .btn').forEach(el => {
+    document.querySelectorAll(
+        '.service-card, .paquete-card, .timeline-step, .hero-stat, .cta-buttons .btn, .hero-desc, .hero-scroll-cta, .hero-scroll-indicator, .section-tag'
+    ).forEach(el => {
         if (parseFloat(window.getComputedStyle(el).opacity) < 0.1) {
             el.style.opacity = '1';
             el.style.transform = 'none';
@@ -358,4 +431,4 @@ setTimeout(() => {
     ScrollTrigger.refresh();
 }, 4000);
 
-console.log('%c INNOVO STUDIO — SERVICIOS (animaciones corregidas)', 'background:#9A4E28;color:#F5F1EB;font-size:13px;padding:6px 14px;font-weight:700;letter-spacing:3px;');
+console.log('%c INNOVO STUDIO — SERVICIOS', 'background:#9A4E28;color:#F5F1EB;font-size:13px;padding:6px 14px;font-weight:700;letter-spacing:3px;');
