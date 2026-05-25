@@ -46,6 +46,8 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
+    overflow-x: hidden;
+    max-width: 100%;
 }
 
 body {
@@ -54,17 +56,18 @@ body {
     color: var(--off-white);
     line-height: 1.5;
     overflow-x: hidden;
+    max-width: 100%;
     -webkit-font-smoothing: antialiased;
 }
 
 .container {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0 3rem;
+    padding: 0 clamp(1rem, 5vw, 3rem);
 }
 
 .section {
-    padding: 10rem 0;
+    padding: clamp(4rem, 8vw, 10rem) 0;
 }
 
 img {
@@ -743,6 +746,13 @@ h3 {
     object-fit: cover;
     transform: scale(1.05);
     animation: heroVideoZoom 20s ease-in-out infinite alternate;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    will-change: opacity;
+}
+
+.services-hero .hero-bg-video.loaded {
+    opacity: 1;
 }
 
 @keyframes heroVideoZoom {
@@ -2000,15 +2010,36 @@ h3 {
 }
 
 /* ========== RESPONSIVE ========== */
+
+/* Mobile S/L: 320–480px */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .hero-content {
+        padding: 0 1rem;
+    }
+
+    .nav-container {
+        padding: 0 1rem;
+    }
+}
+
+/* Tablet portrait and below: 768px */
 @media (max-width: 768px) {
     .container {
-        padding: 0 1.5rem;
+        padding: 0 clamp(1rem, 4vw, 1.5rem);
+    }
+
+    .nav-container {
+        padding: 0 clamp(1rem, 4vw, 1.5rem);
     }
 
     .hero-content {
         flex-direction: column;
         align-items: flex-start;
-        padding: 0 1.5rem;
+        padding: 0 clamp(1rem, 4vw, 1.5rem);
     }
 
     .hero-right {
@@ -2024,15 +2055,15 @@ h3 {
     }
 
     .section {
-        padding: 5rem 0;
+        padding: clamp(3rem, 8vw, 5rem) 0;
     }
 
     .servicios-page,
     .paquetes,
     .proceso-servicios,
     .cta-final {
-        padding-top: 5rem;
-        padding-bottom: 5rem;
+        padding-top: clamp(3rem, 8vw, 5rem);
+        padding-bottom: clamp(3rem, 8vw, 5rem);
     }
 
     .whatsapp-float {
@@ -2040,6 +2071,13 @@ h3 {
         right: 1.25rem;
         width: 48px;
         height: 48px;
+    }
+}
+
+/* Desktop XL: 1536px+ */
+@media (min-width: 1536px) {
+    .container {
+        max-width: 1440px;
     }
 }
 

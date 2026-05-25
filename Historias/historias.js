@@ -5,6 +5,90 @@
 
 'use strict';
 
+// Registrar ScrollTrigger si está cargado
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
+
+// ========== PRELOADER (igual a inicio/servicios/contacto) ==========
+(function initPreloader() {
+    const preloader = document.getElementById('preloader');
+    if (!preloader) return;
+    document.body.style.overflow = 'hidden';
+    const counterEl = preloader.querySelector('.preloader-counter');
+    const barFill = document.getElementById('preloaderBarFill');
+    const veil = preloader.querySelector('.preloader-veil');
+    let obj = { val: 0 };
+    
+    gsap.to(obj, {
+        val: 100,
+        duration: 1.2,
+        ease: 'power1.inOut',
+        onUpdate: () => {
+            const percent = Math.floor(obj.val);
+            if (counterEl) counterEl.textContent = percent + '%';
+            if (barFill) barFill.style.width = percent + '%';
+        },
+        onComplete: () => {
+            gsap.delayedCall(0.2, () => {
+                const target = veil || preloader;
+                gsap.to(target, {
+                    yPercent: -100,
+                    duration: 0.9,
+                    ease: 'power3.inOut',
+                    onComplete: () => {
+                        preloader.style.display = 'none';
+                        document.body.style.overflow = '';
+                        if (typeof ScrollTrigger !== 'undefined') {
+                            ScrollTrigger.refresh();
+                        }
+                    }
+                });
+            });
+        }
+    });
+})();
+
+// ========== TRANSICIÓN ENTRE PÁGINAS (igual a inicio/servicios/contacto) ==========
+(function initPageTransitions() {
+    const curtain = document.getElementById('pageCurtain');
+    if (!curtain) return;
+    gsap.to(curtain, { yPercent: -100, duration: 0.8, ease: 'power3.inOut', delay: 0.1 });
+    document.querySelectorAll('a[href]').forEach(link => {
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('tel')) return;
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.getElementById('hamburger');
+            if (mobileMenu && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                hamburger && hamburger.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            gsap.to(curtain, {
+                yPercent: 0,
+                duration: 0.7,
+                ease: 'power3.inOut',
+                onComplete: () => { window.location.href = href; }
+            });
+        });
+    });
+})();
+
+// ========== SCROLL PROGRESS BAR (igual a inicio/servicios/contacto) ==========
+(function initScrollProgress() {
+    const bar = document.getElementById('scrollProgress');
+    if (!bar) return;
+    ScrollTrigger.create({
+        start: 'top top',
+        end: 'bottom bottom',
+        onUpdate: (self) => {
+            gsap.set(bar, { scaleX: self.progress });
+        }
+    });
+})();
+
 /* ══════════════════════════════
    0. TEXT SPLIT — GENERALIZED TITLES REVEALS
    ══════════════════════════════ */

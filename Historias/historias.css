@@ -37,6 +37,7 @@ html {
     background-color: var(--color-cream);
     color: var(--color-black);
     overflow-x: hidden;
+    max-width: 100%;
 }
 
 body {
@@ -44,6 +45,7 @@ body {
     font-weight: 400;
     line-height: 1.6;
     overflow-x: hidden;
+    max-width: 100%;
     background-color: var(--color-cream);
     -webkit-font-smoothing: antialiased;
 }
@@ -57,12 +59,18 @@ body.menu-open {
     width: 100%;
     max-width: 1300px;
     margin: 0 auto;
-    padding: 0 4rem;
+    padding: 0 clamp(1rem, 4vw, 4rem);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
     .container {
-        padding: 0 2rem;
+        padding: 0 1rem;
+    }
+}
+
+@media (min-width: 1536px) {
+    .container {
+        max-width: 1440px;
     }
 }
 
@@ -1060,4 +1068,81 @@ body.cursor-on-work .cursor-ring::after {
 .reveal.revealed, .reveal.is-visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* ========== UNIFIED ELEMENTS: PRELOADER, CURTAIN & PROGRESS ========== */
+#scrollProgress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--copper, #9A4E28);
+    transform-origin: left;
+    transform: scaleX(0);
+    z-index: 9999;
+    pointer-events: none;
+}
+
+#pageCurtain {
+    position: fixed;
+    inset: 0;
+    background: #0E0E0E;
+    z-index: 9998;
+    pointer-events: none;
+}
+
+#preloader {
+    position: fixed;
+    inset: 0;
+    background: #0E0E0E;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.preloader-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: #F5F1EB;
+}
+
+.preloader-logo span {
+    color: var(--copper-light, #C47A4E);
+}
+
+.preloader-counter {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: #6E6A65;
+}
+
+.preloader-bar {
+    width: 200px;
+    height: 1px;
+    background: rgba(245, 241, 235, 0.07);
+    position: relative;
+    overflow: hidden;
+}
+
+.preloader-bar-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: var(--copper, #9A4E28);
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.preloader-veil {
+    position: absolute;
+    inset: 0;
+    background: #0E0E0E;
 }

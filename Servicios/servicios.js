@@ -302,9 +302,28 @@ function initSplitTitle() {
     });
 })();
 
+// ========== HERO VIDEO — Fade-in suave sin flash negro ==========
+(function initHeroVideo() {
+    const heroVideo = document.querySelector('.services-hero .hero-bg-video');
+    if (!heroVideo) return;
+
+    const showVideo = () => heroVideo.classList.add('loaded');
+
+    // Si ya tiene datos suficientes para reproducir, mostrarlo de inmediato
+    if (heroVideo.readyState >= 3) {
+        showVideo();
+    } else {
+        heroVideo.addEventListener('canplay', showVideo, { once: true });
+        // Fallback: si tarda más de 2s, mostrarlo de todas formas
+        setTimeout(() => {
+            if (!heroVideo.classList.contains('loaded')) showVideo();
+        }, 2000);
+    }
+})();
+
 // ========== PARALLAX HERO ==========
 (function initHeroParallax() {
-    const heroBg = document.querySelector('.services-hero .hero-bg-img');
+    const heroBg = document.querySelector('.services-hero .hero-bg-video');
     if (!heroBg) return;
     gsap.to(heroBg, {
         yPercent: 20,

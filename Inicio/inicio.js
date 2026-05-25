@@ -227,6 +227,27 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 })();
 
 // ================================================================
+//  5.5. HERO VIDEO — Fade-in suave sin flash negro
+// ================================================================
+(function initHeroVideo() {
+    const heroVideo = document.querySelector('.hero-video');
+    if (!heroVideo) return;
+
+    const showVideo = () => heroVideo.classList.add('loaded');
+
+    // Si ya tiene datos suficientes para reproducir, mostrarlo de inmediato
+    if (heroVideo.readyState >= 3) {
+        showVideo();
+    } else {
+        heroVideo.addEventListener('canplay', showVideo, { once: true });
+        // Fallback: si tarda más de 2s, mostrarlo de todas formas
+        setTimeout(() => {
+            if (!heroVideo.classList.contains('loaded')) showVideo();
+        }, 2000);
+    }
+})();
+
+// ================================================================
 //  6. PARALLAX HERO
 // ================================================================
 (function initHeroParallax() {
@@ -238,6 +259,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
     });
 })();
+
 
 // ================================================================
 //  7. SPLIT TEXT EN TÍTULOS (palabras individuales)
