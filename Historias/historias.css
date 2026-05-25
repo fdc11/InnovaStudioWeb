@@ -7,12 +7,17 @@
    1. VARIABLES & CORE SETTINGS
    ───────────────────────────────────────────────────────────── */
 :root {
-    /* Color Palette */
-    --color-black: #332E2B;
-    --color-burgundy: #72393F;
-    --color-taupe: #AD9D8D;
-    --color-sand: #D0C8BD;
-    --color-cream: #F0E9E3;
+    /* Color Palette (Synced with Global Identity) */
+    --color-black: #0E0E0E;
+    --color-burgundy: #c87941;
+    --color-taupe: #9A9590;
+    --color-sand: #111110;
+    --color-cream: #F5F1EB;
+    
+    /* Variables for Navbar Logo Compatibility */
+    --copper: #c87941;
+    --copper-light: #c87941;
+    --slate-light: #9A9590;
     
     /* Typography */
     --font-display: 'TT Berlinerins', serif;
@@ -114,14 +119,14 @@ a {
 body.cursor-hovering .cursor-ring {
     width: 50px;
     height: 50px;
-    background-color: rgba(114, 57, 63, 0.15);
+    background-color: rgba(200, 121, 65, 0.15);
     border-color: var(--color-burgundy);
 }
 
 body.cursor-on-work .cursor-ring {
     width: 70px;
     height: 70px;
-    background-color: rgba(114, 57, 63, 0.05);
+    background-color: rgba(200, 121, 65, 0.05);
     border-color: var(--color-burgundy);
 }
 
@@ -222,10 +227,10 @@ body.cursor-on-work .cursor-ring::after {
 }
 
 .navbar.scrolled {
-    background-color: rgba(51, 46, 43, 0.95);
+    background-color: rgba(14, 14, 14, 0.95);
     backdrop-filter: blur(10px);
     padding: 1.2rem 0;
-    border-bottom: 1px solid rgba(173, 157, 141, 0.1);
+    border-bottom: 1px solid rgba(154, 149, 144, 0.1);
 }
 
 .nav-container {
@@ -349,13 +354,13 @@ body.cursor-on-work .cursor-ring::after {
     height: 48px;
     border-radius: 50%;
     border: 1px solid rgba(240, 233, 227, 0.15);
-    background-color: rgba(51, 46, 43, 0.3);
+    background-color: rgba(14, 14, 14, 0.3);
     transition: all 0.3s var(--transition-fast);
 }
 
 .hamburger:hover, .hamburger.active {
     border-color: var(--color-burgundy);
-    background-color: rgba(114, 57, 63, 0.2);
+    background-color: rgba(200, 121, 65, 0.2);
 }
 
 .ham-line {
@@ -370,9 +375,9 @@ body.cursor-on-work .cursor-ring::after {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
-    background: radial-gradient(circle at 10% 20%, rgba(51, 46, 43, 0.98) 0%, rgba(35, 31, 29, 0.99) 90%);
+    background: radial-gradient(circle at 10% 20%, rgba(14, 14, 14, 0.98) 0%, rgba(10, 10, 10, 0.99) 90%);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     z-index: 1000;
@@ -772,7 +777,7 @@ body.cursor-on-work .cursor-ring::after {
     left: 0;
     width: 100%;
     padding: 3.5rem;
-    background: linear-gradient(to top, rgba(51, 46, 43, 0.95) 20%, rgba(51, 46, 43, 0) 100%);
+    background: linear-gradient(to top, rgba(14, 14, 14, 0.95) 20%, rgba(14, 14, 14, 0) 100%);
     z-index: 3;
     display: flex;
     flex-direction: column;

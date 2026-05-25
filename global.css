@@ -1,0 +1,415 @@
+/* =========================================================
+   INNOVO STUDIO — GLOBAL CSS
+   Identidad visual, Reset, Layout compartido, Navbar y Footer
+   ========================================================= */
+
+:root {
+    --ink: #0E0E0E;
+    --stone: #111110;
+    --off-white: #F5F1EB;
+    --cream: #EDE8E0;
+    --copper: #9A4E28;
+    --copper-light: #C47A4E;
+    --copper-glow: rgba(196, 122, 78, 0.12);
+    --slate: #6E6A65;
+    --slate-light: #9A9590;
+    --border: rgba(245, 241, 235, 0.07);
+    --border-light: rgba(245, 241, 235, 0.14);
+    
+    /* Fallbacks para Historias y otros */
+    --color-black: #0E0E0E;
+    --color-burgundy: #c87941;
+    --color-taupe: #9A9590;
+    --color-sand: #111110;
+    --color-cream: #F5F1EB;
+
+    --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-slow: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ================== REGLAS OBLIGATORIAS (TAREA 6) ================== */
+/* Reset base */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: hidden; max-width: 100%; }
+
+body {
+    font-family: 'Syne', sans-serif;
+    background-color: var(--ink);
+    color: var(--off-white);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Tipografía escalable */
+.hero-title     { font-size: clamp(2.8rem, 10vw, 9rem); line-height: 0.95; }
+.section-title  { font-size: clamp(2rem, 5vw, 4.5rem); }
+.body-text      { font-size: clamp(0.95rem, 2vw, 1.1rem); }
+
+/* Contenedores */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 5vw, 5rem);
+}
+
+/* Secciones */
+.section {
+  padding: clamp(4rem, 10vw, 10rem) 0;
+}
+
+/* Grids */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* Imágenes */
+img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+/* Touch targets */
+a, button { min-height: 44px; min-width: 44px; }
+
+/* TAREA 7: Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ================== GENERAL ESTILOS ================== */
+::selection {
+    background: var(--copper);
+    color: var(--off-white);
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+    background: var(--ink);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--copper);
+    border-radius: 2px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Componentes Comunes */
+.section-dark {
+    background: var(--ink);
+    color: var(--off-white);
+}
+.section-light {
+    background: var(--off-white);
+    color: var(--ink);
+}
+
+/* ================== PRELOADER & CURTAIN ================== */
+#scrollProgress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--copper);
+    transform-origin: left;
+    transform: scaleX(0);
+    z-index: 9999;
+    pointer-events: none;
+}
+
+#pageCurtain {
+    position: fixed;
+    inset: 0;
+    background: var(--ink);
+    z-index: 9998;
+    pointer-events: none;
+}
+
+#preloader {
+    position: fixed;
+    inset: 0;
+    background: var(--ink);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.preloader-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--off-white);
+}
+.preloader-logo span { color: var(--copper-light); }
+.preloader-counter {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--slate);
+}
+.preloader-bar {
+    width: 200px;
+    height: 1px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+}
+.preloader-bar-fill {
+    position: absolute;
+    left: 0; top: 0; height: 100%;
+    background: var(--copper);
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+/* ================== NAVBAR GLOBAL ================== */
+.navbar {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    z-index: 1000;
+    padding: 1.5rem 0;
+    transition: var(--transition);
+}
+.navbar.scrolled {
+    background: rgba(10, 10, 10, 0.92);
+    backdrop-filter: blur(20px);
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--border);
+}
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: flex;
+    justify-content: space-between; /* modificado para mobile default, y desktop overrrides */
+    align-items: center;
+    width: 100%;
+}
+@media (min-width: 1025px) {
+    .nav-container {
+        justify-content: center;
+        gap: 3.5rem;
+    }
+}
+.nav-left-links, .nav-right-links {
+    display: none;
+    gap: 2.75rem;
+    align-items: center;
+}
+@media (min-width: 1025px) {
+    .nav-left-links, .nav-right-links { display: flex; }
+}
+.nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: 0.12em;
+    color: var(--off-white);
+    text-transform: uppercase;
+    text-align: center;
+    flex-shrink: 0;
+}
+.nav-logo span { color: var(--copper-light); }
+
+.nav-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 235, 0.75);
+    transition: var(--transition-fast);
+    position: relative;
+    padding-bottom: 3px;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; width: 0; height: 1px;
+    background: var(--copper-light);
+    transition: width 0.35s ease;
+}
+.nav-link:hover, .nav-link.active { color: var(--off-white); }
+.nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+.nav-link.nav-link-box {
+    border: 1px solid var(--copper);
+    padding: 0.55rem 1.3rem;
+    color: var(--off-white);
+}
+.nav-link.nav-link-box::after { display: none; }
+.nav-link.nav-link-box:hover {
+    background: var(--copper);
+    color: var(--ink);
+}
+
+.hamburger {
+    display: flex;
+    background: transparent;
+    border: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px;
+}
+@media (min-width: 1025px) { .hamburger { display: none; } }
+.ham-line {
+    width: 22px; height: 1px;
+    background: var(--off-white);
+    transition: var(--transition);
+}
+.hamburger.active .ham-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active .ham-line:nth-child(2) { opacity: 0; }
+.hamburger.active .ham-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile Menu Global (Basado en inicio) */
+.mobile-menu {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    min-height: 100dvh;
+    background: #080808;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(-100%);
+    transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.mobile-menu.active { transform: translateY(0); }
+.mobile-menu-inner {
+    display: flex; flex-direction: column; height: 100%; padding: 0; position: relative; z-index: 1;
+}
+.mobile-menu-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 1.75rem; border-bottom: 1px solid rgba(245, 241, 235, 0.06);
+}
+.mobile-menu-logo {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.mobile-menu-logo span { color: var(--copper-light); }
+.mobile-nav-area { flex: 1; padding: 2rem 1.75rem; display: flex; flex-direction: column; justify-content: center; }
+.mobile-links { list-style: none; margin: 0; padding: 0; }
+.mobile-links li { border-bottom: 1px solid rgba(245, 241, 235, 0.05); }
+.mobile-link { display: flex; align-items: center; gap: 1.25rem; padding: 1.1rem 0; }
+.mobile-link-num { font-family: 'DM Mono', monospace; font-size: 0.55rem; color: var(--copper-light); }
+.mobile-link-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(1.6rem, 7.5vw, 2.6rem); }
+.mobile-footer { padding: 1.5rem 1.75rem; border-top: 1px solid rgba(245, 241, 235, 0.06); }
+
+/* ================== FOOTER UNIFICADO (TAREA 2) ================== */
+.global-footer {
+    background: #060606;
+    border-top: 1px solid var(--border);
+    padding: 5rem 0 2rem;
+    color: var(--off-white);
+}
+
+.global-footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+    .global-footer-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.global-footer-brand {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.global-footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: 0.1em;
+    color: var(--off-white);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+.global-footer-logo span { color: var(--copper-light); }
+
+.global-footer-tagline {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--slate);
+    text-transform: uppercase;
+}
+
+.footer-col h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--copper-light);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.footer-col h4::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col li { margin-bottom: 0.8rem; }
+.footer-col a {
+    color: var(--slate);
+    font-size: 0.9rem;
+    transition: var(--transition-fast);
+}
+.footer-col a:hover { color: var(--off-white); }
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: #4a4845;
+}
+
+/* Acordeón móvil para footer */
+@media (max-width: 767px) {
+    .footer-col h4 {
+        cursor: pointer;
+        padding: 1rem 0;
+        margin-bottom: 0;
+    }
+    .footer-col h4::after {
+        content: '+';
+        flex: none;
+        background: none;
+        margin-left: auto;
+        font-size: 1rem;
+    }
+    .footer-col h4.active::after {
+        content: '-';
+    }
+    .footer-col ul, .footer-col .footer-contact-links {
+        display: none;
+        padding-bottom: 1rem;
+    }
+}
+.footer-contact-links { display: flex; flex-direction: column; gap: 0.8rem; }

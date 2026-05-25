@@ -9,147 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// ================================================================
-//  1. PRELOADER — Barra de progreso + contador real
-// ================================================================
-(function initPreloader() {
-    const preloader = document.getElementById('preloader');
-    if (!preloader) return;
-
-    document.body.style.overflow = 'hidden';
-
-    const counterEl = preloader.querySelector('.preloader-counter');
-    const barFill = document.getElementById('preloaderBarFill');
-    const veil = preloader.querySelector('.preloader-veil');
-
-    // Animación de contador y barra
-    let obj = { val: 0 };
-    gsap.to(obj, {
-        val: 100,
-        duration: 1.2,
-        ease: 'power1.inOut',
-        onUpdate: () => {
-            const percent = Math.floor(obj.val);
-            if (counterEl) counterEl.textContent = percent + '%';
-            if (barFill) barFill.style.width = percent + '%';
-        },
-        onComplete: () => {
-            // Pequeña pausa antes de subir el velo
-            gsap.delayedCall(0.2, () => {
-                if (veil) {
-                    gsap.to(veil, {
-                        yPercent: -100,
-                        duration: 0.9,
-                        ease: 'power3.inOut',
-                        onComplete: () => {
-                            preloader.style.display = 'none';
-                            document.body.style.overflow = '';
-                            ScrollTrigger.refresh();
-                        }
-                    });
-                } else {
-                    gsap.to(preloader, {
-                        yPercent: -100,
-                        duration: 0.9,
-                        ease: 'power3.inOut',
-                        onComplete: () => {
-                            preloader.style.display = 'none';
-                            document.body.style.overflow = '';
-                            ScrollTrigger.refresh();
-                        }
-                    });
-                }
-            });
-        }
-    });
-})();
-
-// ================================================================
-//  2. TRANSICIÓN ENTRE PÁGINAS (cortina)
-// ================================================================
-(function initPageTransitions() {
-    const curtain = document.getElementById('pageCurtain');
-    if (!curtain) return;
-
-    gsap.to(curtain, { yPercent: -100, duration: 0.8, ease: 'power3.inOut', delay: 0.1 });
-
-    document.querySelectorAll('a[href]').forEach(link => {
-        const href = link.getAttribute('href');
-        if (!href || href.startsWith('#') || href.startsWith('http') ||
-            href.startsWith('mailto') || href.startsWith('tel')) return;
-
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const target = href;
-
-            // Cerrar menú móvil si está abierto antes de la transición
-            const mobileMenu = document.getElementById('mobileMenu');
-            const hamburger = document.getElementById('hamburger');
-            if (mobileMenu && mobileMenu.classList.contains('active')) {
-                mobileMenu.classList.remove('active');
-                hamburger && hamburger.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-
-            gsap.to(curtain, {
-                yPercent: 0,
-                duration: 0.7,
-                ease: 'power3.inOut',
-                onComplete: () => { window.location.href = target; }
-            });
-        });
-    });
-})();
-
-// ================================================================
-//  3. NAVBAR SCROLL
-// ================================================================
-(function initNavbar() {
-    const navbar = document.getElementById('navbar');
-    if (!navbar) return;
-
-    ScrollTrigger.create({
-        start: 'top -60',
-        onEnter: () => navbar.classList.add('scrolled'),
-        onLeaveBack: () => navbar.classList.remove('scrolled')
-    });
-})();
-
-// ================================================================
-//  4. MENÚ MÓVIL
-// ================================================================
-(function initMobileMenu() {
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    if (!hamburger || !mobileMenu) return;
-
-    const links = mobileMenu.querySelectorAll('.mobile-link');
-    const info = mobileMenu.querySelectorAll('.mobile-info a, .mobile-socials a');
-
-    gsap.set(links, { opacity: 0, y: 40 });
-    gsap.set(info, { opacity: 0 });
-
-    hamburger.addEventListener('click', () => {
-        const isOpen = mobileMenu.classList.toggle('active');
-        hamburger.classList.toggle('active');
-        document.body.style.overflow = isOpen ? 'hidden' : '';
-
-        if (isOpen) {
-            gsap.to(links, { opacity: 1, y: 0, duration: 0.6, stagger: 0.07, ease: 'power3.out', delay: 0.3 });
-            gsap.to(info, { opacity: 1, duration: 0.5, stagger: 0.05, ease: 'power2.out', delay: 0.6 });
-        } else {
-            gsap.to([links, info], { opacity: 0, y: 20, duration: 0.3, stagger: 0.03, ease: 'power2.in' });
-        }
-    });
-
-    mobileMenu.querySelectorAll('.mobile-link').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    });
-})();
+// Funcionalidades de Preloader, Navbar, Menu y Transitions han sido movidas a global.js
 
 // ================================================================
 //  5. HERO — Typewriter + entrada escalonada
@@ -358,23 +218,24 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
         const target = parseInt(counter.getAttribute('data-count'), 10);
         const suffix = counter.getAttribute('data-suffix') || '';
         let triggered = false;
-        ScrollTrigger.create({
-            trigger: counter,
-            start: 'top 85%',
-            onEnter: () => {
-                if (triggered) return;
-                triggered = true;
-                let obj = { val: 0 };
-                gsap.to(obj, {
-                    val: target,
-                    duration: 2,
-                    ease: 'power2.out',
-                    onUpdate: () => {
-                        counter.textContent = Math.floor(obj.val) + suffix;
-                    }
-                });
-            }
-        });
+        const observer = new IntersectionObserver((entries, observerInstance) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !triggered) {
+                    triggered = true;
+                    let obj = { val: 0 };
+                    gsap.to(obj, {
+                        val: target,
+                        duration: 2,
+                        ease: 'power2.out',
+                        onUpdate: () => {
+                            counter.textContent = Math.floor(obj.val) + suffix;
+                        }
+                    });
+                    observerInstance.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+        observer.observe(counter);
     });
 
     // Reveal imagen
