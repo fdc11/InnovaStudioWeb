@@ -1,30 +1,24 @@
 'use strict';
 
 gsap.registerPlugin(ScrollTrigger);
-// ScrollToPlugin eliminado — no se usaba
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Código redundante (Preloader, Navbar, Mobile Menu, Scroll Progress, etc.) movido a global.js
+// Bandera para ejecución única
+let heroEntranceDone = false;
+let splitTitleDone = false;
 
 document.addEventListener('preloaderFinished', initHeroEntrance);
-// Fallback if preloader finishes before this script loads
-setTimeout(initHeroEntrance, 3000);
 
-// ========== HERO ENTRANCE (se llama tras el preloader) ==========
-// Los elementos del hero empiezan invisibles vía CSS:
-// .services-hero .section-tag,
-// .services-hero .services-title,
-// .services-hero .hero-desc,
-// .services-hero .hero-stat,
-// .services-hero .hero-scroll-cta,
-// .services-hero .hero-scroll-indicator { opacity: 0; }
 function initHeroEntrance() {
+    if (heroEntranceDone) return;
+    heroEntranceDone = true;
+
     if (prefersReducedMotion) {
         document.querySelectorAll(
             '.services-hero .section-tag, .services-title, .hero-desc, .hero-stat, .hero-scroll-cta, .hero-scroll-indicator'
         ).forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
-        initSplitTitle(); // igual arrancamos el split para el resto de la página
+        initSplitTitle();
         return;
     }
 
@@ -34,54 +28,37 @@ function initHeroEntrance() {
     const heroCta = document.querySelector('.hero-scroll-cta');
     const scrollInd = document.querySelector('.hero-scroll-indicator');
 
-    // Primero el tag (label pequeño)
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
     if (tag) {
-        tl.fromTo(tag,
-            { opacity: 0, x: -20 },
-            { opacity: 1, x: 0, duration: 0.6 }
-        );
+        tl.fromTo(tag, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.6 });
     }
 
-    // Luego el título con split word por word
     tl.add(() => initSplitTitle(), '-=0.2');
 
-    // Luego desc, stats y cta en cascada
     if (heroDesc) {
-        tl.fromTo(heroDesc,
-            { opacity: 0, y: 22 },
-            { opacity: 1, y: 0, duration: 0.7 },
-            '+=0.5'   // espera a que terminen las palabras del título
-        );
+        tl.fromTo(heroDesc, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.7 }, '+=0.5');
     }
     if (heroStats.length) {
-        tl.fromTo(heroStats,
-            { opacity: 0, y: 18 },
-            { opacity: 1, y: 0, duration: 0.55, stagger: 0.12 },
-            '-=0.3'
-        );
+        tl.fromTo(heroStats, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, stagger: 0.12 }, '-=0.3');
     }
     if (heroCta) {
-        tl.fromTo(heroCta,
-            { opacity: 0, y: 12 },
-            { opacity: 1, y: 0, duration: 0.5 },
-            '-=0.2'
-        );
+        tl.fromTo(heroCta, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.2');
     }
     if (scrollInd) {
-        tl.fromTo(scrollInd,
-            { opacity: 0 },
-            { opacity: 1, duration: 0.6 },
-            '-=0.1'
-        );
+        tl.fromTo(scrollInd, { opacity: 0 }, { opacity: 1, duration: 0.6 }, '-=0.1');
     }
 }
 
-// ========== SPLIT TEXT — Hero título ==========
 function initSplitTitle() {
+    if (splitTitleDone) return;
     const heroTitle = document.querySelector('.services-title');
     if (!heroTitle || prefersReducedMotion) return;
+    // Si ya tiene elementos split, no volver a procesar
+    if (heroTitle.querySelector('.split-word-inner')) {
+        splitTitleDone = true;
+        return;
+    }
 
     const originalHTML = heroTitle.innerHTML;
     const parts = originalHTML.split(/(<br\s*\/?>)/i);
@@ -102,7 +79,6 @@ function initSplitTitle() {
     heroTitle.innerHTML = newHTML;
 
     const words = heroTitle.querySelectorAll('.split-word-inner');
-    // Animamos con delay escalonado — sin ScrollTrigger porque el hero ya es visible
     words.forEach((word, i) => {
         setTimeout(() => {
             word.style.transition = 'opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1)';
@@ -110,16 +86,14 @@ function initSplitTitle() {
             word.style.transform = 'translateY(0) rotateX(0)';
         }, i * 45);
     });
-
-    // Retornar duración estimada para que el timeline la espere
-    return words.length * 45;
+    splitTitleDone = true;
 }
 
-// ========== SPLIT TEXT — Títulos de sección (con ScrollTrigger) ==========
+// ========== SPLIT TEXT — Títulos de sección ==========
 (function initSectionTitles() {
     if (prefersReducedMotion) return;
-
     document.querySelectorAll('.section-title, .paquetes-title, .cta-content h2').forEach(title => {
+        if (title.classList.contains('services-title')) return;
         const parts = title.innerHTML.split(/(<br\s*\/?>)/i);
         let newHTML = '';
         parts.forEach(part => {
@@ -136,12 +110,9 @@ function initSplitTitle() {
             }
         });
         title.innerHTML = newHTML;
-
         const inners = title.querySelectorAll('.split-word-inner');
         ScrollTrigger.create({
-            trigger: title,
-            start: 'top 85%',
-            once: true,
+            trigger: title, start: 'top 85%', once: true,
             onEnter: () => {
                 inners.forEach((word, i) => {
                     setTimeout(() => {
@@ -155,151 +126,81 @@ function initSplitTitle() {
     });
 })();
 
-// ========== HERO VIDEO — Fade-in suave sin flash negro ==========
+// Hero video fade
 (function initHeroVideo() {
     const heroVideo = document.querySelector('.services-hero .hero-bg-video');
     if (!heroVideo) return;
-
     const showVideo = () => heroVideo.classList.add('loaded');
-
-    // Si ya tiene datos suficientes para reproducir, mostrarlo de inmediato
-    if (heroVideo.readyState >= 3) {
-        showVideo();
-    } else {
-        heroVideo.addEventListener('loadeddata', showVideo, { once: true });
-    }
+    if (heroVideo.readyState >= 3) showVideo();
+    else heroVideo.addEventListener('loadeddata', showVideo, { once: true });
     document.addEventListener('preloaderFinished', () => {
-        if (heroVideo.readyState >= 3) {
-            heroVideo.classList.add('loaded');
-        } else {
-            heroVideo.addEventListener('loadeddata', () => heroVideo.classList.add('loaded'), { once: true });
-        }
+        if (heroVideo.readyState >= 3) heroVideo.classList.add('loaded');
+        else heroVideo.addEventListener('loadeddata', () => heroVideo.classList.add('loaded'), { once: true });
     });
 })();
 
-// ========== PARALLAX HERO ==========
+// Parallax
 (function initHeroParallax() {
     const heroBg = document.querySelector('.services-hero .hero-bg-video');
     if (!heroBg) return;
-    gsap.to(heroBg, {
-        yPercent: 20,
-        ease: 'none',
-        scrollTrigger: { trigger: '.services-hero', start: 'top top', end: 'bottom top', scrub: true }
-    });
+    gsap.to(heroBg, { yPercent: 20, ease: 'none', scrollTrigger: { trigger: '.services-hero', start: 'top top', end: 'bottom top', scrub: true } });
 })();
 
-// ========== SECTION TAGS (fuera del hero) ==========
+// Section tags (excepto hero)
 (function initSectionTags() {
     document.querySelectorAll('.section-tag').forEach(tag => {
-        if (tag.closest('.services-hero')) return; // ya animado en hero
-        gsap.from(tag, {
-            opacity: 0, x: -20, duration: 0.6,
-            scrollTrigger: { trigger: tag, start: 'top 90%', once: true }
-        });
+        if (tag.closest('.services-hero')) return;
+        gsap.from(tag, { opacity: 0, x: -20, duration: 0.6, scrollTrigger: { trigger: tag, start: 'top 90%', once: true } });
     });
 })();
 
-// ========== SERVICIOS SHOWCASE — reveal por bloque ==========
+// Servicios bloques reveal
 (function initServiciosBloques() {
     const bloques = document.querySelectorAll('.servicio-bloque');
     if (!bloques.length) return;
-
     bloques.forEach(bloque => {
         const isReverse = bloque.classList.contains('bloque--reverse');
         const content = bloque.querySelector('.bloque-content');
         const media = bloque.querySelector('.bloque-media');
-
-        // Estado inicial
-        if (content) {
-            content.style.opacity = '0';
-            content.style.transform = `translateX(${isReverse ? '-3rem' : '3rem'})`;
-            content.style.transition = 'none';
-        }
-        if (media) {
-            media.style.opacity = '0';
-            media.style.transform = 'scale(1.04)';
-            media.style.transition = 'none';
-        }
-
+        if (content) { content.style.opacity = '0'; content.style.transform = `translateX(${isReverse ? '-3rem' : '3rem'})`; content.style.transition = 'none'; }
+        if (media) { media.style.opacity = '0'; media.style.transform = 'scale(1.04)'; media.style.transition = 'none'; }
         let triggered = false;
         function reveal() {
-            if (triggered) return;
-            triggered = true;
-            if (content) {
-                requestAnimationFrame(() => {
-                    content.style.transition = 'opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1)';
-                    content.style.opacity = '1';
-                    content.style.transform = 'translateX(0)';
-                });
-            }
-            if (media) {
-                setTimeout(() => {
-                    media.style.transition = 'opacity 1.1s cubic-bezier(0.16,1,0.3,1), transform 1.1s cubic-bezier(0.16,1,0.3,1)';
-                    media.style.opacity = '1';
-                    media.style.transform = 'scale(1)';
-                }, 120);
-            }
+            if (triggered) return; triggered = true;
+            if (content) { requestAnimationFrame(() => { content.style.transition = 'opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1)'; content.style.opacity = '1'; content.style.transform = 'translateX(0)'; }); }
+            if (media) { setTimeout(() => { media.style.transition = 'opacity 1.1s cubic-bezier(0.16,1,0.3,1), transform 1.1s cubic-bezier(0.16,1,0.3,1)'; media.style.opacity = '1'; media.style.transform = 'scale(1)'; }, 120); }
         }
-
-        ScrollTrigger.create({
-            trigger: bloque,
-            start: 'top 82%',
-            once: true,
-            onEnter: reveal
-        });
-
-        // Fallback 2.5s
+        ScrollTrigger.create({ trigger: bloque, start: 'top 82%', once: true, onEnter: reveal });
         setTimeout(() => {
             if (triggered) return;
-            const rect = bloque.getBoundingClientRect();
-            if (rect.top < window.innerHeight * 1.1) {
-                reveal();
-            } else {
-                function onScroll() {
-                    if (bloque.getBoundingClientRect().top < window.innerHeight * 0.92) {
-                        reveal();
-                        window.removeEventListener('scroll', onScroll);
-                    }
-                }
+            if (bloque.getBoundingClientRect().top < window.innerHeight * 1.1) reveal();
+            else {
+                function onScroll() { if (bloque.getBoundingClientRect().top < window.innerHeight * 0.92) { reveal(); window.removeEventListener('scroll', onScroll); } }
                 window.addEventListener('scroll', onScroll, { passive: true });
             }
         }, 2500);
     });
 })();
 
-// ========== PAQUETES CARDS ==========
+// Paquetes cards
 (function initPaquetes() {
     const cards = document.querySelectorAll('.paquete-card');
-    if (!cards.length) return;
-    gsap.from(cards, {
-        opacity: 0, y: 40, duration: 0.7, stagger: 0.1,
-        scrollTrigger: { trigger: '.paquetes-grid', start: 'top 85%', toggleActions: 'play none none none' }
-    });
+    if (cards.length) gsap.from(cards, { opacity: 0, y: 40, duration: 0.7, stagger: 0.1, scrollTrigger: { trigger: '.paquetes-grid', start: 'top 85%', toggleActions: 'play none none none' } });
 })();
 
-// ========== PROCESO STEPS ==========
+// Proceso steps
 (function initProcesoSteps() {
     const steps = document.querySelectorAll('.timeline-step');
-    if (!steps.length) return;
-    gsap.from(steps, {
-        opacity: 0, y: 35, duration: 0.7, stagger: 0.15,
-        scrollTrigger: { trigger: '.proceso-timeline', start: 'top 85%', toggleActions: 'play none none none' }
-    });
+    if (steps.length) gsap.from(steps, { opacity: 0, y: 35, duration: 0.7, stagger: 0.15, scrollTrigger: { trigger: '.proceso-timeline', start: 'top 85%', toggleActions: 'play none none none' } });
 })();
 
-// ========== CTA BUTTONS ==========
+// CTA buttons
 (function initCTAButtons() {
     const buttons = document.querySelectorAll('.cta-buttons .btn');
-    if (!buttons.length) return;
-    gsap.from(buttons, {
-        opacity: 0, y: 25, duration: 0.6, stagger: 0.12,
-        scrollTrigger: { trigger: '.cta-buttons', start: 'top 88%', toggleActions: 'play none none none' }
-    });
+    if (buttons.length) gsap.from(buttons, { opacity: 0, y: 25, duration: 0.6, stagger: 0.12, scrollTrigger: { trigger: '.cta-buttons', start: 'top 88%', toggleActions: 'play none none none' } });
 })();
 
-// Animaciones y footer manejadas globalmente o inline en secciones.
-
-// ========== SMOOTH SCROLL PARA ANCLAS ==========
+// Smooth scroll anclas
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
         const targetId = anchor.getAttribute('href');
@@ -313,7 +214,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const dist = targetY - startY;
         const dur = 1000;
         let startTime = null;
-        const ease = t => 1 - Math.pow(1 - t, 3); // easeOutCubic
+        const ease = t => 1 - Math.pow(1 - t, 3);
         function step(ts) {
             if (!startTime) startTime = ts;
             const progress = Math.min((ts - startTime) / dur, 1);
@@ -326,32 +227,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         if (mobileMenu && mobileMenu.classList.contains('active')) {
             mobileMenu.classList.remove('active');
             hamburger.classList.remove('active');
-            hamburger.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
         }
     });
 });
 
-// ========== FALLBACK DE SEGURIDAD (nada invisible tras 4s) ==========
+// Fallback de seguridad (4s) sin forzar el título
 setTimeout(() => {
-    document.querySelectorAll(
-        '.paquete-card, .timeline-step, .hero-stat, .cta-buttons .btn, .hero-desc, .hero-scroll-cta, .hero-scroll-indicator, .section-tag'
-    ).forEach(el => {
-        if (parseFloat(window.getComputedStyle(el).opacity) < 0.1) {
-            el.style.opacity = '1';
-            el.style.transform = 'none';
-        }
+    document.querySelectorAll('.paquete-card, .timeline-step, .hero-stat, .cta-buttons .btn, .hero-desc, .hero-scroll-cta, .hero-scroll-indicator, .section-tag').forEach(el => {
+        if (parseFloat(window.getComputedStyle(el).opacity) < 0.1) { el.style.opacity = '1'; el.style.transform = 'none'; }
     });
-    // Forzar bloques de servicio visibles
-    document.querySelectorAll('.bloque-content, .bloque-media').forEach(el => {
-        el.style.transition = 'none';
-        el.style.opacity = '1';
-        el.style.transform = 'none';
-    });
-    document.querySelectorAll('.split-word-inner').forEach(el => {
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0) rotateX(0)';
-    });
+    document.querySelectorAll('.bloque-content, .bloque-media').forEach(el => { el.style.transition = 'none'; el.style.opacity = '1'; el.style.transform = 'none'; });
+    document.querySelectorAll('.split-word-inner').forEach(el => { el.style.opacity = '1'; el.style.transform = 'translateY(0) rotateX(0)'; });
     ScrollTrigger.refresh();
 }, 4000);
 

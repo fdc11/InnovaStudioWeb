@@ -5,12 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Contacto — Innovo Studio</title>
-    <meta name="description" content="Contáctanos para empezar tu proyecto con Innovo Studio. Respuesta en menos de 24 horas. Lima, Perú.">
-    <!-- Fuentes -->
+    <meta name="description"
+        content="Contáctanos para empezar tu proyecto con Innovo Studio. Respuesta en menos de 24 horas. Lima, Perú.">
     <link
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap"
         rel="stylesheet">
-    <!-- GSAP estándar -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="../global.css">
@@ -20,17 +19,9 @@
 
 <body>
 
-    <!-- Cursor Personalizado de Alta Gama -->
-    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
-    <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
-
-    <!-- Barra de progreso de scroll -->
+    <!-- Sin cursor personalizado -->
     <div id="scrollProgress"></div>
-
-    <!-- Cortina de transición entre páginas -->
     <div id="pageCurtain"></div>
-
-    <!-- Preloader mejorado -->
     <div id="preloader">
         <div class="preloader-logo">INNOVO<span>.</span>STUDIO</div>
         <div class="preloader-counter">0%</div>
@@ -53,14 +44,12 @@
                 <a href="#" class="nav-link nav-link-box active">Contáctanos</a>
             </div>
             <button class="hamburger" id="hamburger" aria-label="Menú">
-                <span class="ham-line"></span>
-                <span class="ham-line"></span>
-                <span class="ham-line"></span>
+                <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
             </button>
         </div>
     </nav>
 
-    <!-- Menú móvil fullscreen -->
+    <!-- Menú móvil (mismo que inicio/servicios) -->
     <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menú de navegación">
         <div class="mobile-menu-inner">
             <div class="mobile-menu-header">
@@ -69,40 +58,19 @@
             </div>
             <div class="mobile-nav-area">
                 <ul class="mobile-links" role="list">
-                    <li>
-                        <a href="../Inicio/inicio.html" class="mobile-link">
-                            <span class="mobile-link-num">01</span>
-                            <span class="mobile-link-text">Inicio</span>
-                            <span class="mobile-link-arrow">→</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../Servicios/servicios.html" class="mobile-link">
-                            <span class="mobile-link-num">02</span>
-                            <span class="mobile-link-text">Servicios</span>
-                            <span class="mobile-link-arrow">→</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../Inicio/inicio.html#proceso" class="mobile-link">
-                            <span class="mobile-link-num">03</span>
-                            <span class="mobile-link-text">Proceso</span>
-                            <span class="mobile-link-arrow">→</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../Historias/historias.html" class="mobile-link">
-                            <span class="mobile-link-num">04</span>
-                            <span class="mobile-link-text">Historias</span>
-                            <span class="mobile-link-arrow">→</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="mobile-link">
-                            <span class="mobile-link-num">05</span>
-                            <span class="mobile-link-text">Contacto</span>
-                            <span class="mobile-link-arrow">→</span>
-                        </a>
+                    <li><a href="../Inicio/inicio.html" class="mobile-link"><span class="mobile-link-num">01</span><span
+                                class="mobile-link-text">Inicio</span><span class="mobile-link-arrow">→</span></a></li>
+                    <li><a href="../Servicios/servicios.html" class="mobile-link"><span
+                                class="mobile-link-num">02</span><span class="mobile-link-text">Servicios</span><span
+                                class="mobile-link-arrow">→</span></a></li>
+                    <li><a href="../Inicio/inicio.html#proceso" class="mobile-link"><span
+                                class="mobile-link-num">03</span><span class="mobile-link-text">Proceso</span><span
+                                class="mobile-link-arrow">→</span></a></li>
+                    <li><a href="../Historias/historias.html" class="mobile-link"><span
+                                class="mobile-link-num">04</span><span class="mobile-link-text">Historias</span><span
+                                class="mobile-link-arrow">→</span></a></li>
+                    <li><a href="#" class="mobile-link"><span class="mobile-link-num">05</span><span
+                                class="mobile-link-text">Contacto</span><span class="mobile-link-arrow">→</span></a>
                     </li>
                 </ul>
             </div>
@@ -130,30 +98,19 @@
     <!-- MAIN CONTACT CONTENT -->
     <main class="contact-page">
         <div class="container contact-grid">
-            
-            <!-- Columna Izquierda: Información Editorial -->
             <section class="contact-info-panel reveal">
                 <span class="section-tag">Hablemos</span>
                 <h1 class="contact-title" data-split>CREEMOS ALGO<br>EXTRAORDINARIO JUNTOS.</h1>
-                <p class="contact-desc">
-                    Cuéntanos tu visión o proyecto. Nos pondremos en contacto contigo en menos de 24 horas para agendar una llamada y aterrizar tus ideas.
-                </p>
-
+                <p class="contact-desc">Cuéntanos tu visión o proyecto. Nos pondremos en contacto contigo en menos de 24
+                    horas para agendar una llamada y aterrizar tus ideas.</p>
                 <div class="contact-details">
-                    <div class="detail-group">
-                        <span class="detail-label">Correo Electrónico</span>
-                        <a href="mailto:hola@innovostudio.pe" class="detail-value">hola@innovostudio.pe</a>
-                    </div>
-                    <div class="detail-group">
-                        <span class="detail-label">WhatsApp Directo</span>
-                        <a href="https://wa.me/51999999999" class="detail-value">+51 999 999 999</a>
-                    </div>
-                    <div class="detail-group">
-                        <span class="detail-label">Ubicación Principal</span>
-                        <span class="detail-value">Lima, Perú (Servicio Global)</span>
-                    </div>
+                    <div class="detail-group"><span class="detail-label">Correo Electrónico</span><a
+                            href="mailto:hola@innovostudio.pe" class="detail-value">hola@innovostudio.pe</a></div>
+                    <div class="detail-group"><span class="detail-label">WhatsApp Directo</span><a
+                            href="https://wa.me/51999999999" class="detail-value">+51 999 999 999</a></div>
+                    <div class="detail-group"><span class="detail-label">Ubicación Principal</span><span
+                            class="detail-value">Lima, Perú (Servicio Global)</span></div>
                 </div>
-
                 <div class="contact-social-group">
                     <span class="detail-label">Síguenos</span>
                     <div class="contact-social-links">
@@ -164,31 +121,22 @@
                 </div>
             </section>
 
-            <!-- Columna Derecha: Formulario Premium -->
             <section class="contact-form-panel reveal">
                 <form class="luxe-form" id="contactForm" novalidate>
-                    
-                    <!-- Campo Nombre -->
                     <div class="form-group">
                         <input type="text" id="name" name="name" class="form-input" placeholder=" " required />
                         <label for="name" class="form-label">Tu Nombre *</label>
                         <span class="form-error-msg" id="nameError">Por favor ingresa tu nombre</span>
                     </div>
-
-                    <!-- Campo Correo -->
                     <div class="form-group">
                         <input type="email" id="email" name="email" class="form-input" placeholder=" " required />
                         <label for="email" class="form-label">Tu Correo Electrónico *</label>
                         <span class="form-error-msg" id="emailError">Ingresa un correo electrónico válido</span>
                     </div>
-
-                    <!-- Campo Teléfono -->
                     <div class="form-group">
                         <input type="tel" id="phone" name="phone" class="form-input" placeholder=" " />
                         <label for="phone" class="form-label">Tu Teléfono / WhatsApp (Opcional)</label>
                     </div>
-
-                    <!-- Selector de Servicio -->
                     <div class="form-group select-group">
                         <select id="service" name="service" class="form-input form-select" required>
                             <option value="" disabled selected hidden></option>
@@ -201,42 +149,33 @@
                         <label for="service" class="form-label-select">¿En qué servicio estás interesado? *</label>
                         <span class="form-error-msg" id="serviceError">Por favor selecciona un servicio</span>
                     </div>
-
-                    <!-- Campo Mensaje -->
                     <div class="form-group textarea-group">
-                        <textarea id="message" name="message" class="form-input form-textarea" placeholder=" " required></textarea>
+                        <textarea id="message" name="message" class="form-input form-textarea" placeholder=" "
+                            required></textarea>
                         <label for="message" class="form-label">Cuéntanos sobre tu proyecto *</label>
                         <span class="form-error-msg" id="messageError">Por favor escribe un mensaje descriptivo</span>
                     </div>
-
-                    <!-- Botón de Envío -->
                     <div class="form-submit-container">
-                        <button type="submit" class="btn btn-primary btn-submit">
-                            <span>Enviar Solicitud</span>
-                            <svg class="submit-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
+                        <button type="submit" class="btn btn-primary btn-submit"><span>Enviar Solicitud</span><svg
+                                class="submit-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg></button>
                     </div>
-
-                    <!-- Mensajes de estado -->
                     <div class="form-status-box" id="formStatusBox">
-                        <div class="status-content status-success" id="statusSuccess">
-                            <span class="status-icon">✓</span>
-                            <span class="status-msg">¡Mensaje enviado con éxito! Te contactaremos muy pronto.</span>
-                        </div>
-                        <div class="status-content status-error" id="statusError">
-                            <span class="status-icon">✕</span>
-                            <span class="status-msg">Hubo un error al enviar el formulario. Inténtalo de nuevo.</span>
-                        </div>
+                        <div class="status-content status-success" id="statusSuccess"><span
+                                class="status-icon">✓</span><span class="status-msg">¡Mensaje enviado con éxito! Te
+                                contactaremos muy pronto.</span></div>
+                        <div class="status-content status-error" id="statusError"><span
+                                class="status-icon">✕</span><span class="status-msg">Hubo un error al enviar el
+                                formulario. Inténtalo de nuevo.</span></div>
                     </div>
                 </form>
             </section>
-            
         </div>
     </main>
 
-    <!-- ==================== FOOTER ==================== -->
+    <!-- Footer unificado (global-footer) -->
     <footer class="global-footer section-dark">
         <div class="container">
             <div class="global-footer-grid">
@@ -278,7 +217,6 @@
         </div>
     </footer>
 
-    <!-- WhatsApp flotante -->
     <a href="https://wa.me/51999999999?text=Hola%20Innovo%20Studio%2C%20me%20interesa%20un%20proyecto"
         class="whatsapp-float" target="_blank" aria-label="WhatsApp">
         <svg viewBox="0 0 24 24">
@@ -287,22 +225,9 @@
         </svg>
     </a>
 
-    <!-- Scripts -->
     <script src="../global.js"></script>
     <script src="contacto.js"></script>
-    <!-- Fallback de seguridad por si el preloader falla -->
-    <script>
-        setTimeout(() => {
-            const preloader = document.getElementById('preloader');
-            if (preloader && getComputedStyle(preloader).display !== 'none') {
-                preloader.style.opacity = '0';
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                    document.body.style.overflow = '';
-                }, 500);
-            }
-        }, 4000);
-    </script>
+    <!-- No hay setTimeout de fallback -->
 </body>
 
 </html>
