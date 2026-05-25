@@ -21,31 +21,25 @@
 
     <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
-        <a href="../Inicio/inicio.html" class="nav-logo" aria-label="Innovo Studio Home">
-            <span class="logo-innovo">INNOVO<span class="logo-dot">.</span></span>
-            <span class="logo-studio">STUDIO</span>
-        </a>
-
-        <ul class="nav-links" role="list">
-            <li><a href="../Inicio/inicio.html" class="nav-link">Inicio</a></li>
-            <li><a href="../Servicios/servicios.html" class="nav-link">Servicios</a></li>
-            <li><a href="../Inicio/inicio.html#proceso" class="nav-link">Proceso</a></li>
-            <li><a href="#" class="nav-link active-page">Historias</a></li>
-            <li><a href="../Contacto/contacto.html" class="nav-link">Contacto</a></li>
-        </ul>
-
-        <div class="nav-cta-container">
-            <a href="https://wa.me/51999999999?text=Hola%2C%20me%20interesa%20un%20proyecto" target="_blank"
-                rel="noopener" class="btn-nav-cta" aria-label="Contactar por WhatsApp">
-                Contactar
+        <div class="nav-container">
+            <div class="nav-left-links">
+                <a href="../Inicio/inicio.html" class="nav-link">Inicio</a>
+                <a href="../Servicios/servicios.html" class="nav-link">Servicios</a>
+            </div>
+            <a href="../Inicio/inicio.html" class="nav-logo" aria-label="Innovo Studio Home">
+                <span class="logo-innovo">INNOVO<span class="logo-dot" style="color:var(--copper-light)">.</span></span>
+                <span class="logo-studio" style="color:var(--slate-light)">STUDIO</span>
             </a>
+            <div class="nav-right-links">
+                <a href="#" class="nav-link active-page">Historias</a>
+                <a href="../Contacto/contacto.html" class="nav-link nav-link-box">Contáctanos</a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+                <span class="ham-line"></span>
+                <span class="ham-line"></span>
+                <span class="ham-line"></span>
+            </button>
         </div>
-
-        <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
-            <span class="ham-line"></span>
-            <span class="ham-line"></span>
-            <span class="ham-line"></span>
-        </button>
     </nav>
 
     <!-- Menú móvil fullscreen -->

@@ -206,9 +206,8 @@ body.cursor-on-work .cursor-ring::after {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 1.8rem 4rem;
+    padding: 1.8rem 0;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     z-index: 990;
     transition: background-color 0.4s var(--transition-primary), padding 0.4s var(--transition-primary);
@@ -217,14 +216,32 @@ body.cursor-on-work .cursor-ring::after {
 .navbar.scrolled {
     background-color: rgba(51, 46, 43, 0.95);
     backdrop-filter: blur(10px);
-    padding: 1.2rem 4rem;
+    padding: 1.2rem 0;
     border-bottom: 1px solid rgba(173, 157, 141, 0.1);
+}
+
+.nav-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+}
+
+.nav-left-links {
+    display: flex;
+    gap: 3rem;
+    justify-content: flex-start;
 }
 
 .nav-logo {
     display: flex;
     flex-direction: column;
     line-height: 0.9;
+    justify-self: center;
+    text-align: center;
 }
 
 .logo-innovo {
@@ -246,10 +263,11 @@ body.cursor-on-work .cursor-ring::after {
     color: var(--color-taupe);
 }
 
-.nav-links {
+.nav-right-links {
     display: flex;
-    list-style: none;
     gap: 3rem;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .nav-link {
@@ -290,21 +308,23 @@ body.cursor-on-work .cursor-ring::after {
     width: 100%;
 }
 
-.btn-nav-cta {
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.8rem 1.8rem;
+/* Contáctanos boxed button style */
+.nav-link.nav-link-box {
     border: 1px solid var(--color-burgundy);
-    background-color: var(--color-burgundy);
+    padding: 0.55rem 1.3rem;
     color: var(--color-cream);
-    transition: all 0.3s var(--transition-primary);
+    transition: var(--transition-fast);
 }
 
-.btn-nav-cta:hover {
-    background-color: transparent;
-    color: var(--color-burgundy);
+.nav-link.nav-link-box::after {
+    display: none;
+}
+
+.nav-link.nav-link-box:hover,
+.nav-link.nav-link-box.active-page {
+    background: var(--color-burgundy);
+    color: var(--color-black);
+    border-color: var(--color-burgundy);
 }
 
 /* Hamburger mobile menu button */
@@ -512,17 +532,24 @@ body.cursor-on-work .cursor-ring::after {
 }
 
 @media (max-width: 1024px) {
-    .nav-links, .nav-cta-container {
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 1.5rem;
+    }
+    .nav-left-links, .nav-right-links, .nav-links, .nav-cta-container {
         display: none;
     }
     .hamburger {
         display: flex;
     }
     .navbar {
-        padding: 1.4rem 1.5rem;
+        padding: 1.4rem 0;
     }
     .navbar.scrolled {
-        padding: 0.9rem 1.5rem;
+        padding: 0.9rem 0;
     }
 }
 

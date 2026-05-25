@@ -262,9 +262,16 @@ h3 {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 3rem;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
+    width: 100%;
+}
+
+.nav-left-links {
+    display: flex;
+    gap: 2.75rem;
+    justify-content: flex-start;
 }
 
 .nav-logo {
@@ -274,16 +281,19 @@ h3 {
     letter-spacing: 0.12em;
     color: var(--off-white);
     text-transform: uppercase;
+    justify-self: center;
+    text-align: center;
 }
 
 .nav-logo span {
     color: var(--copper-light);
 }
 
-.nav-links {
+.nav-right-links {
     display: flex;
     gap: 2.75rem;
-    list-style: none;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .nav-link {
@@ -318,6 +328,25 @@ h3 {
     width: 100%;
 }
 
+/* Contáctanos boxed button style */
+.nav-link.nav-link-box {
+    border: 1px solid var(--copper);
+    padding: 0.55rem 1.3rem;
+    color: var(--off-white);
+    transition: var(--transition-fast);
+}
+
+.nav-link.nav-link-box::after {
+    display: none;
+}
+
+.nav-link.nav-link-box:hover,
+.nav-link.nav-link-box.active {
+    background: var(--copper);
+    color: var(--ink);
+    border-color: var(--copper-light);
+}
+
 .hamburger {
     display: none;
     background: transparent;
@@ -350,9 +379,14 @@ h3 {
 }
 
 @media (max-width: 1024px) {
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-    .nav-links,
-    .nav-cta {
+    .nav-left-links,
+    .nav-right-links {
         display: none;
     }
 
