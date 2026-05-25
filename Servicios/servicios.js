@@ -20,7 +20,7 @@ function initHeroEntrance() {
 
     if (prefersReducedMotion) {
         document.querySelectorAll(
-            '.services-hero .section-tag, .services-title, .hero-desc, .hero-stat, .hero-scroll-cta, .hero-scroll-indicator'
+            '.services-hero .section-tag, .services-title, .hero-desc, .hero-stat, .hero-scroll-cta'
         ).forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
         initSplitTitle();
         return;
@@ -30,7 +30,6 @@ function initHeroEntrance() {
     const heroDesc = document.querySelector('.hero-desc');
     const heroStats = document.querySelectorAll('.hero-stat');
     const heroCta = document.querySelector('.hero-scroll-cta');
-    const scrollInd = document.querySelector('.hero-scroll-indicator');
 
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
@@ -48,9 +47,6 @@ function initHeroEntrance() {
     }
     if (heroCta) {
         tl.fromTo(heroCta, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.2');
-    }
-    if (scrollInd) {
-        tl.fromTo(scrollInd, { opacity: 0 }, { opacity: 1, duration: 0.6 }, '-=0.1');
     }
 }
 
@@ -92,4 +88,36 @@ function initSplitTitle() {
     splitTitleDone = true;
 }
 
-// El resto del archivo (initSectionTitles, initHeroVideo, etc.) se mantiene igual
+// ========== VIDEO HERO: añadir clase .loaded ==========
+(function initHeroVideo() {
+    const heroVideo = document.getElementById('heroVideo');
+    if (!heroVideo) return;
+
+    const setLoaded = () => {
+        heroVideo.classList.add('loaded');
+    };
+
+    if (heroVideo.readyState >= 2) { // HAVE_CURRENT_DATA o más
+        setLoaded();
+    } else {
+        heroVideo.addEventListener('loadeddata', setLoaded);
+        // fallback por si el evento no se dispara
+        setTimeout(() => {
+            if (!heroVideo.classList.contains('loaded')) {
+                setLoaded();
+            }
+        }, 1500);
+    }
+})();
+
+// ========== ANIMACIONES SCROLL (ejemplo: números contadores) ==========
+// Si tienes más lógica (contadores, ScrollTrigger), agrégala aquí.
+// Por ahora mantenemos la funcionalidad básica.
+
+// Fallback: si el preloader nunca dispara 'preloaderFinished' (ej: global.js no cargó),
+// forzar entrada del hero después de 3.5s.
+setTimeout(() => {
+    if (!heroEntranceDone) {
+        initHeroEntrance();
+    }
+}, 3500);

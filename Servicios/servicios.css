@@ -731,7 +731,10 @@ h3 {
     align-items: flex-end;
     overflow: hidden;
     background: var(--ink);
-    padding-bottom: 5.5rem; /* ticker height + gap */
+    padding-bottom: 5.5rem;
+    /* ticker height + gap */
+    border-radius: 0;
+    /* elimina cualquier redondeo */
 }
 
 .services-hero .hero-bg {
@@ -756,8 +759,13 @@ h3 {
 }
 
 @keyframes heroVideoZoom {
-    from { transform: scale(1.05); }
-    to   { transform: scale(1.12); }
+    from {
+        transform: scale(1.05);
+    }
+
+    to {
+        transform: scale(1.12);
+    }
 }
 
 .services-hero .hero-bg-overlay {
@@ -873,43 +881,6 @@ h3 {
     justify-content: center;
 }
 
-.hero-scroll-indicator {
-    position: absolute;
-    bottom: 4.5rem; /* above the ticker */
-    right: 2rem;
-    z-index: 5;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.5rem;
-    letter-spacing: 0.2em;
-    color: var(--slate);
-}
-
-.scroll-line {
-    width: 1px;
-    height: 60px;
-    background: linear-gradient(to bottom, transparent, var(--copper));
-    animation: scrollPulse 2s ease infinite;
-}
-
-@keyframes scrollPulse {
-
-    0%,
-    100% {
-        opacity: 0.3;
-        transform: scaleY(1);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scaleY(1.2);
-        transform-origin: top;
-    }
-}
-
 /* ========== MARQUEE ========== */
 .ticker-wrap {
     width: 100%;
@@ -1009,7 +980,7 @@ h3 {
     direction: rtl;
 }
 
-.bloque--reverse > * {
+.bloque--reverse>* {
     direction: ltr;
 }
 
@@ -1038,23 +1009,19 @@ h3 {
 .bloque-media-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        135deg,
-        rgba(10, 10, 10, 0.35) 0%,
-        rgba(10, 10, 10, 0.1) 60%,
-        rgba(154, 78, 40, 0.15) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(10, 10, 10, 0.35) 0%,
+            rgba(10, 10, 10, 0.1) 60%,
+            rgba(154, 78, 40, 0.15) 100%);
     transition: background 0.5s ease;
     z-index: 1;
 }
 
 .servicio-bloque:hover .bloque-media-overlay {
-    background: linear-gradient(
-        135deg,
-        rgba(10, 10, 10, 0.5) 0%,
-        rgba(10, 10, 10, 0.2) 50%,
-        rgba(154, 78, 40, 0.3) 100%
-    );
+    background: linear-gradient(135deg,
+            rgba(10, 10, 10, 0.5) 0%,
+            rgba(10, 10, 10, 0.2) 50%,
+            rgba(154, 78, 40, 0.3) 100%);
 }
 
 /* Número watermark gigante sobre la media */
@@ -1265,6 +1232,7 @@ h3 {
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
+
     .servicio-bloque,
     .bloque--reverse {
         grid-template-columns: 1fr;
@@ -1305,7 +1273,6 @@ h3 {
         padding: 2.5rem 1.5rem;
     }
 }
-
 
 .services-grid {
     display: grid;
@@ -2050,10 +2017,6 @@ h3 {
         justify-content: space-between;
     }
 
-    .hero-scroll-indicator {
-        display: none;
-    }
-
     .section {
         padding: clamp(3rem, 8vw, 5rem) 0;
     }
@@ -2089,7 +2052,6 @@ h3 {
 .services-hero .section-tag,
 .services-hero .hero-desc,
 .services-hero .hero-stat,
-.services-hero .hero-scroll-cta,
-.services-hero .hero-scroll-indicator {
+.services-hero .hero-scroll-cta {
     opacity: 0;
 }
