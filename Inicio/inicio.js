@@ -385,14 +385,59 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
     const cards = document.querySelectorAll('.service-card');
     if (!cards.length) return;
 
-    gsap.from(cards, {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        stagger: 0.12,
-        scrollTrigger: { trigger: '.services-grid', start: 'top 82%' }
+    // --- Estado inicial via inline style ---
+    cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(40px)';
+        card.style.transition = 'none';
     });
 
+    function revealCards() {
+        cards.forEach((card, i) => {
+            setTimeout(() => {
+                card.style.transition = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, i * 120);
+        });
+    }
+
+    // Intentar con ScrollTrigger primero
+    let triggered = false;
+    ScrollTrigger.create({
+        trigger: '.services-grid',
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+            if (triggered) return;
+            triggered = true;
+            revealCards();
+        }
+    });
+
+    // Fallback: 2.5s — si ya está en viewport pero ScrollTrigger no disparó
+    setTimeout(() => {
+        if (triggered) return;
+        const grid = document.querySelector('.services-grid');
+        if (!grid) { revealCards(); return; }
+        const rect = grid.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 1.1) {
+            triggered = true;
+            revealCards();
+        } else {
+            function onScroll() {
+                const r = grid.getBoundingClientRect();
+                if (r.top < window.innerHeight * 0.9) {
+                    triggered = true;
+                    revealCards();
+                    window.removeEventListener('scroll', onScroll);
+                }
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+        }
+    }, 2500);
+
+    // Tilt 3D (sin cambios)
     if (!prefersReducedMotion && window.innerWidth > 1024) {
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -418,7 +463,11 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 //  11. PROYECTOS: OVERLAY DESDE ABAJO + SCROLL REVEAL
 // ================================================================
 (function initProyectos() {
-    document.querySelectorAll('.proyecto-item').forEach(item => {
+    const items = document.querySelectorAll('.proyecto-item');
+    if (!items.length) return;
+
+    // Hover overlay stagger (sin cambios)
+    items.forEach(item => {
         const overlayEls = item.querySelectorAll('.proyecto-cat, .proyecto-overlay h3, .proyecto-overlay p');
         if (!overlayEls.length) return;
         gsap.set(overlayEls, { y: 20, opacity: 0 });
@@ -430,13 +479,62 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
         });
     });
 
-    gsap.from('.proyecto-item', {
-        opacity: 0,
-        scale: 0.96,
-        duration: 0.9,
-        stagger: 0.1,
-        scrollTrigger: { trigger: '.proyectos-grid', start: 'top 82%' }
+    // --- Scroll reveal robusto ---
+    // Preparar estado inicial via inline style (visible por defecto en CSS)
+    // para que si GSAP/ScrollTrigger falla, los items sean siempre visibles
+    items.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'scale(0.96)';
+        item.style.transition = 'none';
     });
+
+    function revealItems() {
+        items.forEach((item, i) => {
+            setTimeout(() => {
+                item.style.transition = 'opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1)';
+                item.style.opacity = '1';
+                item.style.transform = 'scale(1)';
+            }, i * 100);
+        });
+    }
+
+    // Intentar con ScrollTrigger primero
+    let triggered = false;
+    ScrollTrigger.create({
+        trigger: '.proyectos-grid',
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+            if (triggered) return;
+            triggered = true;
+            revealItems();
+        }
+    });
+
+    // Fallback: si después de 2.5s aún no se disparó (ej. preloader bloqueó el scroll),
+    // revisar si la sección ya está en el viewport y revelar de todas formas
+    setTimeout(() => {
+        if (triggered) return;
+        const grid = document.querySelector('.proyectos-grid');
+        if (!grid) { revealItems(); return; }
+        const rect = grid.getBoundingClientRect();
+        // Si la sección está en pantalla o ya pasó, revelar
+        if (rect.top < window.innerHeight * 1.1) {
+            triggered = true;
+            revealItems();
+        } else {
+            // Si aún no llega, agregar un listener de scroll de una sola vez
+            function onScroll() {
+                const r = grid.getBoundingClientRect();
+                if (r.top < window.innerHeight * 0.9) {
+                    triggered = true;
+                    revealItems();
+                    window.removeEventListener('scroll', onScroll);
+                }
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+        }
+    }, 2500);
 })();
 
 // ================================================================
@@ -730,11 +828,23 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 //  23. FALLBACK DE SEGURIDAD (nada invisible)
 // ================================================================
 setTimeout(() => {
-    document.querySelectorAll('.service-card, .porque-card, .timeline-step, .proyecto-item, .stat-item, .footer-grid > *, .testimonial-card, .section-tag, .section-subtitle, .adn-text, .adn-image, .hero-label, .hero-scroll-indicator, .cta-buttons .btn').forEach(el => {
+    document.querySelectorAll('.porque-card, .timeline-step, .stat-item, .footer-grid > *, .testimonial-card, .section-tag, .section-subtitle, .adn-text, .adn-image, .hero-label, .hero-scroll-indicator, .cta-buttons .btn').forEach(el => {
         if (parseFloat(window.getComputedStyle(el).opacity) < 0.1) {
             el.style.opacity = '1';
             el.style.transform = 'none';
         }
+    });
+    // Forzar service-cards visibles (gestionadas por initServiciosCards, pero por si acaso)
+    document.querySelectorAll('.service-card').forEach(el => {
+        el.style.transition = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+    });
+    // Forzar proyecto-items visibles (gestionados por initProyectos, pero por si acaso)
+    document.querySelectorAll('.proyecto-item').forEach(el => {
+        el.style.transition = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'scale(1)';
     });
     document.querySelectorAll('.split-word-inner, .cta-line-inner').forEach(el => {
         el.style.opacity = '1';
