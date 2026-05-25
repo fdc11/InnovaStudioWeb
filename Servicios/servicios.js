@@ -24,7 +24,10 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
             gsap.delayedCall(0.2, () => {
                 if (veil) {
                     gsap.to(veil, {
-                        yPercent: -100, duration: 0.9, ease: 'power3.inOut', onComplete: () => {
+                        yPercent: -100,
+                        duration: 0.9,
+                        ease: 'power3.inOut',
+                        onComplete: () => {
                             preloader.style.display = 'none';
                             document.body.style.overflow = '';
                             ScrollTrigger.refresh();
@@ -32,7 +35,10 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
                     });
                 } else {
                     gsap.to(preloader, {
-                        yPercent: -100, duration: 0.9, ease: 'power3.inOut', onComplete: () => {
+                        yPercent: -100,
+                        duration: 0.9,
+                        ease: 'power3.inOut',
+                        onComplete: () => {
                             preloader.style.display = 'none';
                             document.body.style.overflow = '';
                             ScrollTrigger.refresh();
@@ -61,7 +67,12 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
                 hamburger && hamburger.classList.remove('active');
                 document.body.style.overflow = '';
             }
-            gsap.to(curtain, { yPercent: 0, duration: 0.7, ease: 'power3.inOut', onComplete: () => { window.location.href = href; } });
+            gsap.to(curtain, {
+                yPercent: 0,
+                duration: 0.7,
+                ease: 'power3.inOut',
+                onComplete: () => { window.location.href = href; }
+            });
         });
     });
 })();
@@ -118,12 +129,14 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
     });
 })();
 
-// ========== SPLIT TEXT EN TÍTULOS ==========
-(function initSplitTitles() {
+// ========== SPLIT TEXT ANIMATION (HERO + TÍTULOS) ==========
+(function initSplitText() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
-    document.querySelectorAll('[data-split]').forEach(title => {
-        const originalHTML = title.innerHTML;
+
+    // Función para aplicar split a cualquier elemento con [data-split]
+    function applySplit(element) {
+        const originalHTML = element.innerHTML;
         const parts = originalHTML.split(/(<br\s*\/?>)/i);
         let newHTML = '';
         parts.forEach(part => {
@@ -140,103 +153,175 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
                 });
             }
         });
-        title.innerHTML = newHTML;
-        const inners = title.querySelectorAll('.split-word-inner');
+        element.innerHTML = newHTML;
+        return element.querySelectorAll('.split-word-inner');
+    }
+
+    // Hero title: se anima al entrar (inmediatamente porque el hero es visible)
+    const heroTitle = document.querySelector('.services-title');
+    if (heroTitle) {
+        const words = applySplit(heroTitle);
+        // Animación escalonada al cargar (sin ScrollTrigger)
+        setTimeout(() => {
+            words.forEach((word, i) => {
+                setTimeout(() => {
+                    word.style.transition = 'opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)';
+                    word.style.opacity = '1';
+                    word.style.transform = 'translateY(0) rotateX(0)';
+                }, i * 40);
+            });
+        }, 300);
+    }
+
+    // Otros títulos (section-title, paquetes-title, etc.) con ScrollTrigger
+    document.querySelectorAll('.section-title, .paquetes-title, .cta-content h2').forEach(title => {
+        const words = applySplit(title);
         ScrollTrigger.create({
             trigger: title,
-            start: 'top 88%',
+            start: 'top 85%',
             onEnter: () => {
-                inners.forEach((inner, i) => {
+                words.forEach((word, i) => {
                     setTimeout(() => {
-                        inner.style.transition = 'opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1)';
-                        inner.style.opacity = '1';
-                        inner.style.transform = 'translateY(0) rotateX(0)';
-                    }, i * 38);
+                        word.style.transition = 'opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1)';
+                        word.style.opacity = '1';
+                        word.style.transform = 'translateY(0) rotateX(0)';
+                    }, i * 35);
                 });
-            }
+            },
+            once: true
         });
     });
 })();
 
-// ========== SCROLL REVEAL (cards, steps, etc) ==========
-(function initScrollReveal() {
-    const reveals = document.querySelectorAll('.service-card, .paquete-card, .timeline-step, .section-tag');
-    reveals.forEach(el => el.classList.add('reveal'));
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-})();
+// ========== ENTRADA DE ELEMENTOS CON GSAP (sin conflictos) ==========
 
-// ========== SERVICIOS CARDS STAGGER ==========
-(function initServicesCards() {
-    const cards = document.querySelectorAll('.service-card');
-    if (!cards.length) return;
-    gsap.from(cards, {
+// 1. Hero: label, stats, scroll-cta
+const heroLabel = document.querySelector('.services-hero .section-tag');
+const heroStats = document.querySelectorAll('.hero-stat');
+const heroScrollCta = document.querySelector('.hero-scroll-cta');
+if (heroLabel) gsap.from(heroLabel, { opacity: 0, y: 20, duration: 0.7, delay: 0.2 });
+if (heroStats.length) gsap.from(heroStats, { opacity: 0, y: 20, duration: 0.6, stagger: 0.15, delay: 0.4 });
+if (heroScrollCta) gsap.from(heroScrollCta, { opacity: 0, y: 15, duration: 0.6, delay: 0.8 });
+
+// 2. Service Cards (stagger al hacer scroll)
+const serviceCards = document.querySelectorAll('.service-card');
+if (serviceCards.length) {
+    gsap.from(serviceCards, {
         opacity: 0,
-        y: 40,
+        y: 50,
         duration: 0.8,
         stagger: 0.12,
-        scrollTrigger: { trigger: '.services-grid', start: 'top 82%' }
+        scrollTrigger: {
+            trigger: '.services-grid',
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+        }
     });
-})();
+}
 
-// ========== PAQUETES STAGGER ==========
-(function initPaquetes() {
-    const cards = document.querySelectorAll('.paquete-card');
-    if (!cards.length) return;
-    gsap.from(cards, {
+// 3. Paquete Cards (stagger)
+const paqueteCards = document.querySelectorAll('.paquete-card');
+if (paqueteCards.length) {
+    gsap.from(paqueteCards, {
+        opacity: 0,
+        y: 40,
+        duration: 0.7,
+        stagger: 0.1,
+        scrollTrigger: {
+            trigger: '.paquetes-grid',
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+        }
+    });
+}
+
+// 4. Timeline Steps (proceso)
+const timelineSteps = document.querySelectorAll('.timeline-step');
+if (timelineSteps.length) {
+    gsap.from(timelineSteps, {
+        opacity: 0,
+        y: 35,
+        duration: 0.7,
+        stagger: 0.15,
+        scrollTrigger: {
+            trigger: '.proceso-timeline',
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+        }
+    });
+}
+
+// 5. CTA Buttons
+const ctaButtons = document.querySelectorAll('.cta-buttons .btn');
+if (ctaButtons.length) {
+    gsap.from(ctaButtons, {
+        opacity: 0,
+        y: 25,
+        duration: 0.6,
+        stagger: 0.12,
+        scrollTrigger: {
+            trigger: '.cta-buttons',
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+        }
+    });
+}
+
+// 6. Section Tags (pequeña entrada desde izquierda)
+document.querySelectorAll('.section-tag').forEach(tag => {
+    if (tag.closest('.services-hero')) return; // ya animado
+    gsap.from(tag, {
+        opacity: 0,
+        x: -20,
+        duration: 0.6,
+        scrollTrigger: {
+            trigger: tag,
+            start: 'top 90%',
+            toggleActions: 'play none none none'
+        }
+    });
+});
+
+// 7. Footer columns (stagger)
+const footerCols = document.querySelectorAll('.footer-grid > *');
+if (footerCols.length) {
+    gsap.from(footerCols, {
         opacity: 0,
         y: 30,
         duration: 0.7,
         stagger: 0.1,
-        scrollTrigger: { trigger: '.paquetes-grid', start: 'top 85%' }
+        scrollTrigger: {
+            trigger: '.footer-grid',
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+        }
     });
-})();
+}
 
-// ========== PROCESO STEPS STAGGER ==========
-(function initProcesoSteps() {
-    const steps = document.querySelectorAll('.timeline-step');
-    if (!steps.length) return;
-    gsap.from(steps, {
-        opacity: 0,
-        y: 30,
-        duration: 0.7,
-        stagger: 0.15,
-        scrollTrigger: { trigger: '.proceso-timeline', start: 'top 80%' }
-    });
-})();
-
-// ========== CTA BUTTONS STAGGER ==========
-(function initCTAButtons() {
-    const buttons = document.querySelectorAll('.cta-buttons .btn');
-    if (!buttons.length) return;
-    gsap.from(buttons, {
-        opacity: 0,
-        y: 20,
-        duration: 0.7,
-        stagger: 0.15,
-        scrollTrigger: { trigger: '.cta-buttons', start: 'top 88%' }
-    });
-})();
-
-// ========== HERO PARALLAX ==========
-(function initHeroParallax() {
-    const heroBg = document.querySelector('.services-hero .hero-bg-img');
-    if (!heroBg) return;
+// ========== PARALLAX HERO ==========
+const heroBg = document.querySelector('.services-hero .hero-bg-img');
+if (heroBg) {
     gsap.to(heroBg, {
         yPercent: 20,
         ease: 'none',
-        scrollTrigger: { trigger: '.services-hero', start: 'top top', end: 'bottom top', scrub: true }
+        scrollTrigger: {
+            trigger: '.services-hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+        }
     });
-})();
+}
 
-// ========== SMOOTH SCROLL FOR ANCHORS ==========
+// ========== MARQUEE PAUSE ON HOVER ==========
+const tickerTrack = document.querySelector('.ticker-track');
+if (tickerTrack) {
+    const wrapper = tickerTrack.parentElement;
+    wrapper.addEventListener('mouseenter', () => tickerTrack.style.animationPlayState = 'paused');
+    wrapper.addEventListener('mouseleave', () => tickerTrack.style.animationPlayState = 'running');
+}
+
+// ========== SMOOTH SCROLL PARA ANCLAS ==========
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
         const targetId = anchor.getAttribute('href');
@@ -247,6 +332,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const offset = 80;
         const targetY = target.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top: targetY, behavior: 'smooth' });
+        // Cerrar menú móvil si está abierto
         const mobileMenu = document.getElementById('mobileMenu');
         const hamburger = document.getElementById('hamburger');
         if (mobileMenu && mobileMenu.classList.contains('active')) {
@@ -257,4 +343,19 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-console.log('%c INNOVO STUDIO — SERVICIOS (unificado)', 'background:#9A4E28;color:#F5F1EB;font-size:13px;padding:6px 14px;font-weight:700;letter-spacing:3px;');
+// ========== FALLBACK DE SEGURIDAD (nada invisible) ==========
+setTimeout(() => {
+    document.querySelectorAll('.service-card, .paquete-card, .timeline-step, .hero-stat, .cta-buttons .btn').forEach(el => {
+        if (parseFloat(window.getComputedStyle(el).opacity) < 0.1) {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+        }
+    });
+    document.querySelectorAll('.split-word-inner').forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0) rotateX(0)';
+    });
+    ScrollTrigger.refresh();
+}, 4000);
+
+console.log('%c INNOVO STUDIO — SERVICIOS (animaciones corregidas)', 'background:#9A4E28;color:#F5F1EB;font-size:13px;padding:6px 14px;font-weight:700;letter-spacing:3px;');
