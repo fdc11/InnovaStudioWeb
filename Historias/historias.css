@@ -1,27 +1,54 @@
 /* ============================================================
    INNOVO STUDIO — HISTORIAS (estilos específicos)
-   Hereda de global.css. Solo añade lo propio de la página.
+   Hereda de global.css. No contiene reglas de navbar, footer ni preloader.
    ============================================================ */
 
-/* ---------- HERO HISTORIAS ---------- */
+/* ---------- HERO HISTORIAS (coherente con Inicio) ---------- */
 .stories-hero {
-    min-height: 60vh;
-    padding: clamp(8rem, 12vw, 12rem) 0 clamp(4rem, 6vw, 6rem);
+    min-height: 70vh;
+    position: relative;
     display: flex;
     align-items: center;
     background: var(--ink);
+    overflow: hidden;
+    padding: 8rem 0 5rem;
+}
+
+/* Fondo con gradiente y textura sutil (similar a Inicio) */
+.stories-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(154, 78, 40, 0.08) 0%, transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Línea decorativa superior */
+.stories-hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--copper-light), transparent);
+    opacity: 0.3;
+    z-index: 1;
 }
 
 .stories-hero-content {
+    position: relative;
+    z-index: 2;
     max-width: 900px;
 }
 
 .stories-title {
     font-family: 'Syne', sans-serif;
     font-weight: 800;
-    font-size: clamp(2.5rem, 5vw, 4.2rem);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
     text-transform: uppercase;
     color: var(--off-white);
     margin-bottom: 1.5rem;
@@ -30,8 +57,90 @@
 .stories-subtitle {
     font-size: 1.1rem;
     color: var(--slate);
-    max-width: 650px;
+    max-width: 620px;
     line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+/* Indicador de scroll (opcional, como en Inicio) */
+.stories-scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--slate);
+    writing-mode: vertical-rl;
+    z-index: 2;
+}
+
+.scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, transparent, var(--copper));
+    animation: scrollPulse 2s ease infinite;
+}
+
+@keyframes scrollPulse {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scaleY(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scaleY(1.2);
+        transform-origin: top;
+    }
+}
+
+/* Marquee dentro del hero (opcional) */
+.stories-marquee {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    padding: 0.8rem 0;
+    border-top: 1px solid rgba(196, 122, 78, 0.2);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.marquee-track {
+    display: inline-flex;
+    gap: 2rem;
+    animation: marqueeScroll 20s linear infinite;
+}
+
+.marquee-track span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--slate-light);
+}
+
+.marquee-sep {
+    color: var(--copper);
+}
+
+@keyframes marqueeScroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
 }
 
 /* ---------- PORTFOLIO SECTION ---------- */
@@ -286,11 +395,15 @@
         top: 1rem;
         right: 1rem;
     }
+
+    .stories-scroll-indicator {
+        display: none;
+    }
 }
 
 @media (max-width: 768px) {
     .stories-hero {
-        min-height: 40vh;
+        min-height: 50vh;
         padding: 6rem 0 3rem;
     }
 
