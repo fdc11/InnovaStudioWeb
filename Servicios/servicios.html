@@ -1,18 +1,224 @@
-<!-- ... todo igual ... -->
-<script src="../global.js"></script>
-<script src="servicios.js"></script>
-<!-- ELIMINAR ESTE BLOQUE -->
-<!--
-    <script>
-        setTimeout(() => {
-            const preloader = document.getElementById('preloader');
-            if (preloader && getComputedStyle(preloader).display !== 'none') {
-                preloader.style.opacity = '0';
-                setTimeout(() => { preloader.style.display = 'none'; document.body.style.overflow = ''; }, 500);
-            }
-        }, 4000);
-    </script>
-    -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Servicios — Innovo Studio</title>
+    <meta name="description"
+        content="Servicios premium de producción visual y desarrollo de software por Innovo Studio. Producción de video, fotografía editorial, invitaciones interactivas y SEO en Lima, Perú.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../global.css">
+    <link rel="stylesheet" href="servicios.css">
+    <meta name="theme-color" content="#0E0E0E">
+</head>
+
+<body>
+
+    <div id="scrollProgress"></div>
+    <div id="pageCurtain"></div>
+    <div id="preloader">
+        <div class="preloader-logo">INNOVO<span>.</span>STUDIO</div>
+        <div class="preloader-counter">0%</div>
+        <div class="preloader-bar">
+            <div class="preloader-bar-fill" id="preloaderBarFill"></div>
+        </div>
+        <div class="preloader-veil"></div>
+    </div>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-left-links">
+                <a href="../Inicio/inicio.html" class="nav-link">Inicio</a>
+                <a href="#" class="nav-link active">Servicios</a>
+            </div>
+            <a href="../Inicio/inicio.html" class="nav-logo">INNOVO<span style="color:var(--copper)">.</span>STUDIO</a>
+            <div class="nav-right-links">
+                <a href="../Historias/historias.html" class="nav-link">Historias</a>
+                <a href="../Contacto/contacto.html" class="nav-link nav-link-box">Contáctanos</a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Menú">
+                <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Menú móvil (idéntico a inicio) -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-inner">
+            <div class="mobile-menu-header">
+                <a href="../Inicio/inicio.html" class="mobile-menu-logo">INNOVO<span>.</span>STUDIO</a>
+                <span class="mobile-menu-tag">Menú</span>
+            </div>
+            <div class="mobile-nav-area">
+                <ul class="mobile-links">
+                    <li><a href="../Inicio/inicio.html" class="mobile-link"><span class="mobile-link-num">01</span><span
+                                class="mobile-link-text">Inicio</span><span class="mobile-link-arrow">→</span></a></li>
+                    <li><a href="#" class="mobile-link"><span class="mobile-link-num">02</span><span
+                                class="mobile-link-text">Servicios</span><span class="mobile-link-arrow">→</span></a>
+                    </li>
+                    <li><a href="../Inicio/inicio.html#proceso" class="mobile-link"><span
+                                class="mobile-link-num">03</span><span class="mobile-link-text">Proceso</span><span
+                                class="mobile-link-arrow">→</span></a></li>
+                    <li><a href="../Historias/historias.html" class="mobile-link"><span
+                                class="mobile-link-num">04</span><span class="mobile-link-text">Historias</span><span
+                                class="mobile-link-arrow">→</span></a></li>
+                    <li><a href="../Contacto/contacto.html" class="mobile-link"><span
+                                class="mobile-link-num">05</span><span class="mobile-link-text">Contacto</span><span
+                                class="mobile-link-arrow">→</span></a></li>
+                </ul>
+            </div>
+            <div class="mobile-cta-wrapper">
+                <a href="https://wa.me/51999999999?text=Hola%20Innovo%20Studio%2C%20me%20interesa%20un%20proyecto"
+                    class="mobile-cta" target="_blank">Cotizar por WhatsApp</a>
+            </div>
+            <div class="mobile-footer">
+                <div class="mobile-contact-block">
+                    <span class="mobile-contact-label">Contacto</span>
+                    <div class="mobile-info">
+                        <a href="mailto:hola@innovostudio.pe">hola@innovostudio.pe</a>
+                        <a href="tel:+51999999999">+51 999 999 999</a>
+                    </div>
+                </div>
+                <div class="mobile-socials">
+                    <a href="#" target="_blank">Instagram</a>
+                    <a href="#" target="_blank">Facebook</a>
+                    <a href="#" target="_blank">TikTok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== HERO SERVICIOS ==================== -->
+    <header class="services-hero" id="hero">
+        <div class="hero-bg">
+            <video class="hero-bg-video" id="heroVideo" src="Imagenes/Banner.mp4" autoplay muted loop playsinline
+                poster="Imagenes/Equipo.jpg" preload="auto" aria-hidden="true"></video>
+            <div class="hero-bg-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-left">
+                <span class="section-tag reveal" style="--delay:0.1s">Nuestros Servicios</span>
+                <h1 class="services-title" data-split>Soluciones para tus ideas</h1>
+            </div>
+            <div class="hero-right reveal" style="--delay:0.6s">
+                <p class="hero-desc">Fusionamos producción visual de nivel internacional con tecnología web de
+                    vanguardia. Cada proyecto es una declaración estética.</p>
+                <div class="hero-stats">
+                    <div class="hero-stat"><span class="hero-stat-num" data-count="50" data-suffix="+">0</span><span
+                            class="hero-stat-label">Proyectos</span></div>
+                    <div class="hero-stat"><span class="hero-stat-num" data-count="4">0</span><span
+                            class="hero-stat-label">Áreas</span></div>
+                    <div class="hero-stat"><span class="hero-stat-num" data-count="100" data-suffix="%">0</span><span
+                            class="hero-stat-label">Satisfacción</span></div>
+                </div>
+                <a href="#servicios-list" class="hero-scroll-cta"><span>Explorar servicios</span>
+                    <div class="hero-scroll-arrow">↓</div>
+                </a>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator" aria-hidden="true">
+            <div class="scroll-line"></div>
+        </div>
+        <div class="ticker-wrap hero-ticker" aria-hidden="true">
+            <div class="ticker-track">
+                <span class="ticker-item">Producción Visual</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Desarrollo Web</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Marketing Digital</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Social Media</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Invitaciones Web</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Fotografía de Eventos</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Galerías Privadas</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Meta Ads</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Producción Visual</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Desarrollo Web</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Marketing Digital</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Social Media</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Invitaciones Web</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Fotografía de Eventos</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Galerías Privadas</span><span class="ticker-sep">✦</span>
+                <span class="ticker-item">Meta Ads</span><span class="ticker-sep">✦</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== SERVICIOS SHOWCASE (tus 4 bloques completos) ==================== -->
+    <!-- Aquí va todo el contenido de tus 4 servicios (producción visual, desarrollo web, marketing digital, social media) -->
+    <!-- Como es muy extenso, lo omito por brevedad, pero tú mantén todo lo que tenías originalmente -->
+
+    <section class="servicios-showcase section-dark" id="servicios-list">
+        <div class="showcase-header">
+            <div class="container">
+                <span class="section-tag">Lo que hacemos</span>
+                <h2 class="section-title">Cuatro áreas,<br>una sinergia perfecta.</h2>
+                <p class="section-subtitle">Cada servicio es una pieza de un sistema diseñado para elevar tu marca.</p>
+            </div>
+        </div>
+        <!-- AQUÍ VAN TUS 4 ARTÍCULOS .servicio-bloque (01,02,03,04) TAL CUAL LOS TENÍAS -->
+    </section>
+
+    <!-- ==================== PAQUETES ==================== -->
+    <!-- Aquí todo tu contenido de paquetes, proceso, cta, footer, etc. -->
+
+    <footer class="global-footer section-dark">
+        <div class="container">
+            <div class="global-footer-grid">
+                <div class="global-footer-brand">
+                    <a href="../Inicio/inicio.html" class="global-footer-logo">INNOVO<span>.</span>STUDIO</a>
+                    <p class="global-footer-tagline">Producción visual + Ingeniería de software. Lima, Perú.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Explorar</h4>
+                    <ul>
+                        <li><a href="../Inicio/inicio.html">Inicio</a></li>
+                        <li><a href="#">Servicios</a></li>
+                        <li><a href="../Historias/historias.html">Historias</a></li>
+                        <li><a href="../Inicio/inicio.html#proceso">Proceso</a></li>
+                        <li><a href="../Contacto/contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Servicios</h4>
+                    <ul>
+                        <li><a href="#">Producción Visual</a></li>
+                        <li><a href="#">Desarrollo Web</a></li>
+                        <li><a href="#">Marketing Digital</a></li>
+                        <li><a href="#">Social Media</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contáctanos</h4>
+                    <div class="footer-contact-links">
+                        <a href="mailto:hola@innovostudio.pe">hola@innovostudio.pe</a>
+                        <a href="tel:+51999999999">+51 999 999 999</a>
+                        <a href="../Contacto/contacto.html" style="color:var(--copper-light);">Ir al formulario →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Innovo Studio — 5 socios, una visión. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/51999999999?text=Hola%20Innovo%20Studio%2C%20me%20interesa%20un%20proyecto"
+        class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+    </a>
+
+    <!-- ==================== SCRIPTS (movidos al final, con fallback) ==================== -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script>window.gsap || document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"><\/script>');</script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script>window.ScrollTrigger || document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"><\/script>');</script>
+    <script src="../global.js"></script>
+    <script src="servicios.js"></script>
 </body>
 
 </html>
