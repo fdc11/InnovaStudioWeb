@@ -169,16 +169,16 @@ h1, h2, h3 {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 3rem;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    gap: 3.5rem;
     width: 100%;
 }
 
 .nav-left-links {
     display: flex;
     gap: 2.75rem;
-    justify-content: flex-start;
 }
 
 .nav-logo {
@@ -188,8 +188,8 @@ h1, h2, h3 {
     letter-spacing: 0.12em;
     color: var(--off-white);
     text-transform: uppercase;
-    justify-self: center;
     text-align: center;
+    flex-shrink: 0;
 }
 
 .nav-logo span {
@@ -199,16 +199,15 @@ h1, h2, h3 {
 .nav-right-links {
     display: flex;
     gap: 2.75rem;
-    justify-content: flex-end;
     align-items: center;
 }
 
 .nav-link {
     font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
+    font-size: 0.72rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--slate);
+    color: rgba(245, 241, 235, 0.75);
     transition: var(--transition-fast);
     position: relative;
     padding-bottom: 3px;
