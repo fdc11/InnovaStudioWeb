@@ -210,33 +210,9 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 })();
 
 // ================================================================
-//  9. ADN: CONTADORES + REVEAL IMAGEN
+//  9. ADN: REVEAL IMAGEN (Contadores manejados globalmente)
 // ================================================================
 (function initADN() {
-    // Contadores con GSAP (más suave)
-    document.querySelectorAll('.stat-number[data-count]').forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-count'), 10);
-        const suffix = counter.getAttribute('data-suffix') || '';
-        let triggered = false;
-        const observer = new IntersectionObserver((entries, observerInstance) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !triggered) {
-                    triggered = true;
-                    let obj = { val: 0 };
-                    gsap.to(obj, {
-                        val: target,
-                        duration: 2,
-                        ease: 'power2.out',
-                        onUpdate: () => {
-                            counter.textContent = Math.floor(obj.val) + suffix;
-                        }
-                    });
-                    observerInstance.unobserve(counter);
-                }
-            });
-        }, { threshold: 0.5 });
-        observer.observe(counter);
-    });
 
     // Reveal imagen
     const adnImage = document.querySelector('.adn-image');

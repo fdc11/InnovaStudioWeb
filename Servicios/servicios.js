@@ -166,12 +166,15 @@ function initSplitTitle() {
     if (heroVideo.readyState >= 3) {
         showVideo();
     } else {
-        heroVideo.addEventListener('canplay', showVideo, { once: true });
-        // Fallback: si tarda más de 2s, mostrarlo de todas formas
-        setTimeout(() => {
-            if (!heroVideo.classList.contains('loaded')) showVideo();
-        }, 2000);
+        heroVideo.addEventListener('loadeddata', showVideo, { once: true });
     }
+    document.addEventListener('preloaderFinished', () => {
+        if (heroVideo.readyState >= 3) {
+            heroVideo.classList.add('loaded');
+        } else {
+            heroVideo.addEventListener('loadeddata', () => heroVideo.classList.add('loaded'), { once: true });
+        }
+    });
 })();
 
 // ========== PARALLAX HERO ==========

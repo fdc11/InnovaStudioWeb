@@ -110,4 +110,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         revealElements.forEach(el => revealObserver.observe(el));
     }
+
+    // 6. TAREA 5: CONTADORES GLOBALES
+    const counters = document.querySelectorAll('[data-count]');
+    if (counters.length > 0) {
+        const counterObserver = new IntersectionObserver((entries, observerInstance) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.getAttribute('data-count'), 10);
+                    const suffix = counter.getAttribute('data-suffix') || '';
+                    let obj = { val: 0 };
+                    
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(obj, {
+                            val: target,
+                            duration: 2,
+                            ease: 'power2.out',
+                            onUpdate: () => {
+                                counter.textContent = Math.floor(obj.val) + suffix;
+                            }
+                        });
+                    } else {
+                        counter.textContent = target + suffix;
+                    }
+                    observerInstance.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        counters.forEach(counter => counterObserver.observe(counter));
+    }
 });
