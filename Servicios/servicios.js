@@ -324,13 +324,71 @@ function initSplitTitle() {
     });
 })();
 
-// ========== SERVICE CARDS ==========
-(function initServicesCards() {
-    const cards = document.querySelectorAll('.service-card');
-    if (!cards.length) return;
-    gsap.from(cards, {
-        opacity: 0, y: 50, duration: 0.8, stagger: 0.12,
-        scrollTrigger: { trigger: '.services-grid', start: 'top 85%', toggleActions: 'play none none none' }
+// ========== SERVICIOS SHOWCASE — reveal por bloque ==========
+(function initServiciosBloques() {
+    const bloques = document.querySelectorAll('.servicio-bloque');
+    if (!bloques.length) return;
+
+    bloques.forEach(bloque => {
+        const isReverse = bloque.classList.contains('bloque--reverse');
+        const content = bloque.querySelector('.bloque-content');
+        const media = bloque.querySelector('.bloque-media');
+
+        // Estado inicial
+        if (content) {
+            content.style.opacity = '0';
+            content.style.transform = `translateX(${isReverse ? '-3rem' : '3rem'})`;
+            content.style.transition = 'none';
+        }
+        if (media) {
+            media.style.opacity = '0';
+            media.style.transform = 'scale(1.04)';
+            media.style.transition = 'none';
+        }
+
+        let triggered = false;
+        function reveal() {
+            if (triggered) return;
+            triggered = true;
+            if (content) {
+                requestAnimationFrame(() => {
+                    content.style.transition = 'opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1)';
+                    content.style.opacity = '1';
+                    content.style.transform = 'translateX(0)';
+                });
+            }
+            if (media) {
+                setTimeout(() => {
+                    media.style.transition = 'opacity 1.1s cubic-bezier(0.16,1,0.3,1), transform 1.1s cubic-bezier(0.16,1,0.3,1)';
+                    media.style.opacity = '1';
+                    media.style.transform = 'scale(1)';
+                }, 120);
+            }
+        }
+
+        ScrollTrigger.create({
+            trigger: bloque,
+            start: 'top 82%',
+            once: true,
+            onEnter: reveal
+        });
+
+        // Fallback 2.5s
+        setTimeout(() => {
+            if (triggered) return;
+            const rect = bloque.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 1.1) {
+                reveal();
+            } else {
+                function onScroll() {
+                    if (bloque.getBoundingClientRect().top < window.innerHeight * 0.92) {
+                        reveal();
+                        window.removeEventListener('scroll', onScroll);
+                    }
+                }
+                window.addEventListener('scroll', onScroll, { passive: true });
+            }
+        }, 2500);
     });
 })();
 
@@ -417,12 +475,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ========== FALLBACK DE SEGURIDAD (nada invisible tras 4s) ==========
 setTimeout(() => {
     document.querySelectorAll(
-        '.service-card, .paquete-card, .timeline-step, .hero-stat, .cta-buttons .btn, .hero-desc, .hero-scroll-cta, .hero-scroll-indicator, .section-tag'
+        '.paquete-card, .timeline-step, .hero-stat, .cta-buttons .btn, .hero-desc, .hero-scroll-cta, .hero-scroll-indicator, .section-tag'
     ).forEach(el => {
         if (parseFloat(window.getComputedStyle(el).opacity) < 0.1) {
             el.style.opacity = '1';
             el.style.transform = 'none';
         }
+    });
+    // Forzar bloques de servicio visibles
+    document.querySelectorAll('.bloque-content, .bloque-media').forEach(el => {
+        el.style.transition = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
     });
     document.querySelectorAll('.split-word-inner').forEach(el => {
         el.style.opacity = '1';

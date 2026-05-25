@@ -695,7 +695,7 @@ h3 {
     align-items: flex-end;
     overflow: hidden;
     background: var(--ink);
-    padding-bottom: 6rem;
+    padding-bottom: 5.5rem; /* ticker height + gap */
 }
 
 .services-hero .hero-bg {
@@ -760,7 +760,7 @@ h3 {
 .services-title {
     font-family: 'Syne', sans-serif;
     font-weight: 800;
-    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-size: clamp(3rem, 5.5vw, 5.5rem);
     line-height: 1.0;
     letter-spacing: -0.03em;
     color: var(--off-white);
@@ -832,9 +832,9 @@ h3 {
 
 .hero-scroll-indicator {
     position: absolute;
-    bottom: 2rem;
+    bottom: 4.5rem; /* above the ticker */
     right: 2rem;
-    z-index: 3;
+    z-index: 5;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -877,6 +877,21 @@ h3 {
     border-bottom: 1px solid var(--border);
 }
 
+/* Ticker dentro del hero: pegado al fondo */
+.hero-ticker {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    background: rgba(8, 8, 8, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(200, 132, 90, 0.2);
+    border-bottom: none;
+    padding: 0.85rem 0;
+}
+
 .ticker-track {
     display: flex;
     gap: 0;
@@ -913,10 +928,341 @@ h3 {
     }
 }
 
-/* ========== SERVICIOS GRID (igual a inicio) ========== */
-.servicios-page {
-    padding: 9rem 0;
+/* ================================================================
+   SERVICIOS SHOWCASE — layout editorial full-width alternado
+   ================================================================ */
+
+.servicios-showcase {
+    background: var(--ink);
 }
+
+/* ── Header intro ── */
+.showcase-header {
+    padding: 7rem 0 5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.showcase-header .section-tag {
+    display: inline-block;
+    margin-bottom: 1.2rem;
+}
+
+.showcase-header .section-title {
+    max-width: 700px;
+}
+
+/* ── Bloque individual ── */
+.servicio-bloque {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 620px;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Versión invertida: texto izquierda, media derecha */
+.bloque--reverse {
+    direction: rtl;
+}
+
+.bloque--reverse > * {
+    direction: ltr;
+}
+
+/* ── Panel de media ── */
+.bloque-media {
+    position: relative;
+    overflow: hidden;
+    background: #0d0d0d;
+}
+
+.bloque-video,
+.bloque-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.servicio-bloque:hover .bloque-video,
+.servicio-bloque:hover .bloque-img {
+    transform: scale(1.04);
+}
+
+/* Overlay oscuro sobre el media */
+.bloque-media-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(10, 10, 10, 0.35) 0%,
+        rgba(10, 10, 10, 0.1) 60%,
+        rgba(154, 78, 40, 0.15) 100%
+    );
+    transition: background 0.5s ease;
+    z-index: 1;
+}
+
+.servicio-bloque:hover .bloque-media-overlay {
+    background: linear-gradient(
+        135deg,
+        rgba(10, 10, 10, 0.5) 0%,
+        rgba(10, 10, 10, 0.2) 50%,
+        rgba(154, 78, 40, 0.3) 100%
+    );
+}
+
+/* Número watermark gigante sobre la media */
+.bloque-num-bg {
+    position: absolute;
+    bottom: -0.15em;
+    left: -0.05em;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(7rem, 18vw, 16rem);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(245, 241, 235, 0.08);
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    z-index: 2;
+    user-select: none;
+    transition: -webkit-text-stroke-color 0.5s ease;
+}
+
+.servicio-bloque:hover .bloque-num-bg {
+    -webkit-text-stroke-color: rgba(200, 132, 90, 0.18);
+}
+
+/* ── Panel de contenido ── */
+.bloque-content {
+    padding: 4.5rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.6rem;
+    background: var(--ink);
+    position: relative;
+}
+
+/* Línea cobre decorativa a la izquierda */
+.bloque-content::before {
+    content: '';
+    position: absolute;
+    top: 4.5rem;
+    bottom: 4.5rem;
+    left: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--copper) 30%, var(--copper) 70%, transparent);
+    opacity: 0.25;
+    transition: opacity 0.4s ease;
+}
+
+.servicio-bloque:hover .bloque-content::before {
+    opacity: 0.7;
+}
+
+.bloque--reverse .bloque-content::before {
+    left: auto;
+    right: 0;
+}
+
+/* Tag: número + categoría */
+.bloque-tag {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.bloque-index {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--copper);
+    border: 1px solid var(--copper-glow);
+    padding: 0.3rem 0.6rem;
+    border-radius: 2px;
+}
+
+.bloque-category {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--slate);
+}
+
+/* Título del servicio */
+.bloque-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.4rem, 4.5vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--off-white);
+    text-transform: uppercase;
+}
+
+/* Descripción */
+.bloque-desc {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--slate);
+    max-width: 460px;
+}
+
+/* Lista de features */
+.bloque-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.bloque-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.88rem;
+    color: rgba(245, 241, 235, 0.75);
+    line-height: 1.55;
+    transition: color 0.25s ease;
+}
+
+.bloque-features li:hover {
+    color: var(--off-white);
+}
+
+.feat-dot {
+    color: var(--copper);
+    font-size: 0.6rem;
+    flex-shrink: 0;
+    margin-top: 0.35em;
+    transition: transform 0.3s ease;
+}
+
+.bloque-features li:hover .feat-dot {
+    transform: scale(1.4);
+}
+
+/* Chips de herramientas */
+.bloque-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tool-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--slate);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.75rem;
+    border-radius: 100px;
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.tool-chip:hover {
+    border-color: var(--copper-glow);
+    color: var(--copper-light);
+}
+
+/* CTA */
+.bloque-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--copper-light);
+    text-decoration: none;
+    padding: 0.85rem 1.6rem;
+    border: 1px solid var(--copper-glow);
+    border-radius: 3px;
+    align-self: flex-start;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.35s ease, border-color 0.35s ease, gap 0.3s ease;
+}
+
+.bloque-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--copper);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 0;
+}
+
+.bloque-cta span,
+.bloque-cta svg {
+    position: relative;
+    z-index: 1;
+}
+
+.bloque-cta:hover {
+    color: var(--ink);
+    border-color: var(--copper);
+    gap: 1.2rem;
+}
+
+.bloque-cta:hover::before {
+    transform: scaleX(1);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .servicio-bloque,
+    .bloque--reverse {
+        grid-template-columns: 1fr;
+        direction: ltr;
+        min-height: unset;
+    }
+
+    .bloque-media {
+        height: 55vw;
+        min-height: 260px;
+        max-height: 420px;
+    }
+
+    .bloque-content {
+        padding: 3rem 2rem;
+        gap: 1.2rem;
+    }
+
+    .bloque-content::before {
+        display: none;
+    }
+
+    .bloque-title {
+        font-size: clamp(2rem, 8vw, 3rem);
+    }
+
+    .bloque-num-bg {
+        font-size: clamp(6rem, 28vw, 12rem);
+    }
+}
+
+@media (max-width: 600px) {
+    .showcase-header {
+        padding: 5rem 0 3.5rem;
+    }
+
+    .bloque-content {
+        padding: 2.5rem 1.5rem;
+    }
+}
+
 
 .services-grid {
     display: grid;
