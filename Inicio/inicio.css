@@ -832,17 +832,7 @@ h3 {
     gap: 0;
 }
 
-/* Línea superior decorativa */
-.hero-container::before {
-    content: '';
-    position: absolute;
-    top: -4rem;
-    left: 3rem;
-    right: 3rem;
-    height: 1px;
-    background: linear-gradient(to right, var(--copper-light), transparent);
-    opacity: 0.4;
-}
+
 
 .hero-content {
     max-width: 860px;
