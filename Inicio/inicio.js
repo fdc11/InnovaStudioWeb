@@ -6,9 +6,30 @@
 //  No duplica funcionalidades de global.js (navbar, preloader, menú)
 // ================================================================
 
-gsap.registerPlugin(ScrollTrigger);
+// Guard por si GSAP no cargó del CDN
+if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    console.warn('GSAP o ScrollTrigger no están disponibles en inicio.js');
+} else {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ========== SCROLLTRIGGER REFRESH POST-PRELOADER ==========
+// El preloader cubre la página mientras se calculan las posiciones de scroll.
+// Al terminar el preloader, refrescamos ScrollTrigger para que las animaciones
+// recalculen sus triggers correctamente y disparen cuando corresponde.
+document.addEventListener('preloaderFinished', () => {
+    if (typeof ScrollTrigger !== 'undefined') {
+        // Pequeño delay para que el DOM termine de pintar tras el fade del preloader
+        setTimeout(() => { ScrollTrigger.refresh(true); }, 100);
+    }
+});
+// Fallback: si el evento preloaderFinished no llega (ej: global.js tardó)
+setTimeout(() => {
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(true);
+}, 3200);
+
 
 // ========== HERO TYPEWRITER (restaurado) ==========
 (function initHero() {
@@ -177,20 +198,32 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
         ScrollTrigger.create({
             trigger: adnImage,
             start: 'top 75%',
+            once: true,
             onEnter: () => adnImage.classList.add('revealed')
         });
     }
     const stats = document.querySelectorAll('.stat-item');
     if (stats.length) {
-        gsap.from(stats, {
-            opacity: 0,
-            y: 24,
-            duration: 0.7,
-            stagger: 0.15,
-            scrollTrigger: { trigger: '.adn-stats', start: 'top 85%' }
-        });
+        // Usamos fromTo en lugar de from para evitar que los stats
+        // queden en opacity:0 si ScrollTrigger dispara mientras
+        // el preloader aún está visible
+        gsap.fromTo(stats,
+            { opacity: 0, y: 24 },
+            {
+                opacity: 1, y: 0,
+                duration: 0.7,
+                stagger: 0.15,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.adn-stats',
+                    start: 'top 85%',
+                    once: true
+                }
+            }
+        );
     }
 })();
+
 
 // ========== SERVICIOS CARDS: REVEAL + TILT 3D ==========
 (function initServiciosCards() {
@@ -507,7 +540,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ========== FALLBACK SEGURIDAD ==========
+// ========== FALLBACK DE SEGURIDAD ==========
+// Solo actúa si algún elemento quedó invisible después del tiempo esperado
 setTimeout(() => {
     document.querySelectorAll('.porque-card, .timeline-step, .stat-item, .service-card, .proyecto-item, .section-tag, .cta-buttons .btn').forEach(el => {
         if (parseFloat(window.getComputedStyle(el).opacity) < 0.1) {
@@ -519,7 +553,8 @@ setTimeout(() => {
         el.style.opacity = '1';
         el.style.transform = 'translateY(0) rotateX(0)';
     });
-    ScrollTrigger.refresh();
-}, 4000);
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+}, 5000);
+
 
 console.log('%c Innovo Studio — Inicio (typewriter restaurado)', 'color: #C8845A; font-size: 14px; font-weight: bold;');

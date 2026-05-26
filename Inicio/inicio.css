@@ -2219,6 +2219,7 @@ h3 {
     align-items: center;
     justify-content: center;
     gap: 2rem;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .preloader-logo {
@@ -2262,4 +2263,5 @@ h3 {
     position: absolute;
     inset: 0;
     background: var(--ink);
+    display: none;
 }
