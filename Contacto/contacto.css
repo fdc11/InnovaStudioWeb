@@ -189,15 +189,22 @@
 }
 
 /* ---------- PANEL DE INFO (IZQUIERDA) ---------- */
+/* MEJORA 4: Eliminar position:sticky duplicado — dejar solo relative como base */
 .contact-info-panel {
-    position: sticky;
-    top: 8rem;
+    position: relative;
     background: rgba(17, 17, 16, 0.6);
     backdrop-filter: blur(10px);
     padding: 2.5rem;
     border: 1px solid var(--border);
-    position: relative;
     overflow: hidden;
+}
+
+/* Sticky solo en desktop (>1024px) */
+@media (min-width: 1025px) {
+    .contact-info-panel {
+        position: sticky;
+        top: 8rem;
+    }
 }
 
 .info-bg-number {

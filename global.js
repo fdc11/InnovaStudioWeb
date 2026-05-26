@@ -3,6 +3,22 @@
    Funcionalidad compartida para todas las páginas
    ========================================================= */
 
+// ── MEJORA 1: Listener pageshow para bfcache (botón Atrás del navegador) ──
+// Si la página se restaura desde el bfcache, el preloader se omite inmediatamente.
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+        // La página viene del bfcache: forzar finalización del preloader
+        const preloader = document.getElementById('preloader');
+        const pageCurtain = document.getElementById('pageCurtain');
+        if (preloader) {
+            preloader.style.opacity = '0';
+            preloader.style.pointerEvents = 'none';
+            preloader.style.display = 'none';
+        }
+        if (pageCurtain) pageCurtain.style.display = 'none';
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     // 1. PRELOADER UNIFICADO (sin conflictos)
     const preloader = document.getElementById('preloader');
@@ -17,12 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!preloader) return;
         preloader.style.opacity = '0';
         preloader.style.pointerEvents = 'none';
+        // ── MEJORA 4: display:none inmediato (sin delay residual) ──
         setTimeout(() => {
             if (preloader) preloader.style.display = 'none';
             if (pageCurtain) pageCurtain.style.display = 'none';
             document.dispatchEvent(new Event('preloaderFinished'));
         }, 500);
     }
+
+    // ── MEJORA 4: pageCurtain se oculta siempre que no exista ──
+    if (pageCurtain) pageCurtain.style.display = 'none';
 
     if (preloader && progressBar) {
         let progress = 0;
@@ -56,13 +76,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 3. MOBILE MENU TOGGLE (unificado)
-    const hamburger = document.querySelector('.hamburger');
-    const mobileMenu = document.querySelector('.mobile-menu');
+    // ── MEJORA 4: verificar existencia de hamburger y mobileMenu antes de usarlos ──
+    const hamburger = document.getElementById('hamburger') || document.querySelector('.hamburger');
+    const mobileMenu = document.getElementById('mobileMenu') || document.querySelector('.mobile-menu');
     if (hamburger && mobileMenu) {
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             mobileMenu.classList.toggle('active');
             document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Cerrar menú al hacer clic en un link del mobile menu
+        const mobileLinks = mobileMenu.querySelectorAll('.mobile-link');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
         });
     }
 

@@ -12,6 +12,8 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 (function initScrollProgress() {
     const bar = document.getElementById('scrollProgress');
     if (!bar) return;
+    // MEJORA 4: guard para evitar error si ScrollTrigger no está disponible
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     ScrollTrigger.create({
         start: 'top top',
         end: 'bottom bottom',
@@ -54,6 +56,8 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 (function initStoriesHeroParallax() {
     const heroBg = document.querySelector('.stories-hero-video');
     if (!heroBg) return;
+    // MEJORA 4: guard para evitar error si gsap no está disponible
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     gsap.to(heroBg, {
         yPercent: 20,
         ease: 'none',
