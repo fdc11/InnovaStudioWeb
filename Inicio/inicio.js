@@ -15,14 +15,29 @@ if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+let preloaderFinished = false;
+
 // ========== SCROLLTRIGGER REFRESH POST-PRELOADER ==========
 // El preloader cubre la página mientras se calculan las posiciones de scroll.
 // Al terminar el preloader, refrescamos ScrollTrigger para que las animaciones
 // recalculen sus triggers correctamente y disparen cuando corresponde.
 document.addEventListener('preloaderFinished', () => {
+    preloaderFinished = true;
     if (typeof ScrollTrigger !== 'undefined') {
         // Pequeño delay para que el DOM termine de pintar tras el fade del preloader
         setTimeout(() => { ScrollTrigger.refresh(true); }, 100);
+    }
+    // Registrar el trigger de .adn-image después del preloader
+    const adnImage = document.querySelector('.adn-image');
+    if (adnImage) {
+        setTimeout(() => {
+            ScrollTrigger.create({
+                trigger: adnImage,
+                start: 'top 75%',
+                once: true,
+                onEnter: () => adnImage.classList.add('revealed')
+            });
+        }, 150);
     }
 });
 // Fallback: si el evento preloaderFinished no llega (ej: global.js tardó)
@@ -194,13 +209,16 @@ setTimeout(() => {
 // ========== ADN: IMAGEN REVEAL Y STATS ==========
 (function initADN() {
     const adnImage = document.querySelector('.adn-image');
-    if (adnImage) {
-        ScrollTrigger.create({
-            trigger: adnImage,
-            start: 'top 75%',
-            once: true,
-            onEnter: () => adnImage.classList.add('revealed')
-        });
+    // Edge case: si el preloader ya terminó antes de que initADN() se ejecute
+    if (adnImage && preloaderFinished) {
+        setTimeout(() => {
+            ScrollTrigger.create({
+                trigger: adnImage,
+                start: 'top 75%',
+                once: true,
+                onEnter: () => adnImage.classList.add('revealed')
+            });
+        }, 150);
     }
     const stats = document.querySelectorAll('.stat-item');
     if (stats.length) {
