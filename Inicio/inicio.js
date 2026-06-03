@@ -43,6 +43,15 @@ document.addEventListener('preloaderFinished', () => {
 // Fallback: si el evento preloaderFinished no llega (ej: global.js tardó)
 setTimeout(() => {
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(true);
+    const adnImage = document.querySelector('.adn-image');
+    if (adnImage && !adnImage.classList.contains('revealed')) {
+        ScrollTrigger.create({
+            trigger: adnImage,
+            start: 'top 75%',
+            once: true,
+            onEnter: () => adnImage.classList.add('revealed')
+        });
+    }
 }, 3200);
 
 
@@ -208,18 +217,6 @@ setTimeout(() => {
 
 // ========== ADN: IMAGEN REVEAL Y STATS ==========
 (function initADN() {
-    const adnImage = document.querySelector('.adn-image');
-    // Edge case: si el preloader ya terminó antes de que initADN() se ejecute
-    if (adnImage && preloaderFinished) {
-        setTimeout(() => {
-            ScrollTrigger.create({
-                trigger: adnImage,
-                start: 'top 75%',
-                once: true,
-                onEnter: () => adnImage.classList.add('revealed')
-            });
-        }, 150);
-    }
     const stats = document.querySelectorAll('.stat-item');
     if (stats.length) {
         // Usamos fromTo en lugar de from para evitar que los stats
