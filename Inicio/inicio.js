@@ -31,12 +31,17 @@ document.addEventListener('preloaderFinished', () => {
     const adnImage = document.querySelector('.adn-image');
     if (adnImage) {
         setTimeout(() => {
-            ScrollTrigger.create({
-                trigger: adnImage,
-                start: 'top 75%',
-                once: true,
-                onEnter: () => adnImage.classList.add('revealed')
-            });
+            const rect = adnImage.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.85) {
+                adnImage.classList.add('revealed');
+            } else {
+                ScrollTrigger.create({
+                    trigger: adnImage,
+                    start: 'top 75%',
+                    once: true,
+                    onEnter: () => adnImage.classList.add('revealed')
+                });
+            }
         }, 150);
     }
 });
@@ -45,12 +50,17 @@ setTimeout(() => {
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(true);
     const adnImage = document.querySelector('.adn-image');
     if (adnImage && !adnImage.classList.contains('revealed')) {
-        ScrollTrigger.create({
-            trigger: adnImage,
-            start: 'top 75%',
-            once: true,
-            onEnter: () => adnImage.classList.add('revealed')
-        });
+        const rect = adnImage.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+            adnImage.classList.add('revealed');
+        } else {
+            ScrollTrigger.create({
+                trigger: adnImage,
+                start: 'top 75%',
+                once: true,
+                onEnter: () => adnImage.classList.add('revealed')
+            });
+        }
     }
 }, 3200);
 
