@@ -27,41 +27,11 @@ document.addEventListener('preloaderFinished', () => {
         // Pequeño delay para que el DOM termine de pintar tras el fade del preloader
         setTimeout(() => { ScrollTrigger.refresh(true); }, 100);
     }
-    // Registrar el trigger de .adn-image después del preloader
-    const adnImage = document.querySelector('.adn-image');
-    if (adnImage) {
-        setTimeout(() => {
-            const rect = adnImage.getBoundingClientRect();
-            if (rect.top < window.innerHeight * 0.85) {
-                adnImage.classList.add('revealed');
-            } else {
-                ScrollTrigger.create({
-                    trigger: adnImage,
-                    start: 'top 75%',
-                    once: true,
-                    onEnter: () => adnImage.classList.add('revealed')
-                });
-            }
-        }, 150);
-    }
+    // (sin animación en .adn-image)
 });
 // Fallback: si el evento preloaderFinished no llega (ej: global.js tardó)
 setTimeout(() => {
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(true);
-    const adnImage = document.querySelector('.adn-image');
-    if (adnImage && !adnImage.classList.contains('revealed')) {
-        const rect = adnImage.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.85) {
-            adnImage.classList.add('revealed');
-        } else {
-            ScrollTrigger.create({
-                trigger: adnImage,
-                start: 'top 75%',
-                once: true,
-                onEnter: () => adnImage.classList.add('revealed')
-            });
-        }
-    }
 }, 3200);
 
 
@@ -224,31 +194,6 @@ setTimeout(() => {
         }, 40);
     });
 })();
-
-// ========== ADN: IMAGEN REVEAL Y STATS ==========
-(function initADN() {
-    const stats = document.querySelectorAll('.stat-item');
-    if (stats.length) {
-        // Usamos fromTo en lugar de from para evitar que los stats
-        // queden en opacity:0 si ScrollTrigger dispara mientras
-        // el preloader aún está visible
-        gsap.fromTo(stats,
-            { opacity: 0, y: 24 },
-            {
-                opacity: 1, y: 0,
-                duration: 0.7,
-                stagger: 0.15,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: '.adn-stats',
-                    start: 'top 85%',
-                    once: true
-                }
-            }
-        );
-    }
-})();
-
 
 // ========== SERVICIOS CARDS: REVEAL + TILT 3D ==========
 (function initServiciosCards() {
