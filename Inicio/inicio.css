@@ -1135,6 +1135,59 @@ h3 {
     }
 }
 
+/* ========== ADN — ANIMACIONES DE ENTRADA (CSS puro, sin GSAP) ========== */
+
+/* Estado inicial: invisible y desplazado hacia abajo */
+.adn-text,
+.adn-image {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* La imagen aparece ligeramente después del texto */
+.adn-image {
+    transition-delay: 0.15s;
+}
+
+/* Estado visible: activado por IntersectionObserver en inicio.js */
+.adn-text.adn-visible,
+.adn-image.adn-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stats: estado inicial */
+.stat-item {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Stats: estado visible */
+.stat-item.adn-stat-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Delays escalonados para los 3 stats */
+.adn-stats .stat-item:nth-child(1) { transition-delay: 0s;    }
+.adn-stats .stat-item:nth-child(2) { transition-delay: 0.12s; }
+.adn-stats .stat-item:nth-child(3) { transition-delay: 0.24s; }
+
+/* prefers-reduced-motion: mostrar todo de inmediato */
+@media (prefers-reduced-motion: reduce) {
+    .adn-text,
+    .adn-image,
+    .stat-item {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
 /* ========== SERVICIOS ========== */
 .servicios {
     padding: clamp(4rem, 8vw, 9rem) 0;

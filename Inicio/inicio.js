@@ -27,12 +27,56 @@ document.addEventListener('preloaderFinished', () => {
         // Pequeño delay para que el DOM termine de pintar tras el fade del preloader
         setTimeout(() => { ScrollTrigger.refresh(true); }, 100);
     }
-    // (sin animación en .adn-image)
 });
 // Fallback: si el evento preloaderFinished no llega (ej: global.js tardó)
 setTimeout(() => {
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(true);
 }, 3200);
+
+// ========== ADN — REVEAL VIA INTERSECTION OBSERVER (sin GSAP) ==========
+// Texto e imagen aparecen desde abajo con CSS transition pura.
+// Los stats reciben su clase con delay para no explotar todo junto.
+(function initAdnReveal() {
+    const adnText   = document.querySelector('.adn-text');
+    const adnImage  = document.querySelector('.adn-image');
+    const statItems = document.querySelectorAll('.adn-stats .stat-item');
+
+    if (!adnText && !adnImage) return;
+
+    // prefers-reduced-motion: mostrar todo de inmediato, sin animación
+    if (prefersReducedMotion) {
+        if (adnText)  adnText.classList.add('adn-visible');
+        if (adnImage) adnImage.classList.add('adn-visible');
+        statItems.forEach(s => s.classList.add('adn-stat-visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+
+            // Activar texto e imagen (la imagen lleva transition-delay en CSS)
+            if (adnText)  adnText.classList.add('adn-visible');
+            if (adnImage) adnImage.classList.add('adn-visible');
+
+            // Stats: arrancan 300ms después del texto, escalonados por CSS
+            if (statItems.length) {
+                setTimeout(() => {
+                    statItems.forEach(stat => stat.classList.add('adn-stat-visible'));
+                }, 300);
+            }
+
+            obs.unobserve(entry.target);
+        });
+    }, {
+        threshold: 0.18,
+        rootMargin: '0px 0px -60px 0px'
+    });
+
+    // Observar el texto (ancla principal); si no existe, observar la imagen
+    if (adnText)       observer.observe(adnText);
+    else if (adnImage) observer.observe(adnImage);
+})();
 
 
 // ========== HERO TYPEWRITER (restaurado) ==========
@@ -519,6 +563,13 @@ setTimeout(() => {
             el.style.transform = 'none';
         }
     });
+    // Fallback ADN: forzar visibilidad si el IntersectionObserver no disparó
+    const adnText  = document.querySelector('.adn-text');
+    const adnImage = document.querySelector('.adn-image');
+    if (adnText  && !adnText.classList.contains('adn-visible'))  adnText.classList.add('adn-visible');
+    if (adnImage && !adnImage.classList.contains('adn-visible')) adnImage.classList.add('adn-visible');
+    document.querySelectorAll('.adn-stats .stat-item').forEach(s => s.classList.add('adn-stat-visible'));
+
     document.querySelectorAll('.split-word-inner, .cta-line-inner').forEach(el => {
         el.style.opacity = '1';
         el.style.transform = 'translateY(0) rotateX(0)';
