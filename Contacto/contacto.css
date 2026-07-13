@@ -159,47 +159,41 @@
     }
 }
 
-/* ---------- MAIN CONTACT (FORM + INFO) ---------- */
+/* ---------- MAIN CONTACT (FORM + INFO) — REDISEÑO EDITORIAL ---------- */
 .contact-main {
     background: var(--ink);
-    padding: 5rem 0 8rem;
+    padding: 8rem 0 10rem;
     position: relative;
 }
 
-/* Fondo con textura sutil */
+/* Textura sutil de fondo, más discreta */
 .contact-main::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: radial-gradient(rgba(196, 122, 78, 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
+    inset: 0;
+    background-image: radial-gradient(rgba(196, 122, 78, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
     pointer-events: none;
 }
 
 .contact-grid {
     display: grid;
-    grid-template-columns: 40fr 60fr;
-    gap: 5rem;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 7rem;
     align-items: start;
     position: relative;
     z-index: 1;
 }
 
-/* ---------- PANEL DE INFO (IZQUIERDA) ---------- */
-/* MEJORA 4: Eliminar position:sticky duplicado — dejar solo relative como base */
+/* ---------- PANEL DE INFO (IZQUIERDA) — SIN CAJA, EDITORIAL ---------- */
 .contact-info-panel {
     position: relative;
-    background: rgba(17, 17, 16, 0.6);
-    backdrop-filter: blur(10px);
-    padding: 2.5rem;
-    border: 1px solid var(--border);
-    overflow: hidden;
+    background: transparent;
+    border: none;
+    padding: 0;
+    backdrop-filter: none;
 }
 
-/* Sticky solo en desktop (>1024px) */
 @media (min-width: 1025px) {
     .contact-info-panel {
         position: sticky;
@@ -207,120 +201,176 @@
     }
 }
 
-.info-bg-number {
-    position: absolute;
-    bottom: -1rem;
-    right: -0.5rem;
+.info-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--copper-light);
+    margin-bottom: 2rem;
+}
+
+.info-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--copper);
+    box-shadow: 0 0 12px var(--copper);
+    animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.25);
+    }
+}
+
+.info-title {
     font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 8rem;
-    color: var(--copper);
-    opacity: 0.08;
-    pointer-events: none;
-    line-height: 1;
+    font-weight: 700;
+    font-size: clamp(2.4rem, 4.5vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    color: var(--off-white);
+    margin-bottom: 2rem;
+}
+
+.info-title em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--copper-light);
+    letter-spacing: -0.01em;
+}
+
+.info-lead {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--slate-light, #b8b8b0);
+    max-width: 440px;
+    margin-bottom: 3.5rem;
 }
 
 .contact-details {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    margin-bottom: 2.5rem;
-    position: relative;
-    z-index: 1;
+    gap: 1.75rem;
+    margin-bottom: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
 }
 
 .detail-group {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: 0.55rem;
 }
 
 .detail-label {
     font-family: 'DM Mono', monospace;
-    font-size: 0.55rem;
+    font-size: 0.72rem;
     font-weight: 400;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--copper-light);
+    color: var(--slate);
 }
 
 .detail-value {
     font-family: 'Syne', sans-serif;
-    font-size: clamp(1rem, 2vw, 1.4rem);
-    font-weight: 700;
+    font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+    font-weight: 600;
     color: var(--off-white);
+    letter-spacing: -0.01em;
+    line-height: 1.25;
     transition: var(--transition-fast);
     display: inline-block;
     width: fit-content;
-    line-height: 1.2;
+    position: relative;
+}
+
+a.detail-value::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 1px;
+    background: var(--copper);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 a.detail-value:hover {
     color: var(--copper-light);
-    transform: translateX(6px);
+}
+
+a.detail-value:hover::after {
+    transform: scaleX(1);
 }
 
 .contact-social-group {
-    margin-top: 1rem;
-    position: relative;
-    z-index: 1;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
 }
 
 .contact-social-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.75rem;
     flex-wrap: wrap;
-    margin-top: 1rem;
+    margin-top: 1.1rem;
 }
 
 .contact-social-link {
     font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
+    font-size: 0.78rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--slate);
+    color: var(--slate-light, #b8b8b0);
     transition: var(--transition-fast);
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.4rem;
 }
 
 .contact-social-link::after {
     content: '↗';
-    font-size: 0.6rem;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    font-size: 0.7rem;
+    transition: transform 0.3s ease, color 0.2s ease;
+    color: var(--copper);
 }
 
 .contact-social-link:hover {
-    color: var(--copper-light);
+    color: var(--off-white);
 }
 
 .contact-social-link:hover::after {
-    opacity: 1;
+    transform: translate(2px, -2px);
 }
 
-.info-decor-line {
-    position: absolute;
-    bottom: 2rem;
-    left: 2rem;
-    width: 60px;
-    height: 2px;
-    background: var(--copper);
-    opacity: 0.3;
-}
-
-/* ---------- FORMULARIO PREMIUM (DERECHA) ---------- */
+/* ---------- FORMULARIO (DERECHA) — SIN CAJA, LÍNEAS FINAS ---------- */
 .contact-form-panel {
-    background: rgba(20, 20, 18, 0.8);
-    backdrop-filter: blur(4px);
-    border: 1px solid var(--border);
-    padding: 2.5rem;
-    transition: box-shadow 0.3s ease;
+    background: transparent;
+    border: none;
+    padding: 0;
+    backdrop-filter: none;
+    transition: none;
 }
 
 .contact-form-panel:hover {
-    box-shadow: 0 0 0 1px rgba(196, 122, 78, 0.2);
+    box-shadow: none;
 }
 
 .contact-form {
@@ -331,57 +381,55 @@ a.detail-value:hover {
 
 .form-group {
     position: relative;
-    padding: 1.2rem 0;
+    padding: 1.5rem 0 1.4rem;
     border-bottom: 1px solid var(--border);
-    transition: border-color 0.3s ease;
+    transition: border-color 0.35s ease;
 }
 
 .form-group:focus-within {
-    border-bottom-color: var(--copper-light);
+    border-bottom-color: var(--copper);
 }
 
 .form-label {
     display: block;
     font-family: 'DM Mono', monospace;
-    font-size: 0.5rem;
+    font-size: 0.72rem;
     font-weight: 400;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--slate);
-    margin-bottom: 0.4rem;
-    transition: color 0.3s ease, transform 0.3s ease;
+    margin-bottom: 0.7rem;
+    transition: color 0.3s ease;
 }
 
 .form-group:focus-within .form-label {
     color: var(--copper-light);
-    transform: translateY(-2px);
 }
 
 .form-input {
     width: 100%;
     background: transparent;
     border: none;
-    padding: 0.7rem 0;
+    padding: 0.35rem 0;
     font-family: 'Syne', sans-serif;
-    font-size: clamp(0.9rem, 2vw, 1rem);
+    font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+    font-weight: 500;
     color: var(--off-white);
+    letter-spacing: -0.005em;
     outline: none;
-    transition: all 0.3s ease;
-}
-
-.form-input:focus {
-    border-color: transparent;
+    transition: color 0.3s ease;
 }
 
 .form-input::placeholder {
-    color: var(--slate);
-    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.2);
+    font-weight: 400;
 }
 
 .form-textarea {
-    min-height: 100px;
+    min-height: 120px;
     resize: vertical;
-    line-height: 1.6;
+    line-height: 1.55;
+    font-size: clamp(1rem, 1.4vw, 1.1rem);
 }
 
 .form-select {
@@ -391,13 +439,14 @@ a.detail-value:hover {
     background-image: url("data:image/svg+xml;utf8,<svg fill='%23C47A4E' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
     background-repeat: no-repeat;
     background-position: right 0 top 50%;
-    background-size: 18px;
-    padding-right: 1.5rem;
+    background-size: 20px;
+    padding-right: 2rem;
 }
 
 .form-select option {
     background: #1a1a18;
     color: var(--off-white);
+    font-family: 'Syne', sans-serif;
 }
 
 /* Errores */
@@ -411,9 +460,9 @@ a.detail-value:hover {
 
 .form-error-msg {
     display: block;
-    margin-top: 0.3rem;
+    margin-top: 0.55rem;
     font-family: 'DM Mono', monospace;
-    font-size: 0.5rem;
+    font-size: 0.68rem;
     letter-spacing: 0.1em;
     color: #c0392b;
     opacity: 0;
@@ -426,40 +475,57 @@ a.detail-value:hover {
     transform: translateY(0);
 }
 
-/* Botón de envío */
+/* Botón de envío — más confiado, ancho auto tipo editorial */
 .form-submit-container {
-    margin-top: 2rem;
+    margin-top: 2.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.form-submit-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--slate);
+    max-width: 220px;
+    line-height: 1.5;
+    order: 1;
 }
 
 .btn-submit {
-    width: 100%;
-    padding: 1.2rem;
+    padding: 1.35rem 2.5rem;
     font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 600;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    background: transparent;
-    color: var(--off-white);
+    background: var(--copper);
+    color: var(--ink);
     border: 1px solid var(--copper);
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
+    gap: 0.85rem;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
+    order: 2;
+    min-width: 260px;
 }
 
 .btn-submit::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: var(--copper);
+    background: var(--off-white);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 0;
 }
 
@@ -471,9 +537,8 @@ a.detail-value:hover {
 
 .btn-submit:hover {
     color: var(--ink);
-    border-color: var(--copper);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(154, 78, 40, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(154, 78, 40, 0.35);
 }
 
 .btn-submit:hover::before {
@@ -487,7 +552,7 @@ a.detail-value:hover {
 }
 
 .btn-submit:hover .submit-arrow {
-    transform: translateX(5px);
+    transform: translateX(6px);
 }
 
 .btn-submit:disabled {
@@ -502,6 +567,7 @@ a.detail-value:hover {
     overflow: hidden;
     max-height: 0;
     transition: max-height 0.4s ease;
+    width: 100%;
 }
 
 .form-status-box.active {
@@ -512,11 +578,12 @@ a.detail-value:hover {
     display: none;
     align-items: flex-start;
     gap: 0.75rem;
-    padding: 1rem;
+    padding: 1rem 1.2rem;
     border-left: 2px solid;
     font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     line-height: 1.5;
+    letter-spacing: 0.05em;
 }
 
 .status-success {
@@ -564,7 +631,7 @@ a.detail-value:hover {
 @media (max-width: 1024px) {
     .contact-grid {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 4rem;
     }
 
     .contact-info-panel {
@@ -574,6 +641,22 @@ a.detail-value:hover {
 
     .contact-scroll-indicator {
         display: none;
+    }
+
+    .form-submit-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-submit-note {
+        max-width: none;
+        order: 2;
+        text-align: center;
+    }
+
+    .btn-submit {
+        order: 1;
+        width: 100%;
     }
 }
 
@@ -587,11 +670,11 @@ a.detail-value:hover {
         font-size: clamp(2rem, 8vw, 3rem);
     }
 
-    .contact-form-panel {
-        padding: 1.5rem;
+    .contact-main {
+        padding: 5rem 0 6rem;
     }
 
-    .info-bg-number {
-        font-size: 5rem;
+    .info-title {
+        font-size: clamp(2rem, 8vw, 2.8rem);
     }
 }
